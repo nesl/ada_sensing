@@ -2,7 +2,7 @@ python3 train_policy.py \
   --train_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/policy_labels/policy_train_labels.json \
   --val_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/policy_labels/policy_val_labels.json \
   --test_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/policy_labels/policy_test_labels.json \
-  --save_dir /mnt/hdd1/yuyang/adaptive_sensing/Lenz/results \
+  --save_dir /mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results \
   --image_size 224 \
   --batch_size 16 \
   --epochs 5 \
