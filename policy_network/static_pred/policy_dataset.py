@@ -1,5 +1,6 @@
 import json
-from typing import Any, Dict, List
+import random
+from typing import Any, Dict, List, Optional
 
 import torch
 from torch.utils.data import Dataset
@@ -21,27 +22,72 @@ class PolicyDataset(Dataset):
         "best_option_id": 13,
         ...
     }
+
+    When `manifest_path` is provided, the dataset can also sample the input image
+    from all candidates of the same physical scene instead of always using the
+    fixed baseline image.
     """
-    def __init__(self, json_path: str, transform=None):
+    def __init__(
+        self,
+        json_path: str,
+        transform=None,
+        manifest_path: Optional[str] = None,
+        input_sampling: str = "baseline",
+    ):
         with open(json_path, "r") as f:
             self.items: List[Dict[str, Any]] = json.load(f)
 
         self.transform = transform
+        self.input_sampling = input_sampling
+        self.manifest_by_id: Optional[Dict[str, Dict[str, Any]]] = None
+
+        if self.input_sampling not in {"baseline", "random_candidate"}:
+            raise ValueError(
+                f"Unsupported input_sampling={input_sampling}. "
+                "Expected 'baseline' or 'random_candidate'."
+            )
+
+        if manifest_path is not None:
+            with open(manifest_path, "r") as f:
+                manifest_items: List[Dict[str, Any]] = json.load(f)
+            self.manifest_by_id = {
+                str(item["id"]): item for item in manifest_items
+            }
+
+        if self.input_sampling == "random_candidate" and self.manifest_by_id is None:
+            raise ValueError(
+                "manifest_path is required when input_sampling='random_candidate'."
+            )
+
+        self.has_soft_targets = any("soft_target" in item for item in self.items)
 
     def __len__(self) -> int:
         return len(self.items)
 
+    def _resolve_input_path(self, item: Dict[str, Any]) -> str:
+        if self.input_sampling == "baseline":
+            return item["baseline_path"]
+
+        manifest_item = self.manifest_by_id[str(item["sample_id"])]
+        candidates = manifest_item["candidates"]
+        chosen_candidate = random.choice(candidates)
+        return chosen_candidate["path"]
+
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         item = self.items[idx]
 
-        img = load_image_rgb(item["baseline_path"])
+        image_path = self._resolve_input_path(item)
+        img = load_image_rgb(image_path)
         if self.transform is not None:
             img = self.transform(img)
 
         target = torch.tensor(int(item["best_option_id"]), dtype=torch.long)
-
-        return {
+        record = {
             "image": img,
             "target": target,
             "sample_id": item["sample_id"],
+            "input_path": image_path,
         }
+        if "soft_target" in item:
+            record["soft_target"] = torch.tensor(item["soft_target"], dtype=torch.float32)
+        return record

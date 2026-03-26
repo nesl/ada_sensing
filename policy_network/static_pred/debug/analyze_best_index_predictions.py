@@ -2,11 +2,22 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from collections import Counter
+from pathlib import Path
 from typing import Any, Dict, List
 
 import torch
 from torch.utils.data import DataLoader
+
+# Make sibling modules importable when this script is launched from debug/.
+ROOT = Path(__file__).resolve().parents[3]
+POLICY_DIR = ROOT / "policy_network" / "static_pred"
+
+for extra_path in (ROOT, POLICY_DIR):
+    extra_path_str = str(extra_path)
+    if extra_path_str not in sys.path:
+        sys.path.insert(0, extra_path_str)
 
 from policy_dataset import PolicyDataset
 from policy_model import SensorPolicyNetwork

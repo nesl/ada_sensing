@@ -1,13 +1,17 @@
 python3 train_policy.py \
-  --train_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/policy_labels/policy_train_labels.json \
-  --val_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/policy_labels/policy_val_labels.json \
-  --test_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/policy_labels/policy_test_labels.json \
-  --save_dir /mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results \
+  --train_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/oracle_policy_labels/oracle_policy_train_labels.json \
+  --val_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/oracle_policy_labels/oracle_policy_val_labels.json \
+  --test_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/oracle_policy_labels/oracle_policy_test_labels.json \
+  --manifest_json /mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/manifest_all.json \
+  --save_dir /mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_oracle_policy \
+  --resume_checkpoint /mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_oracle_policy/policy_net_freeze_soft.pth \
   --image_size 224 \
   --batch_size 16 \
-  --epochs 5 \
+  --epochs 20 \
   --lr 1e-4 \
+  --backbone_lr 5e-6 \
   --weight_decay 1e-4 \
   --device cuda \
   --num_workers 4 \
-  --pretrained
+  --pretrained \
+  --freeze_backbone

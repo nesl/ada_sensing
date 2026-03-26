@@ -22,8 +22,20 @@ def parse_args():
     p.add_argument("--train_json", type=str, required=True)
     p.add_argument("--val_json", type=str, required=True)
     p.add_argument("--test_json", type=str, required=True)
+    p.add_argument(
+        "--manifest_json",
+        type=str,
+        default="data/ImageNet-ES-Diverse/manifest_all.json",
+        help="Manifest used to recover all candidates for state augmentation.",
+    )
 
     p.add_argument("--save_dir", type=str, required=True)
+    p.add_argument(
+        "--resume_checkpoint",
+        type=str,
+        default=None,
+        help="Optional checkpoint to load model weights from before training.",
+    )
 
     p.add_argument("--image_size", type=int, default=224)
     p.add_argument("--num_candidates", type=int, default=27)
@@ -31,6 +43,7 @@ def parse_args():
     p.add_argument("--batch_size", type=int, default=32)
     p.add_argument("--epochs", type=int, default=15)
     p.add_argument("--lr", type=float, default=1e-4)
+    p.add_argument("--backbone_lr", type=float, default=1e-5)
     p.add_argument("--weight_decay", type=float, default=1e-4)
 
     p.add_argument("--device", type=str, default="cuda")
@@ -39,6 +52,23 @@ def parse_args():
 
     p.add_argument("--pretrained", action="store_true")
     p.add_argument("--no_pretrained", action="store_true")
+    p.add_argument(
+        "--loss_type",
+        type=str,
+        choices=["auto", "hard_ce", "soft_kl"],
+        default="auto",
+        help="Training loss. 'auto' uses soft_kl when the dataset provides soft_target.",
+    )
+    p.add_argument(
+        "--freeze_backbone",
+        action="store_true",
+        help="Freeze the pretrained backbone and only train the policy head.",
+    )
+    p.add_argument(
+        "--no_freeze_backbone",
+        action="store_true",
+        help="Train the full network instead of only the policy head.",
+    )
 
     return p.parse_args()
 
@@ -55,12 +85,23 @@ def get_pretrained_flag(args) -> bool:
     return True
 
 
+def get_freeze_backbone_flag(args) -> bool:
+    if args.no_freeze_backbone:
+        return False
+    return True
+
+
 def build_dataloaders(args):
     tfm = imagenet_preprocess(args.image_size)
 
-    train_ds = PolicyDataset(args.train_json, transform=tfm)
-    val_ds = PolicyDataset(args.val_json, transform=tfm)
-    test_ds = PolicyDataset(args.test_json, transform=tfm)
+    train_ds = PolicyDataset(
+        args.train_json,
+        transform=tfm,
+        manifest_path=args.manifest_json,
+        input_sampling="random_candidate",
+    )
+    val_ds = PolicyDataset(args.val_json, transform=tfm, input_sampling="baseline")
+    test_ds = PolicyDataset(args.test_json, transform=tfm, input_sampling="baseline")
 
     train_loader = DataLoader(
         train_ds,
@@ -89,7 +130,34 @@ def build_dataloaders(args):
     return train_loader, val_loader, test_loader
 
 
-def evaluate(model, loader, criterion, device) -> Dict[str, Any]:
+def resolve_loss_type(args, train_loader) -> str:
+    if args.loss_type != "auto":
+        return args.loss_type
+    return "soft_kl" if getattr(train_loader.dataset, "has_soft_targets", False) else "hard_ce"
+
+
+def compute_loss(logits, batch, loss_type: str, device: torch.device):
+    hard_targets = batch["target"].to(device, non_blocking=True)
+
+    if loss_type == "hard_ce":
+        loss = nn.functional.cross_entropy(logits, hard_targets)
+        return loss, hard_targets
+
+    if loss_type == "soft_kl":
+        if "soft_target" not in batch:
+            raise KeyError("Batch is missing 'soft_target' required for soft_kl.")
+        soft_targets = batch["soft_target"].to(device, non_blocking=True)
+        loss = nn.functional.kl_div(
+            nn.functional.log_softmax(logits, dim=-1),
+            soft_targets,
+            reduction="batchmean",
+        )
+        return loss, hard_targets
+
+    raise ValueError(f"Unsupported loss_type: {loss_type}")
+
+
+def evaluate(model, loader, device, loss_type: str) -> Dict[str, Any]:
     model.eval()
 
     total_loss = 0.0
@@ -99,16 +167,14 @@ def evaluate(model, loader, criterion, device) -> Dict[str, Any]:
     with torch.no_grad():
         for batch in loader:
             images = batch["image"].to(device, non_blocking=True)
-            targets = batch["target"].to(device, non_blocking=True)
-
             logits = model(images)
-            loss = criterion(logits, targets)
+            loss, hard_targets = compute_loss(logits, batch, loss_type, device)
 
             preds = torch.argmax(logits, dim=-1)
 
-            batch_size = targets.size(0)
+            batch_size = hard_targets.size(0)
             total_loss += float(loss.item()) * batch_size
-            total_correct += int((preds == targets).sum().item())
+            total_correct += int((preds == hard_targets).sum().item())
             total += batch_size
 
     avg_loss = total_loss / max(1, total)
@@ -122,7 +188,7 @@ def evaluate(model, loader, criterion, device) -> Dict[str, Any]:
     }
 
 
-def train_one_epoch(model, loader, optimizer, criterion, device, epoch: int, epochs: int):
+def train_one_epoch(model, loader, optimizer, device, loss_type: str, epoch: int, epochs: int):
     model.train()
 
     total_loss = 0.0
@@ -133,20 +199,19 @@ def train_one_epoch(model, loader, optimizer, criterion, device, epoch: int, epo
 
     for batch in pbar:
         images = batch["image"].to(device, non_blocking=True)
-        targets = batch["target"].to(device, non_blocking=True)
 
         optimizer.zero_grad()
 
         logits = model(images)
-        loss = criterion(logits, targets)
+        loss, hard_targets = compute_loss(logits, batch, loss_type, device)
         loss.backward()
         optimizer.step()
 
         preds = torch.argmax(logits, dim=-1)
 
-        batch_size = targets.size(0)
+        batch_size = hard_targets.size(0)
         total_loss += float(loss.item()) * batch_size
-        total_correct += int((preds == targets).sum().item())
+        total_correct += int((preds == hard_targets).sum().item())
         total += batch_size
 
         running_loss = total_loss / max(1, total)
@@ -164,7 +229,7 @@ def train_one_epoch(model, loader, optimizer, criterion, device, epoch: int, epo
     }
 
 
-def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float, args):
+def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float, args, loss_type: str):
     ckpt = {
         "model_state_dict": model.state_dict(),
         "optimizer_state_dict": optimizer.state_dict(),
@@ -172,6 +237,10 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "best_val_acc": best_val_acc,
         "num_candidates": args.num_candidates,
         "image_size": args.image_size,
+        "freeze_backbone": get_freeze_backbone_flag(args),
+        "backbone_lr": args.backbone_lr,
+        "head_lr": args.lr,
+        "loss_type": loss_type,
     }
     torch.save(ckpt, path)
 
@@ -184,9 +253,12 @@ def main():
 
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
     pretrained = get_pretrained_flag(args)
+    freeze_backbone = get_freeze_backbone_flag(args)
 
     print("Building dataloaders...")
     train_loader, val_loader, test_loader = build_dataloaders(args)
+    loss_type = resolve_loss_type(args, train_loader)
+    print(f"Using loss_type={loss_type}")
 
     print("Building model...")
     model = SensorPolicyNetwork(
@@ -194,24 +266,61 @@ def main():
         pretrained=pretrained,
     ).to(device)
 
+    best_val_acc = -1.0
+    start_epoch = 1
+
+    if args.resume_checkpoint:
+        print(f"Loading resume checkpoint from {args.resume_checkpoint}")
+        resume_ckpt = torch.load(args.resume_checkpoint, map_location=device)
+        model.load_state_dict(resume_ckpt["model_state_dict"])
+        best_val_acc = float(resume_ckpt.get("best_val_acc", -1.0))
+        start_epoch = int(resume_ckpt.get("epoch", 0)) + 1
+        print(
+            f"Resumed model weights from epoch {resume_ckpt.get('epoch', 0)} "
+            f"with best_val_acc={best_val_acc:.2f}"
+        )
+
+    if freeze_backbone:
+        model.unfreeze_backbone_tail(start_idx=9)
+        optimizer_param_groups = [
+            {
+                "params": model.get_backbone_tail_parameters(),
+                "lr": args.backbone_lr,
+            },
+            {
+                "params": model.policy_head.parameters(),
+                "lr": args.lr,
+            },
+        ]
+        print(
+            "Partially unfroze backbone tail (modules 9-12) and feature_proj. "
+            f"Using backbone_lr={args.backbone_lr} and head_lr={args.lr}."
+        )
+    else:
+        model.unfreeze_backbone()
+        optimizer_param_groups = [
+            {
+                "params": model.parameters(),
+                "lr": args.lr,
+            }
+        ]
+        print("Backbone unfrozen. Training the full network.")
+
     optimizer = AdamW(
-        model.parameters(),
-        lr=args.lr,
+        optimizer_param_groups,
         weight_decay=args.weight_decay,
     )
-    criterion = nn.CrossEntropyLoss()
 
-    best_val_acc = -1.0
-    best_ckpt_path = os.path.join(args.save_dir, "best_policy_net.pth")
+    best_ckpt_path = os.path.join(args.save_dir, "policy_net_part_freeze_soft.pth")
     history = []
 
-    for epoch in range(1, args.epochs + 1):
+    for epoch in range(start_epoch, args.epochs + 1):
         train_stats = train_one_epoch(
             model=model,
             loader=train_loader,
             optimizer=optimizer,
-            criterion=criterion,
             device=device,
+            loss_type=loss_type,
             epoch=epoch,
             epochs=args.epochs,
         )
@@ -219,8 +328,8 @@ def main():
         val_stats = evaluate(
             model=model,
             loader=val_loader,
-            criterion=criterion,
             device=device,
+            loss_type=loss_type,
         )
 
         print(
@@ -237,6 +346,7 @@ def main():
             "train_acc": train_stats["acc"],
             "val_loss": val_stats["loss"],
             "val_acc": val_stats["acc"],
+            "loss_type": loss_type,
         })
 
         if val_stats["acc"] > best_val_acc:
@@ -248,6 +358,7 @@ def main():
                 epoch=epoch,
                 best_val_acc=best_val_acc,
                 args=args,
+                loss_type=loss_type,
             )
             print(f"Saved new best checkpoint to {best_ckpt_path}")
 
@@ -264,8 +375,8 @@ def main():
     test_stats = evaluate(
         model=model,
         loader=test_loader,
-        criterion=criterion,
         device=device,
+        loss_type=loss_type,
     )
 
     print(
