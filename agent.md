@@ -104,63 +104,9 @@ Conclusion:
 - the code should treat policy output as candidate identity and map it back to the actual position before indexing logits.
 - even if current manifests often keep the same order, relying on equality between `option_id` and list position is fragile.
 
-### 4. Clarified why policy can beat Lens on final accuracy
-Initial intuition was that policy should never outperform Lens because policy is trained on Lens labels.
-
-After checking the code and results, the correct interpretation is:
-- policy is trained to imitate Lens candidate choices
-- but evaluation in `test_policy_selected_visit_acc.json` measures final classification accuracy, not imitation accuracy
-- Lens chooses highest-confidence candidate, not necessarily the candidate that gives the highest probability of correct classification
-- therefore policy can disagree with Lens and still accidentally or systematically select candidates that yield better final accuracy
-
-This is not a contradiction.
-It means:
-- policy can have low teacher imitation accuracy
-- yet still have higher downstream classification accuracy than the Lens confidence heuristic
-
-## Results Observed So Far
-
-### Policy index imitation result
-From `policy_network/results/test_best_index_analysis.json`:
-- total test samples: 600
-- correct predicted best index: 106
-- index prediction accuracy: 17.67%
-
-Interpretation:
-- the policy network only matches the Lens teacher on a small fraction of test samples.
-
-### Downstream selected-image accuracy result
-From `policy_network/results/test_policy_selected_visit_acc.json`:
-- evaluated samples: 600
-- missing manifest samples: 0
-- policy selected acc: 32.0% (192 / 600)
-- Lens selected acc: 29.5% (177 / 600)
-- policy minus Lens: +2.5 points
-- same index rate: 17.67%
-
-Interpretation:
-- policy does not closely imitate Lens index choices
-- but the image selected by policy leads to better final classification accuracy on this test split than Lens confidence-based selection
-- this comparison is currently recorded under the `resnet50` setting
-
-This exact outcome motivated the debugging discussion.
-
 ## Problems and Confusions Encountered
 
-### 1. Metric confusion
-There was an important confusion between:
-- predicting the same index as Lens
-- achieving better final classification after selection
-
-These are not the same objective.
-A policy can fail on the first while doing better on the second.
-
-### 2. Backbone naming confusion
-The discussion earlier referred to “ViSIT model” and “Lens's ViT”, but for the purpose of the current project record the backbone should be treated as `resnet50`.
-
-To avoid confusion, future notes should only mention ViT / ViSIT if the actual experiment command explicitly switches away from `resnet50`.
-
-### 3. Environment mismatch during assistant-side execution
+### Environment mismatch during assistant-side execution
 The assistant environment initially did not use the correct conda environment.
 
 Observed issue:
@@ -172,25 +118,6 @@ User clarified that the correct environment is:
 As a result:
 - code execution from the assistant side should not be trusted unless the correct `lens` conda env is active
 - future runs should be done by the user or only after explicitly activating the correct env
-
-### 4. Sandbox / tooling friction
-There were sandbox issues when trying to inspect and edit files from the assistant side.
-Workaround used:
-- read files via escalated shell commands
-- write changes via shell redirection when `apply_patch` was unavailable
-
-This is a tooling issue, not a project issue, but worth remembering.
-
-## Current Hypotheses
-
-1. The policy network may be learning a better proxy for final accuracy than Lens confidence ranking, despite being trained on Lens-generated labels.
-2. Lens confidence is not perfectly aligned with ground-truth correctness on this dataset.
-3. Under the current recorded setting, all conclusions should be interpreted as `resnet50`-based unless explicitly restated.
-4. The gap between teacher imitation and downstream accuracy should be analyzed per environment and per class to understand when policy helps.
-
-## Notes for Future Work
-
-when you try to run / test a code, go to the conda environment lens first.
 
 ## Results Notes
 Upper bound acc of ResNet50:
@@ -348,8 +275,6 @@ Upper bound acc of ResNet50:
   - `30.17%`
   - from Oracle GT + soft-label + Stage 2 partial unfreeze
 
-### 10. Important current interpretation
-- Improving teacher/index accuracy does not guarantee better downstream classification.
-- Switching from Lens GT to Oracle GT changes the supervision target dramatically.
-- Soft-label Oracle training is more principled than hard one-hot Oracle training when multiple candidate settings are all correct.
-- Partial Stage 2 unfreezing with very small backbone LR is stable and currently gives the best Oracle-based downstream result, but it still has not surpassed the earlier `32.0%` policy result.
+
+## New Input Strategy for Training
+As we believe that the input index should be fixed to ensure stable training, we now fix the index to be 13, and got all the results under folder `policy_network/results_fixed_input13`

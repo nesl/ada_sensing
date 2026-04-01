@@ -31,6 +31,12 @@ def parse_args():
 
     p.add_argument("--save_dir", type=str, required=True)
     p.add_argument(
+        "--checkpoint_name",
+        type=str,
+        default="policy_net_part_freeze_soft.pth",
+        help="Filename used for the best checkpoint saved inside save_dir.",
+    )
+    p.add_argument(
         "--resume_checkpoint",
         type=str,
         default=None,
@@ -53,6 +59,19 @@ def parse_args():
     p.add_argument("--pretrained", action="store_true")
     p.add_argument("--no_pretrained", action="store_true")
     p.add_argument(
+        "--train_input_sampling",
+        type=str,
+        choices=["baseline", "random_candidate", "fixed_option"],
+        default="random_candidate",
+        help="How to choose the training input image for each scene.",
+    )
+    p.add_argument(
+        "--train_input_option_id",
+        type=int,
+        default=None,
+        help="Candidate option_id used when train_input_sampling='fixed_option'.",
+    )
+    p.add_argument(
         "--loss_type",
         type=str,
         choices=["auto", "hard_ce", "soft_kl"],
@@ -60,14 +79,21 @@ def parse_args():
         help="Training loss. 'auto' uses soft_kl when the dataset provides soft_target.",
     )
     p.add_argument(
+        "--trainable_scope",
+        type=str,
+        choices=["head_only", "partial_unfreeze", "full_finetune"],
+        default=None,
+        help="Explicit training regime. If omitted, the legacy freeze flags are used.",
+    )
+    p.add_argument(
         "--freeze_backbone",
         action="store_true",
-        help="Freeze the pretrained backbone and only train the policy head.",
+        help="Legacy flag. When trainable_scope is omitted, this maps to partial_unfreeze.",
     )
     p.add_argument(
         "--no_freeze_backbone",
         action="store_true",
-        help="Train the full network instead of only the policy head.",
+        help="Legacy flag. When trainable_scope is omitted, this maps to full_finetune.",
     )
 
     return p.parse_args()
@@ -85,10 +111,12 @@ def get_pretrained_flag(args) -> bool:
     return True
 
 
-def get_freeze_backbone_flag(args) -> bool:
+def get_trainable_scope(args) -> str:
+    if args.trainable_scope is not None:
+        return args.trainable_scope
     if args.no_freeze_backbone:
-        return False
-    return True
+        return "full_finetune"
+    return "partial_unfreeze"
 
 
 def build_dataloaders(args):
@@ -98,7 +126,8 @@ def build_dataloaders(args):
         args.train_json,
         transform=tfm,
         manifest_path=args.manifest_json,
-        input_sampling="random_candidate",
+        input_sampling=args.train_input_sampling,
+        fixed_option_id=args.train_input_option_id,
     )
     val_ds = PolicyDataset(args.val_json, transform=tfm, input_sampling="baseline")
     test_ds = PolicyDataset(args.test_json, transform=tfm, input_sampling="baseline")
@@ -237,10 +266,12 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "best_val_acc": best_val_acc,
         "num_candidates": args.num_candidates,
         "image_size": args.image_size,
-        "freeze_backbone": get_freeze_backbone_flag(args),
+        "trainable_scope": get_trainable_scope(args),
         "backbone_lr": args.backbone_lr,
         "head_lr": args.lr,
         "loss_type": loss_type,
+        "train_input_sampling": args.train_input_sampling,
+        "train_input_option_id": args.train_input_option_id,
     }
     torch.save(ckpt, path)
 
@@ -253,12 +284,17 @@ def main():
 
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
     pretrained = get_pretrained_flag(args)
-    freeze_backbone = get_freeze_backbone_flag(args)
+    trainable_scope = get_trainable_scope(args)
 
     print("Building dataloaders...")
     train_loader, val_loader, test_loader = build_dataloaders(args)
     loss_type = resolve_loss_type(args, train_loader)
     print(f"Using loss_type={loss_type}")
+    print(
+        f"Using train_input_sampling={args.train_input_sampling}, "
+        f"train_input_option_id={args.train_input_option_id}"
+    )
+    print(f"Using trainable_scope={trainable_scope}")
 
     print("Building model...")
     model = SensorPolicyNetwork(
@@ -280,7 +316,16 @@ def main():
             f"with best_val_acc={best_val_acc:.2f}"
         )
 
-    if freeze_backbone:
+    if trainable_scope == "head_only":
+        model.freeze_backbone()
+        optimizer_param_groups = [
+            {
+                "params": model.policy_head.parameters(),
+                "lr": args.lr,
+            },
+        ]
+        print("Backbone frozen. Training policy_head only.")
+    elif trainable_scope == "partial_unfreeze":
         model.unfreeze_backbone_tail(start_idx=9)
         optimizer_param_groups = [
             {
@@ -296,7 +341,7 @@ def main():
             "Partially unfroze backbone tail (modules 9-12) and feature_proj. "
             f"Using backbone_lr={args.backbone_lr} and head_lr={args.lr}."
         )
-    else:
+    elif trainable_scope == "full_finetune":
         model.unfreeze_backbone()
         optimizer_param_groups = [
             {
@@ -305,13 +350,15 @@ def main():
             }
         ]
         print("Backbone unfrozen. Training the full network.")
+    else:
+        raise ValueError(f"Unsupported trainable_scope: {trainable_scope}")
 
     optimizer = AdamW(
         optimizer_param_groups,
         weight_decay=args.weight_decay,
     )
 
-    best_ckpt_path = os.path.join(args.save_dir, "policy_net_part_freeze_soft.pth")
+    best_ckpt_path = os.path.join(args.save_dir, args.checkpoint_name)
     history = []
 
     for epoch in range(start_epoch, args.epochs + 1):

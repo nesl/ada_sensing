@@ -2,4 +2,4 @@
 __pycache__/
 data/
 policy_network/results/
-policy_network/results_oracle_policy/
+policy_network/results_*/

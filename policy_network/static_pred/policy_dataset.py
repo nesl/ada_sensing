@@ -33,18 +33,20 @@ class PolicyDataset(Dataset):
         transform=None,
         manifest_path: Optional[str] = None,
         input_sampling: str = "baseline",
+        fixed_option_id: Optional[int] = None,
     ):
         with open(json_path, "r") as f:
             self.items: List[Dict[str, Any]] = json.load(f)
 
         self.transform = transform
         self.input_sampling = input_sampling
+        self.fixed_option_id = fixed_option_id
         self.manifest_by_id: Optional[Dict[str, Dict[str, Any]]] = None
 
-        if self.input_sampling not in {"baseline", "random_candidate"}:
+        if self.input_sampling not in {"baseline", "random_candidate", "fixed_option"}:
             raise ValueError(
                 f"Unsupported input_sampling={input_sampling}. "
-                "Expected 'baseline' or 'random_candidate'."
+                "Expected 'baseline', 'random_candidate', or 'fixed_option'."
             )
 
         if manifest_path is not None:
@@ -54,10 +56,13 @@ class PolicyDataset(Dataset):
                 str(item["id"]): item for item in manifest_items
             }
 
-        if self.input_sampling == "random_candidate" and self.manifest_by_id is None:
+        if self.input_sampling in {"random_candidate", "fixed_option"} and self.manifest_by_id is None:
             raise ValueError(
-                "manifest_path is required when input_sampling='random_candidate'."
+                "manifest_path is required when input_sampling uses manifest candidates."
             )
+
+        if self.input_sampling == "fixed_option" and self.fixed_option_id is None:
+            raise ValueError("fixed_option_id is required when input_sampling='fixed_option'.")
 
         self.has_soft_targets = any("soft_target" in item for item in self.items)
 
@@ -70,8 +75,17 @@ class PolicyDataset(Dataset):
 
         manifest_item = self.manifest_by_id[str(item["sample_id"])]
         candidates = manifest_item["candidates"]
-        chosen_candidate = random.choice(candidates)
-        return chosen_candidate["path"]
+        if self.input_sampling == "random_candidate":
+            chosen_candidate = random.choice(candidates)
+            return chosen_candidate["path"]
+
+        for candidate in candidates:
+            if int(candidate["option_id"]) == int(self.fixed_option_id):
+                return candidate["path"]
+
+        raise KeyError(
+            f"sample_id={item['sample_id']} does not contain option_id={self.fixed_option_id}"
+        )
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         item = self.items[idx]
