@@ -1,22 +1,5 @@
 from __future__ import annotations
 
-"""
-这个脚本做两件事：
-1. 拿 policy network 预测出来的 best index，回到 manifest 里找到对应 candidate 图。
-2. 把这张图重新送进 ViSIT / Lens 用的分类模型，统计 top-1 acc。
-
-同时它也会在同一批样本上跑一遍 Lens 自己的选择逻辑：
-- 对每个 sample 的全部 candidate 图做前向
-- 用 max-softmax confidence 选出 Lens 认为最好的那一张
-- 统计 Lens 选图后的 top-1 acc
-
-最后输出：
-- policy 选图后的 acc
-- lens 选图后的 acc
-- 两者差值
-- 两者选到相同 index 的比例
-"""
-
 import argparse
 import json
 import os
@@ -29,8 +12,6 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 
-# 把项目根目录、lens 目录、policy 目录都加入 import path，
-# 这样这个 debug 脚本可以直接复用现有模块。
 ROOT = Path(__file__).resolve().parents[3]
 LENS_DIR = ROOT / "lens"
 POLICY_DIR = ROOT / "policy_network" / "static_pred"
@@ -48,26 +29,22 @@ from policy_model import SensorPolicyNetwork
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
-            "Evaluate object classification accuracy when using policy-network "
-            "predicted candidate indices, and compare against Lens selection."
+            "Analyze downstream classifier accuracy for the policy network's top-k "
+            "predicted indices. Useful for checking whether top-1 is wrong while "
+            "other high-confidence policy candidates are still downstream-correct."
         )
     )
     parser.add_argument("--manifest", type=str, required=True)
     parser.add_argument("--output_json", type=str, required=True)
-
-    # 两种输入方式二选一：
-    # 1) 直接给已有的 predictions_json
-    # 2) 给 policy checkpoint + data_json，当场重新跑一遍 policy inference
     parser.add_argument("--predictions_json", type=str, default=None)
     parser.add_argument("--checkpoint", type=str, default=None)
     parser.add_argument("--data_json", type=str, default=None)
-
-    # 这里的 model 是回灌时用的分类模型，也就是 Lens / ViSIT 侧的 backbone。
     parser.add_argument("--model", type=str, default="resnet50")
     parser.add_argument("--image_size", type=int, default=224)
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--num_workers", type=int, default=4)
     parser.add_argument("--device", type=str, default="cuda")
+    parser.add_argument("--topk", type=int, default=5)
     return parser.parse_args()
 
 
@@ -83,8 +60,18 @@ def validate_args(args: argparse.Namespace) -> None:
             "Provide --predictions_json, or provide both --checkpoint and --data_json."
         )
 
+    if args.topk < 1:
+        raise ValueError("--topk must be >= 1.")
+
 
 def normalize_checkpoint_state_dict(raw_state_dict: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
+    """
+    Support both the current policy checkpoint layout and an older layout used by
+    experiment A, where the whole MobileNet was stored under:
+    - backbone.features.*
+    - backbone.classifier.0 / backbone.classifier.1 / backbone.classifier.2
+    - backbone.classifier.3  (policy head)
+    """
     if any(key.startswith("backbone.features.") for key in raw_state_dict):
         normalized: Dict[str, torch.Tensor] = {}
         for key, value in raw_state_dict.items():
@@ -107,15 +94,6 @@ def normalize_checkpoint_state_dict(raw_state_dict: Dict[str, torch.Tensor]) -> 
 
 
 def load_prediction_records(args: argparse.Namespace, device: torch.device) -> List[Dict[str, Any]]:
-    """
-    返回 policy 的预测结果列表，每个元素至少包含：
-    - sample_id
-    - pred_best_index
-    - top1_confidence
-
-    如果已经有 analysis json，就直接读取。
-    否则就用 checkpoint + data_json 重新跑一遍 policy network。
-    """
     if args.predictions_json is not None:
         with open(args.predictions_json, "r") as f:
             payload = json.load(f)
@@ -146,14 +124,20 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
             images = batch["image"].to(device, non_blocking=True)
             logits = model(images)
             probs = torch.softmax(logits, dim=-1)
-            confs, preds = torch.max(probs, dim=-1)
+            topk = min(args.topk, probs.shape[-1])
+            topk_confs, topk_preds = torch.topk(probs, k=topk, dim=-1)
+            top1_confs, top1_preds = torch.max(probs, dim=-1)
 
-            for sample_id, pred, conf in zip(batch["sample_id"], preds, confs):
+            for sample_id, pred, conf, topk_pred, topk_conf in zip(
+                batch["sample_id"], top1_preds, top1_confs, topk_preds, topk_confs
+            ):
                 records.append(
                     {
                         "sample_id": sample_id,
                         "pred_best_index": int(pred.item()),
                         "top1_confidence": float(conf.item()),
+                        "top5_pred_indices": [int(x) for x in topk_pred.tolist()],
+                        "top5_confidences": [float(x) for x in topk_conf.tolist()],
                     }
                 )
 
@@ -161,17 +145,13 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
 
 
 def build_manifest_index(manifest_path: str) -> Dict[str, Dict[str, Any]]:
-    """
-    把 manifest 做成 sample_id -> manifest_item 的字典，
-    方便后面根据 policy 的 sample_id 直接找到全部 candidate 信息。
-    """
     dataset = ManifestLensDataset(manifest_path)
     manifest_index: Dict[str, Dict[str, Any]] = {}
     for item in dataset.items:
         sample_id = item.get("id")
         if sample_id is None:
             raise KeyError("Manifest item is missing required key 'id'.")
-        manifest_index[sample_id] = item
+        manifest_index[str(sample_id)] = item
     return manifest_index
 
 
@@ -179,14 +159,6 @@ def build_candidate_tensor(
     candidates: List[Dict[str, Any]],
     transform,
 ) -> Tuple[torch.Tensor, Dict[int, int]]:
-    """
-    对一个 sample 的全部 candidate 图做预处理，并返回：
-    - 堆起来的图像 tensor，shape [K, 3, H, W]
-    - option_id -> 在 tensor 中位置 的映射
-
-    这里的映射很关键，因为 policy 预测的是 option_id，
-    但真正拿 logits 时我们要知道它在 candidates 列表中的位置。
-    """
     images = [transform(load_image_rgb(candidate["path"])) for candidate in candidates]
     option_id_to_pos = {
         int(candidate["option_id"]): pos for pos, candidate in enumerate(candidates)
@@ -194,12 +166,16 @@ def build_candidate_tensor(
     return torch.stack(images, dim=0), option_id_to_pos
 
 
-def summarize_accuracy(num_correct: int, total: int) -> Dict[str, Any]:
+def accuracy_payload(correct: int, total: int) -> Dict[str, Any]:
     return {
-        "correct": num_correct,
+        "correct": correct,
         "total": total,
-        "acc": 100.0 * num_correct / max(1, total),
+        "acc": 100.0 * correct / max(1, total),
     }
+
+
+def mean_or_zero(values: List[float]) -> float:
+    return sum(values) / len(values) if values else 0.0
 
 
 def main() -> None:
@@ -209,25 +185,22 @@ def main() -> None:
 
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
     transform = imagenet_preprocess(args.image_size)
-
-    # 这个 classifier 就是“回灌”时用的视觉分类模型。
-    # policy 只负责选 index，不负责最终类别判断。
     classifier = load_timm_model(args.model, device=device)
 
-    # prediction_records: policy 输出的 sample_id -> pred_best_index
-    # manifest_index: sample_id -> 该样本的全部 candidate 图与 GT label
-    prediction_records = load_prediction_records(args, device=device)
+    prediction_records = load_prediction_records(args, device)
     manifest_index = build_manifest_index(args.manifest)
 
+    rank_correct = [0 for _ in range(args.topk)]
+    cumulative_correct = [0 for _ in range(args.topk)]
+    top1_wrong_but_topk_fixable = [0 for _ in range(args.topk)]
+    rank_conf_sums = [0.0 for _ in range(args.topk)]
+    rank_conf_counts = [0 for _ in range(args.topk)]
     per_sample: List[Dict[str, Any]] = []
-    total = 0
-    policy_correct = 0
-    lens_correct = 0
-    same_choice = 0
     missing_samples: List[str] = []
+    total = 0
 
-    for record in tqdm(prediction_records, desc="Evaluate policy vs lens"):
-        sample_id = record["sample_id"]
+    for record in tqdm(prediction_records, desc="Analyze top-k downstream"):
+        sample_id = str(record["sample_id"])
         manifest_item = manifest_index.get(sample_id)
         if manifest_item is None:
             missing_samples.append(sample_id)
@@ -237,66 +210,93 @@ def main() -> None:
         candidates = manifest_item["candidates"]
         candidate_tensor, option_id_to_pos = build_candidate_tensor(candidates, transform)
 
-        # policy 预测的是 best option_id，比如 8、12、24 这种。
-        pred_best_index = int(record["pred_best_index"])
-        if pred_best_index not in option_id_to_pos:
-            raise ValueError(
-                f"Predicted option_id {pred_best_index} not found in manifest candidates for {sample_id}."
-            )
-
-        # 先把这个 sample 的所有 candidate 一次性过 classifier，
-        # 后面 policy 和 lens 都直接复用这份 logits，避免重复前向。
         with torch.no_grad():
             logits = classifier(candidate_tensor.to(device, non_blocking=True))
+            class_probs = torch.softmax(logits, dim=-1)
+            candidate_pred_labels = torch.argmax(logits, dim=-1)
+            candidate_pred_confs = class_probs.max(dim=-1).values
 
-        # -----------------------------
-        # 1. Policy 路径
-        # -----------------------------
-        # 用 policy 给出的 option_id 找到对应的 candidate 位置，
-        # 再看那张图经过 classifier 后的类别预测是否正确。
-        policy_pos = option_id_to_pos[pred_best_index]
-        policy_logits = logits[policy_pos]
-        policy_pred_label = int(torch.argmax(policy_logits).item())
-        policy_hit = int(policy_pred_label == label)
+        policy_top_indices = record.get("top5_pred_indices")
+        policy_top_confs = record.get("top5_confidences")
+        if not policy_top_indices or not policy_top_confs:
+            policy_top_indices = [int(record["pred_best_index"])]
+            policy_top_confs = [float(record["top1_confidence"])]
 
-        # -----------------------------
-        # 2. Lens 路径
-        # -----------------------------
-        # Lens 的策略是：对每张 candidate 图看分类 logits 的 max-softmax confidence，
-        # 选择 confidence 最大的那一张作为 best candidate。
-        conf = torch.softmax(logits, dim=-1).max(dim=-1).values
-        lens_pos = int(torch.argmax(conf).item())
-        lens_conf = float(conf[lens_pos].item())
-        lens_logits = logits[lens_pos]
-        lens_option_id = int(candidates[lens_pos]["option_id"])
-        lens_pred_label = int(torch.argmax(lens_logits).item())
-        lens_hit = int(lens_pred_label == label)
+        max_k = min(args.topk, len(policy_top_indices))
+        if max_k == 0:
+            raise ValueError(f"No top-k predictions found for sample {sample_id}.")
 
-        policy_correct += policy_hit
-        lens_correct += lens_hit
-        same_choice += int(pred_best_index == lens_option_id)
-        total += 1
+        sample_rank_records: List[Dict[str, Any]] = []
+        prefix_has_correct = False
+        top1_is_correct = False
 
-        # 保留逐样本结果，方便后面 debug：
-        # 例如查 policy 选错了哪些 index、Lens 选的又是什么。
+        for rank in range(max_k):
+            option_id = int(policy_top_indices[rank])
+            policy_conf = float(policy_top_confs[rank])
+            rank_conf_sums[rank] += policy_conf
+            rank_conf_counts[rank] += 1
+            if option_id not in option_id_to_pos:
+                raise ValueError(
+                    f"Predicted option_id {option_id} not found in manifest candidates for {sample_id}."
+                )
+
+            pos = option_id_to_pos[option_id]
+            downstream_pred = int(candidate_pred_labels[pos].item())
+            downstream_conf = float(candidate_pred_confs[pos].item())
+            downstream_correct = downstream_pred == label
+
+            rank_correct[rank] += int(downstream_correct)
+            prefix_has_correct = prefix_has_correct or downstream_correct
+            cumulative_correct[rank] += int(prefix_has_correct)
+
+            if rank == 0:
+                top1_is_correct = downstream_correct
+
+            if not top1_is_correct and prefix_has_correct:
+                top1_wrong_but_topk_fixable[rank] += 1
+
+            sample_rank_records.append(
+                {
+                    "rank": rank + 1,
+                    "option_id": option_id,
+                    "policy_confidence": policy_conf,
+                    "downstream_pred_label": downstream_pred,
+                    "downstream_pred_confidence": downstream_conf,
+                    "downstream_correct": downstream_correct,
+                }
+            )
+
         per_sample.append(
             {
                 "sample_id": sample_id,
                 "label": label,
-                "policy_pred_best_index": pred_best_index,
-                "policy_pred_confidence": record.get("top1_confidence"),
-                "policy_class_prediction": policy_pred_label,
-                "policy_class_correct": bool(policy_hit),
-                "lens_best_index": lens_option_id,
-                "lens_confidence": lens_conf,
-                "lens_class_prediction": lens_pred_label,
-                "lens_class_correct": bool(lens_hit),
-                "same_selected_index": pred_best_index == lens_option_id,
+                "policy_topk": sample_rank_records,
+                "top1_downstream_correct": top1_is_correct,
+                "topk_contains_downstream_correct": prefix_has_correct,
             }
         )
+        total += 1
 
-    policy_acc = summarize_accuracy(policy_correct, total)
-    lens_acc = summarize_accuracy(lens_correct, total)
+    rank_summary = {
+        f"rank_{rank + 1}": accuracy_payload(rank_correct[rank], total)
+        for rank in range(args.topk)
+    }
+    cumulative_summary = {
+        f"top_{rank + 1}_contains_correct": accuracy_payload(cumulative_correct[rank], total)
+        for rank in range(args.topk)
+    }
+    fixable_summary = {
+        f"top1_wrong_but_top_{rank + 1}_contains_correct": accuracy_payload(
+            top1_wrong_but_topk_fixable[rank], total
+        )
+        for rank in range(args.topk)
+    }
+    average_rank_confidence = {
+        f"rank_{rank + 1}": (
+            rank_conf_sums[rank] / rank_conf_counts[rank] if rank_conf_counts[rank] else 0.0
+        )
+        for rank in range(args.topk)
+    }
 
     result = {
         "config": {
@@ -307,14 +307,15 @@ def main() -> None:
             "model": args.model,
             "image_size": args.image_size,
             "device": str(device),
+            "topk": args.topk,
         },
         "summary": {
             "evaluated_samples": total,
             "missing_manifest_samples": len(missing_samples),
-            "policy_selected_acc": policy_acc,
-            "lens_selected_acc": lens_acc,
-            "policy_minus_lens_acc": policy_acc["acc"] - lens_acc["acc"],
-            "same_index_rate": 100.0 * same_choice / max(1, total),
+            "average_policy_confidence_by_rank": average_rank_confidence,
+            "rankwise_downstream_acc": rank_summary, # use only image of index k for downstream acc
+            "cumulative_topk_contains_correct": cumulative_summary, # acc of at least one of topk hit the gt
+            "top1_wrong_but_recoverable": fixable_summary, # ratio of wrong top1 but can be fixed by looking at more candidates
         },
         "missing_samples": missing_samples,
         "records": per_sample,
@@ -324,7 +325,7 @@ def main() -> None:
         json.dump(result, f, indent=2)
 
     print(json.dumps(result["summary"], indent=2))
-    print(f"Saved evaluation to {args.output_json}")
+    print(f"Saved analysis to {args.output_json}")
 
 
 if __name__ == "__main__":

@@ -59,9 +59,10 @@ def parse_args() -> argparse.Namespace:
             "to reuse the exact same split assignment."
         ),
     )
-    parser.add_argument("--train_ratio", type=float, default=0.8)
-    parser.add_argument("--val_ratio", type=float, default=0.1)
-    parser.add_argument("--test_ratio", type=float, default=0.1)
+    parser.add_argument("--train_groups_per_class", type=int, default=3)
+    parser.add_argument("--val_groups_per_class", type=int, default=1)
+    parser.add_argument("--test_groups_per_class", type=int, default=1)
+    parser.add_argument("--expected_num_classes", type=int, default=200)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument(
         "--soft_label_mode",
@@ -80,43 +81,67 @@ def parse_group_id(sample_id: str) -> str:
     return sample_id
 
 
+def parse_class_id_from_group_id(group_id: str) -> str:
+    parts = group_id.split("__")
+    if len(parts) >= 2:
+        return parts[0]
+    raise ValueError(f"Cannot parse class id from group_id={group_id}")
+
+
 def save_json(path: str, data: Any) -> None:
     with open(path, "w") as f:
         json.dump(data, f, indent=2)
 
 
-def check_split_ratios(train_ratio: float, val_ratio: float, test_ratio: float) -> None:
-    ratio_sum = train_ratio + val_ratio + test_ratio
-    if abs(ratio_sum - 1.0) > 1e-8:
-        raise ValueError(
-            f"train_ratio + val_ratio + test_ratio must sum to 1.0, got {ratio_sum}"
-        )
-
-
-def split_by_group(
+def split_by_class_group_counts(
     records: List[Dict[str, Any]],
-    train_ratio: float,
-    val_ratio: float,
-    test_ratio: float,
+    train_groups_per_class: int,
+    val_groups_per_class: int,
+    test_groups_per_class: int,
+    expected_num_classes: int,
     seed: int,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[Dict[str, Any]]]:
-    check_split_ratios(train_ratio, val_ratio, test_ratio)
-
     group_to_records: Dict[str, List[Dict[str, Any]]] = {}
     for record in records:
         group_to_records.setdefault(record["group_id"], []).append(record)
 
-    all_groups = list(group_to_records.keys())
+    class_to_groups: Dict[str, List[str]] = {}
+    for group_id in group_to_records:
+        class_id = parse_class_id_from_group_id(group_id)
+        class_to_groups.setdefault(class_id, []).append(group_id)
+
+    all_classes = sorted(class_to_groups.keys())
+    if len(all_classes) != expected_num_classes:
+        raise ValueError(
+            f"Expected {expected_num_classes} classes, found {len(all_classes)}: "
+            f"{all_classes[:10]}{' ...' if len(all_classes) > 10 else ''}"
+        )
+
+    groups_needed_per_class = (
+        train_groups_per_class + val_groups_per_class + test_groups_per_class
+    )
     rng = random.Random(seed)
-    rng.shuffle(all_groups)
+    train_groups = set()
+    val_groups = set()
+    test_groups = set()
 
-    n_groups = len(all_groups)
-    n_train = int(n_groups * train_ratio)
-    n_val = int(n_groups * val_ratio)
+    for class_id in all_classes:
+        groups = sorted(class_to_groups[class_id])
+        if len(groups) != groups_needed_per_class:
+            raise ValueError(
+                f"Class {class_id} has {len(groups)} reference-image groups, "
+                f"but split requires exactly {groups_needed_per_class} "
+                f"({train_groups_per_class} train + {val_groups_per_class} val + "
+                f"{test_groups_per_class} test)."
+            )
 
-    train_groups = set(all_groups[:n_train])
-    val_groups = set(all_groups[n_train:n_train + n_val])
-    test_groups = set(all_groups[n_train + n_val:])
+        rng.shuffle(groups)
+        n_train = train_groups_per_class
+        n_val = val_groups_per_class
+
+        train_groups.update(groups[:n_train])
+        val_groups.update(groups[n_train:n_train + n_val])
+        test_groups.update(groups[n_train + n_val:])
 
     train_records: List[Dict[str, Any]] = []
     val_records: List[Dict[str, Any]] = []
@@ -275,9 +300,11 @@ def build_record(
     soft_target: List[float],
 ) -> Dict[str, Any]:
     sample_id = sample["id"]
+    group_id = parse_group_id(sample_id)
     return {
         "sample_id": sample_id,
-        "group_id": parse_group_id(sample_id),
+        "group_id": group_id,
+        "class_id": parse_class_id_from_group_id(group_id),
         "env": sample["env"],
         "label": int(sample["label"]),
         "pred": pred,
@@ -387,11 +414,12 @@ def main() -> None:
             group_to_split,
         )
     else:
-        train_records, val_records, test_records = split_by_group(
+        train_records, val_records, test_records = split_by_class_group_counts(
             oracle_records,
-            train_ratio=args.train_ratio,
-            val_ratio=args.val_ratio,
-            test_ratio=args.test_ratio,
+            train_groups_per_class=args.train_groups_per_class,
+            val_groups_per_class=args.val_groups_per_class,
+            test_groups_per_class=args.test_groups_per_class,
+            expected_num_classes=args.expected_num_classes,
             seed=args.seed,
         )
 

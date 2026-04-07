@@ -7,6 +7,7 @@ Common setup:
 - Downstream classifier used for evaluation: `resnet50`
 - Test split size: `600`
 - Lens downstream reference accuracy on test split: `29.5% (177 / 600)`
+- Upper bound downstream with `resnet50`: All set - `49.93333333333333`; Test set - `49.333333333333336`
 
 ## Result Table
 
@@ -28,6 +29,8 @@ These runs keep the training input fixed to candidate `option_id = 13` instead o
 | C-fixed13 | Oracle label | fixed `option_id=13` | yes | `policy_head` only | hard label | `18.67%` | `19.83%` | `31.33%` |
 | D-fixed13 | Oracle label | fixed `option_id=13` | yes | `policy_head` only | soft label (`soft_kl`) | `16.50%` | `18.50%` | `29.33%` |
 | E-fixed13 | Oracle label | fixed `option_id=13` | partial freeze | `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `16.83%` | `19.83%` | `31.67%` |
+| F-fixed13 | Oracle label | fixed `option_id=13` | no | full model | hard label | `18.67%` | `18.00%` | `28.83%` |
+| G-fixed13 | Oracle label | fixed `option_id=13` | no | full model | soft label (`soft_kl`) | `16.50%` | `17.67%` | `29.50%` |
 
 ## Setting Notes
 
@@ -126,6 +129,28 @@ These runs keep the training input fixed to candidate `option_id = 13` instead o
 - Test index result: [`policy_network/results_fixed_input13/E_oracle_partial_soft/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/E_oracle_partial_soft/test_analysis_fixed13.json)
 - Downstream result: [`policy_network/results_fixed_input13/E_oracle_partial_soft/test_oracle_part_soft_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/E_oracle_partial_soft/test_oracle_part_soft_compare_fixed13.json)
 
+### F-fixed13. Oracle Label + Full Finetune + Hard Label + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: no
+- Trainable part: full model (`full_finetune`)
+- Loss: hard label
+- Best checkpoint: [`policy_network/results_fixed_input13/F_oracle_full_hard/policy_net_fixed13_full_hard.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/policy_net_fixed13_full_hard.pth)
+- Train history: [`policy_network/results_fixed_input13/F_oracle_full_hard/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/F_oracle_full_hard/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/F_oracle_full_hard/test_oracle_full_hard_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/test_oracle_full_hard_compare_fixed13.json)
+
+### G-fixed13. Oracle Label + Full Finetune + Soft Label + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: no
+- Trainable part: full model (`full_finetune`)
+- Loss: soft label with `soft_kl`
+- Best checkpoint: [`policy_network/results_fixed_input13/G_oracle_full_soft/policy_net_fixed13_full_soft.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/policy_net_fixed13_full_soft.pth)
+- Train history: [`policy_network/results_fixed_input13/G_oracle_full_soft/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/G_oracle_full_soft/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/G_oracle_full_soft/test_oracle_full_soft_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/test_oracle_full_soft_compare_fixed13.json)
+
 ## Current Best Downstream Result
 
 - Best policy downstream accuracy currently recorded: `32.00%`
@@ -140,3 +165,111 @@ These runs keep the training input fixed to candidate `option_id = 13` instead o
 
 - Best fixed-input-13 downstream accuracy currently recorded: `31.67%`
 - This result comes from setup E-fixed13, the Oracle soft-label Stage 2 partial-unfreeze model trained with fixed `option_id=13` input.
+
+## Fixed Input-13 Result Table After Fixing The Dataset Problem
+
+These runs use the corrected `3/1/1` split with `1200` test samples.
+
+| ID | Supervision Label | Input Sampling | Backbone Freeze | Unfrozen Parts | Loss | Best Val Index Acc | Test Index Acc | Test Downstream Acc |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A-fixed13-newsplit | Lens label | fixed `option_id=13` | no | full model | hard label | `21.00%` | `18.58%` | `33.25%` |
+| B-fixed13-newsplit | Lens label | fixed `option_id=13` | yes | `policy_head` only | hard label | `20.33%` | `19.50%` | `34.58%` |
+| C-fixed13-newsplit | Oracle label | fixed `option_id=13` | yes | `policy_head` only | hard label | `19.92%` | `19.25%` | `33.67%` |
+| D-fixed13-newsplit | Oracle label | fixed `option_id=13` | yes | `policy_head` only | soft label (`soft_kl`) | `17.50%` | `16.50%` | `31.33%` |
+| E-fixed13-newsplit | Oracle label | fixed `option_id=13` | partial freeze | `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `18.25%` | `19.00%` | `33.33%` |
+| F-fixed13-newsplit | Oracle label | fixed `option_id=13` | no | full model | hard label | `18.42%` | `19.25%` | `33.92%` |
+| G-fixed13-newsplit | Oracle label | fixed `option_id=13` | no | full model | soft label (`soft_kl`) | `17.58%` | `16.58%` | `30.42%` |
+
+## Fixed Input-13 Setting Notes After Fixing The Dataset Problem
+
+### A-fixed13-newsplit. Lens Label + Full Finetune + Fixed Input-13
+- Label source: Lens confidence selection
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: no
+- Trainable part: full model (`full_finetune`)
+- Best checkpoint: [`policy_network/results_fixed_input13/A_lens_ft_all_hard/policy_net_ori.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/A_lens_ft_all_hard/policy_net_ori.pth)
+- Train history: [`policy_network/results_fixed_input13/A_lens_ft_all_hard/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/A_lens_ft_all_hard/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/A_lens_ft_all_hard/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/A_lens_ft_all_hard/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/A_lens_ft_all_hard/test_policy_selected_visit_acc_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/A_lens_ft_all_hard/test_policy_selected_visit_acc_fixed13.json)
+
+### B-fixed13-newsplit. Lens Label + Freeze + Fixed Input-13
+- Label source: Lens confidence selection
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: yes
+- Trainable part: `policy_head` only
+- Best checkpoint: [`policy_network/results_fixed_input13/B_lens_head_hard/policy_net_fixed13_head_hard.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/B_lens_head_hard/policy_net_fixed13_head_hard.pth)
+- Train history: [`policy_network/results_fixed_input13/B_lens_head_hard/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/B_lens_head_hard/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/B_lens_head_hard/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/B_lens_head_hard/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/B_lens_head_hard/test_policy_selected_visit_acc_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/B_lens_head_hard/test_policy_selected_visit_acc_fixed13.json)
+
+### C-fixed13-newsplit. Oracle Label + Freeze + Hard Label + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: yes
+- Trainable part: `policy_head` only
+- Loss: hard label
+- Best checkpoint: [`policy_network/results_fixed_input13/C_oracle_head_hard/policy_net_fixed13_head_hard.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/C_oracle_head_hard/policy_net_fixed13_head_hard.pth)
+- Train history: [`policy_network/results_fixed_input13/C_oracle_head_hard/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/C_oracle_head_hard/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/C_oracle_head_hard/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/C_oracle_head_hard/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/C_oracle_head_hard/test_oracle_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/C_oracle_head_hard/test_oracle_compare_fixed13.json)
+
+### D-fixed13-newsplit. Oracle Label + Freeze + Soft Label + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: yes
+- Trainable part: `policy_head` only
+- Loss: soft label with `soft_kl`
+- Best checkpoint: [`policy_network/results_fixed_input13/D_oracle_head_soft/policy_net_fixed13_head_soft.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/D_oracle_head_soft/policy_net_fixed13_head_soft.pth)
+- Train history: [`policy_network/results_fixed_input13/D_oracle_head_soft/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/D_oracle_head_soft/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/D_oracle_head_soft/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/D_oracle_head_soft/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/D_oracle_head_soft/test_oracle_soft_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/D_oracle_head_soft/test_oracle_soft_compare_fixed13.json)
+
+### E-fixed13-newsplit. Oracle Label + Soft Label + Stage 2 Partial Unfreeze + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: partial freeze
+- Trainable part: `backbone[9:12]`, `feature_proj`, and `policy_head`
+- Learning rates:
+  `backbone_lr = 5e-6`
+  `head_lr = 1e-4`
+- Best checkpoint: [`policy_network/results_fixed_input13/E_oracle_partial_soft/policy_net_fixed13_part_soft.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/E_oracle_partial_soft/policy_net_fixed13_part_soft.pth)
+- Train history: [`policy_network/results_fixed_input13/E_oracle_partial_soft/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/E_oracle_partial_soft/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/E_oracle_partial_soft/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/E_oracle_partial_soft/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/E_oracle_partial_soft/test_oracle_part_soft_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/E_oracle_partial_soft/test_oracle_part_soft_compare_fixed13.json)
+
+### F-fixed13-newsplit. Oracle Label + Full Finetune + Hard Label + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: no
+- Trainable part: full model (`full_finetune`)
+- Loss: hard label
+- Best checkpoint: [`policy_network/results_fixed_input13/F_oracle_full_hard/policy_net_fixed13_full_hard.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/policy_net_fixed13_full_hard.pth)
+- Train history: [`policy_network/results_fixed_input13/F_oracle_full_hard/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/F_oracle_full_hard/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/F_oracle_full_hard/test_oracle_full_hard_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/F_oracle_full_hard/test_oracle_full_hard_compare_fixed13.json)
+
+### G-fixed13-newsplit. Oracle Label + Full Finetune + Soft Label + Fixed Input-13
+- Label source: Oracle label
+- Input image: fixed candidate `option_id=13` during training
+- Freeze status: no
+- Trainable part: full model (`full_finetune`)
+- Loss: soft label with `soft_kl`
+- Best checkpoint: [`policy_network/results_fixed_input13/G_oracle_full_soft/policy_net_fixed13_full_soft.pth`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/policy_net_fixed13_full_soft.pth)
+- Train history: [`policy_network/results_fixed_input13/G_oracle_full_soft/train_history.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/train_history.json)
+- Test index result: [`policy_network/results_fixed_input13/G_oracle_full_soft/test_analysis_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/test_analysis_fixed13.json)
+- Downstream result: [`policy_network/results_fixed_input13/G_oracle_full_soft/test_oracle_full_soft_compare_fixed13.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_fixed_input13/G_oracle_full_soft/test_oracle_full_soft_compare_fixed13.json)
+
+## Current Best Result After Fixing The Dataset Problem
+
+- Best policy downstream accuracy on the corrected split: `34.58%`
+- This result comes from setup B-fixed13-newsplit, the Lens-label head-only model trained with fixed `option_id=13` input.
+
+## Current Best Oracle-Based Result After Fixing The Dataset Problem
+
+- Best Oracle-based downstream accuracy on the corrected split: `33.92%`
+- This result comes from setup F-fixed13-newsplit, the Oracle hard-label full-finetune model trained with fixed `option_id=13` input.
+
+## Current Best Fixed Input-13 Result After Fixing The Dataset Problem
+
+- Best fixed-input-13 downstream accuracy on the corrected split: `34.58%`
+- This result comes from setup B-fixed13-newsplit, the Lens-label head-only model trained with fixed `option_id=13` input.

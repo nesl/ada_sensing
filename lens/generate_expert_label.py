@@ -6,6 +6,11 @@ Each record contains:
 - sample_id / group_id / env / task label
 - baseline image info (input to policy network)
 - best option selected by lens_select_best (supervision target)
+
+Splitting is done at the reference-image group level:
+- all lighting conditions of the same reference image stay in one split
+- within each ImageNet synset, we sample a fixed number of reference images
+  for train / val / test
 """
 
 from __future__ import annotations
@@ -34,9 +39,10 @@ def parse_args():
 
     p.add_argument("--baseline_option_id", type=int, default=13)
 
-    p.add_argument("--train_ratio", type=float, default=0.8)
-    p.add_argument("--val_ratio", type=float, default=0.1)
-    p.add_argument("--test_ratio", type=float, default=0.1)
+    p.add_argument("--train_groups_per_class", type=int, default=3)
+    p.add_argument("--val_groups_per_class", type=int, default=1)
+    p.add_argument("--test_groups_per_class", type=int, default=1)
+    p.add_argument("--expected_num_classes", type=int, default=200)
     p.add_argument("--seed", type=int, default=0)
 
     return p.parse_args()
@@ -57,40 +63,61 @@ def parse_group_id(sample_id: str) -> str:
     return sample_id
 
 
-def check_split_ratios(train_ratio: float, val_ratio: float, test_ratio: float):
-    s = train_ratio + val_ratio + test_ratio
-    if abs(s - 1.0) > 1e-8:
-        raise ValueError(
-            f"train_ratio + val_ratio + test_ratio must sum to 1.0, got {s}"
-        )
+def parse_class_id_from_group_id(group_id: str) -> str:
+    parts = group_id.split("__")
+    if len(parts) >= 2:
+        return parts[0]
+    raise ValueError(f"Cannot parse class id from group_id={group_id}")
 
 
-def split_by_group(
+def split_by_class_group_counts(
     records: List[Dict[str, Any]],
-    train_ratio: float,
-    val_ratio: float,
-    test_ratio: float,
+    train_groups_per_class: int,
+    val_groups_per_class: int,
+    test_groups_per_class: int,
+    expected_num_classes: int,
     seed: int,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[Dict[str, Any]]]:
-    check_split_ratios(train_ratio, val_ratio, test_ratio)
-
     group_to_records: Dict[str, List[Dict[str, Any]]] = {}
     for r in records:
         gid = r["group_id"]
         group_to_records.setdefault(gid, []).append(r)
 
-    all_groups = list(group_to_records.keys())
+    class_to_groups: Dict[str, List[str]] = {}
+    for gid in group_to_records:
+        class_id = parse_class_id_from_group_id(gid)
+        class_to_groups.setdefault(class_id, []).append(gid)
+
+    all_classes = sorted(class_to_groups.keys())
+    if len(all_classes) != expected_num_classes:
+        raise ValueError(
+            f"Expected {expected_num_classes} classes, found {len(all_classes)}: "
+            f"{all_classes[:10]}{' ...' if len(all_classes) > 10 else ''}"
+        )
+
+    groups_needed_per_class = (
+        train_groups_per_class + val_groups_per_class + test_groups_per_class
+    )
     rng = random.Random(seed)
-    rng.shuffle(all_groups)
+    train_groups, val_groups, test_groups = set(), set(), set()
 
-    n_groups = len(all_groups)
-    n_train = int(n_groups * train_ratio)
-    n_val = int(n_groups * val_ratio)
-    n_test = n_groups - n_train - n_val
+    for class_id in all_classes:
+        groups = sorted(class_to_groups[class_id])
+        if len(groups) != groups_needed_per_class:
+            raise ValueError(
+                f"Class {class_id} has {len(groups)} reference-image groups, "
+                f"but split requires exactly {groups_needed_per_class} "
+                f"({train_groups_per_class} train + {val_groups_per_class} val + "
+                f"{test_groups_per_class} test)."
+            )
 
-    train_groups = set(all_groups[:n_train])
-    val_groups = set(all_groups[n_train:n_train + n_val])
-    test_groups = set(all_groups[n_train + n_val:])
+        rng.shuffle(groups)
+        n_train = train_groups_per_class
+        n_val = val_groups_per_class
+
+        train_groups.update(groups[:n_train])
+        val_groups.update(groups[n_train:n_train + n_val])
+        test_groups.update(groups[n_train + n_val:])
 
     train_records, val_records, test_records = [], [], []
 
@@ -163,6 +190,7 @@ def main():
         record = {
             "sample_id": sample_id,
             "group_id": group_id,
+            "class_id": parse_class_id_from_group_id(group_id),
             "env": env,
             "label": label,
             "pred": pred,
@@ -183,12 +211,14 @@ def main():
     full_path = os.path.join(args.output_dir, "policy_all_labels.json")
     save_json(full_path, expert_records)
 
-    # split by reference-image group to avoid leakage across envs
-    train_records, val_records, test_records = split_by_group(
+    # Split by reference-image group so all lighting conditions of the same
+    # image stay together. Within each class, use a fixed 3/1/1 group split.
+    train_records, val_records, test_records = split_by_class_group_counts(
         expert_records,
-        train_ratio=args.train_ratio,
-        val_ratio=args.val_ratio,
-        test_ratio=args.test_ratio,
+        train_groups_per_class=args.train_groups_per_class,
+        val_groups_per_class=args.val_groups_per_class,
+        test_groups_per_class=args.test_groups_per_class,
+        expected_num_classes=args.expected_num_classes,
         seed=args.seed,
     )
 
@@ -210,10 +240,17 @@ def main():
     train_groups = len(set(r["group_id"] for r in train_records))
     val_groups = len(set(r["group_id"] for r in val_records))
     test_groups = len(set(r["group_id"] for r in test_records))
+    train_classes = len(set(r["class_id"] for r in train_records))
+    val_classes = len(set(r["class_id"] for r in val_records))
+    test_classes = len(set(r["class_id"] for r in test_records))
 
     print(
         f"Group counts -> full: {full_groups}, "
         f"train: {train_groups}, val: {val_groups}, test: {test_groups}"
+    )
+    print(
+        f"Class counts -> train: {train_classes}, "
+        f"val: {val_classes}, test: {test_classes}"
     )
 
 

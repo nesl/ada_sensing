@@ -217,6 +217,36 @@ def evaluate(model, loader, device, loss_type: str) -> Dict[str, Any]:
     }
 
 
+def collect_prediction_distribution(model, loader, device, num_candidates: int) -> Dict[str, Any]:
+    model.eval()
+
+    softmax_sum = torch.zeros(num_candidates, dtype=torch.float64)
+    argmax_hist = torch.zeros(num_candidates, dtype=torch.long)
+    total = 0
+
+    with torch.no_grad():
+        for batch in loader:
+            images = batch["image"].to(device, non_blocking=True)
+            logits = model(images)
+            probs = torch.softmax(logits, dim=-1)
+            preds = torch.argmax(probs, dim=-1)
+
+            softmax_sum += probs.sum(dim=0).detach().cpu().to(torch.float64)
+            argmax_hist += torch.bincount(
+                preds.detach().cpu(),
+                minlength=num_candidates,
+            )
+            total += probs.shape[0]
+
+    mean_softmax_per_index = (softmax_sum / max(1, total)).tolist()
+    argmax_hist_list = argmax_hist.tolist()
+
+    return {
+        "mean_softmax_per_index": mean_softmax_per_index,
+        "argmax_hist": argmax_hist_list,
+    }
+
+
 def train_one_epoch(model, loader, optimizer, device, loss_type: str, epoch: int, epochs: int):
     model.train()
 
@@ -378,6 +408,18 @@ def main():
             device=device,
             loss_type=loss_type,
         )
+        train_distribution = collect_prediction_distribution(
+            model=model,
+            loader=train_loader,
+            device=device,
+            num_candidates=args.num_candidates,
+        )
+        val_distribution = collect_prediction_distribution(
+            model=model,
+            loader=val_loader,
+            device=device,
+            num_candidates=args.num_candidates,
+        )
 
         print(
             f"[Epoch {epoch}] "
@@ -394,6 +436,10 @@ def main():
             "val_loss": val_stats["loss"],
             "val_acc": val_stats["acc"],
             "loss_type": loss_type,
+            "train_mean_softmax_per_index": train_distribution["mean_softmax_per_index"],
+            "train_argmax_hist": train_distribution["argmax_hist"],
+            "val_mean_softmax_per_index": val_distribution["mean_softmax_per_index"],
+            "val_argmax_hist": val_distribution["argmax_hist"],
         })
 
         if val_stats["acc"] > best_val_acc:
