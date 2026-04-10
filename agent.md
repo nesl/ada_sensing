@@ -1,4 +1,5 @@
 # Lenz Project Notes
+Results are logged in `results_record.md`
 
 ## Project Goal
 
@@ -234,7 +235,7 @@ As a result:
   - from Oracle GT + soft-label + Stage 2 partial unfreeze
 
 ## Encountered Problems and How We Fixed
-1. The user prefer continuous bash script instead of "case" style.
+1. This is very important: the user prefer continuous bash script instead of "case" style. e.g. the user preffered format is like `python3 ..` then directly list all scripts and arguments.
 2. A is using old checkpoint format, there will be a loading error if directly loads model. So rectified `analyze_best_index_predictions.py' and 'eval_policy_selected_visit_acc.py` for state-dict matching.
 3. bash in bash problem: explicitly use bash... in overall entrance.
 
@@ -254,3 +255,8 @@ Introduce new setting F&G.
 The old splittign strategy has a bias on ImageNet classes. New dataset splited by:
 For 5 images in each class: split 3/1/1 for train/val/test.
 I fixed the dataset problem and got the new one under `data/oracle_policy_labels` and `data/policy_labels`
+
+5. Problem of input image
+Original we use fixed index 13 as the parameter setting of inup image for policy network. Bu† we discovered that the image is too dark for policy network to extract useful information. Currently we use the auto_exposure param1 as the input for policy network. Rectified correspoing scripts: `policy_dataset.py` `train_policy.py`and all the dataset label generation scripts.
+
+6. Fixed the visualization image of training history.

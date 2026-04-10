@@ -49,7 +49,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--num_workers", type=int, default=4)
 
-    parser.add_argument("--baseline_option_id", type=int, default=13)
     parser.add_argument(
         "--split_source_dir",
         type=str,
@@ -86,6 +85,21 @@ def parse_class_id_from_group_id(group_id: str) -> str:
     if len(parts) >= 2:
         return parts[0]
     raise ValueError(f"Cannot parse class id from group_id={group_id}")
+
+
+def resolve_policy_input_path(sample_id: str, candidate_path: str) -> str:
+    parts = sample_id.split("__")
+    if len(parts) < 3:
+        raise ValueError(f"Cannot parse sample_id={sample_id}")
+
+    env, class_id, stem = parts[0], parts[1], "__".join(parts[2:])
+    suffix = os.path.splitext(candidate_path)[1]
+    path = ROOT / "data" / "ImageNet-ES-Diverse" / "es-diverse-test" / "auto_exposure" / env / "param_1" / class_id / f"{stem}{suffix}"
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Policy input image not found for sample_id={sample_id}: {path}"
+        )
+    return str(path)
 
 
 def save_json(path: str, data: Any) -> None:
@@ -216,20 +230,6 @@ def build_candidate_tensor(candidates: List[Dict[str, Any]], transform) -> torch
     return torch.stack(images, dim=0)
 
 
-def find_baseline_candidate(
-    candidates: List[Dict[str, Any]],
-    baseline_option_id: int,
-    sample_id: str,
-) -> Dict[str, Any]:
-    matches = [c for c in candidates if int(c["option_id"]) == int(baseline_option_id)]
-    if len(matches) != 1:
-        raise ValueError(
-            f"Sample {sample_id} has {len(matches)} baseline matches for "
-            f"option_id={baseline_option_id}"
-        )
-    return matches[0]
-
-
 def choose_oracle_candidate(
     logits: torch.Tensor,
     label: int,
@@ -289,7 +289,7 @@ def build_soft_target(
 
 def build_record(
     sample: Dict[str, Any],
-    baseline_candidate: Dict[str, Any],
+    policy_input_path: str,
     best_candidate: Dict[str, Any],
     best_idx: int,
     pred: int,
@@ -314,10 +314,7 @@ def build_record(
         "oracle_correct_option_ids": [int(option_id) for option_id in correct_option_ids],
         "oracle_correct_option_weights": [float(weight) for weight in correct_option_weights],
         "soft_target": [float(value) for value in soft_target],
-
-        "baseline_option_id": int(baseline_candidate["option_id"]),
-        "baseline_option_name": baseline_candidate["meta"]["option_name"],
-        "baseline_path": baseline_candidate["path"],
+        "baseline_path": policy_input_path,
 
         "best_idx_in_candidates": int(best_idx),
         "best_option_id": int(best_candidate["option_id"]),
@@ -364,21 +361,23 @@ def main() -> None:
         label = int(sample["label"])
         candidates = sample["candidates"]
 
-        baseline_candidate = find_baseline_candidate(
-            candidates=candidates,
-            baseline_option_id=args.baseline_option_id,
+        policy_input_path = resolve_policy_input_path(
             sample_id=sample_id,
+            candidate_path=candidates[0]["path"],
         )
         candidate_tensor = build_candidate_tensor(candidates, transform)
 
         with torch.no_grad():
             logits = model(candidate_tensor.to(device, non_blocking=True))
 
+        # logic of generating hrad lables: if one or more candidates are correct, chosse the one with highest confidence
+        # if no candidates are correct, choose the one with lowest loss on gt class
         best_idx, pred, had_correct_candidate, correct_candidate_positions = choose_oracle_candidate(
             logits=logits,
             label=label,
         )
         best_candidate = candidates[best_idx]
+
         soft_target, correct_option_ids, correct_option_weights = build_soft_target(
             logits=logits.detach().cpu(),
             candidates=candidates,
@@ -392,7 +391,7 @@ def main() -> None:
         oracle_records.append(
             build_record(
                 sample=sample,
-                baseline_candidate=baseline_candidate,
+                policy_input_path=policy_input_path,
                 best_candidate=best_candidate,
                 best_idx=best_idx,
                 pred=pred,
@@ -437,7 +436,6 @@ def main() -> None:
             "manifest": args.manifest,
             "model": args.model,
             "num_candidates": args.num_candidates,
-            "baseline_option_id": args.baseline_option_id,
             "soft_label_mode": args.soft_label_mode,
             "split_source_dir": args.split_source_dir,
             "all": summarize_records(oracle_records),

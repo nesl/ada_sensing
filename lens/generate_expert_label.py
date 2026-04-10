@@ -4,7 +4,7 @@ the resulting records into train / val / test json files.
 
 Each record contains:
 - sample_id / group_id / env / task label
-- baseline image info (input to policy network)
+- baseline image path (input to policy network)
 - best option selected by lens_select_best (supervision target)
 
 Splitting is done at the reference-image group level:
@@ -37,8 +37,6 @@ def parse_args():
     p.add_argument("--device", type=str, default="cuda")
     p.add_argument("--num_workers", type=int, default=4)
 
-    p.add_argument("--baseline_option_id", type=int, default=13)
-
     p.add_argument("--train_groups_per_class", type=int, default=3)
     p.add_argument("--val_groups_per_class", type=int, default=1)
     p.add_argument("--test_groups_per_class", type=int, default=1)
@@ -68,6 +66,31 @@ def parse_class_id_from_group_id(group_id: str) -> str:
     if len(parts) >= 2:
         return parts[0]
     raise ValueError(f"Cannot parse class id from group_id={group_id}")
+
+
+def resolve_policy_input_path(sample_id: str, candidate_path: str) -> str:
+    parts = sample_id.split("__")
+    if len(parts) < 3:
+        raise ValueError(f"Cannot parse sample_id={sample_id}")
+
+    env, class_id, stem = parts[0], parts[1], "__".join(parts[2:])
+    suffix = os.path.splitext(candidate_path)[1]
+    path = os.path.join(
+        "data",
+        "ImageNet-ES-Diverse",
+        "es-diverse-test",
+        "auto_exposure",
+        env,
+        "param_1",
+        class_id,
+        f"{stem}{suffix}",
+    )
+    abs_path = os.path.abspath(path)
+    if not os.path.exists(abs_path):
+        raise FileNotFoundError(
+            f"Policy input image not found for sample_id={sample_id}: {abs_path}"
+        )
+    return abs_path
 
 
 def split_by_class_group_counts(
@@ -168,15 +191,10 @@ def main():
         label = int(sample["label"])
         candidates = sample["candidates"]  # expected len = 27
 
-        baseline_candidates = [
-            c for c in candidates if int(c["option_id"]) == int(args.baseline_option_id)
-        ]
-        if len(baseline_candidates) != 1:
-            raise ValueError(
-                f"Sample {sample_id} has {len(baseline_candidates)} baseline matches "
-                f"for option_id={args.baseline_option_id}"
-            )
-        baseline_candidate = baseline_candidates[0]
+        policy_input_path = resolve_policy_input_path(
+            sample_id=sample_id,
+            candidate_path=candidates[0]["path"],
+        )
 
         imgs = [tfm(load_image_rgb(c["path"])) for c in candidates]
         imgs = torch.stack(imgs, dim=0)  # [27, 3, H, W]
@@ -194,10 +212,7 @@ def main():
             "env": env,
             "label": label,
             "pred": pred,
-
-            "baseline_option_id": int(args.baseline_option_id),
-            "baseline_option_name": baseline_candidate["meta"]["option_name"],
-            "baseline_path": baseline_candidate["path"],
+            "baseline_path": policy_input_path,
 
             "best_idx_in_candidates": int(best_idx),
             "best_option_id": int(best_candidate["option_id"]),

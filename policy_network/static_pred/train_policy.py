@@ -22,20 +22,7 @@ def parse_args():
     p.add_argument("--train_json", type=str, required=True)
     p.add_argument("--val_json", type=str, required=True)
     p.add_argument("--test_json", type=str, required=True)
-    p.add_argument(
-        "--manifest_json",
-        type=str,
-        default="data/ImageNet-ES-Diverse/manifest_all.json",
-        help="Manifest used to recover all candidates for state augmentation.",
-    )
-
     p.add_argument("--save_dir", type=str, required=True)
-    p.add_argument(
-        "--checkpoint_name",
-        type=str,
-        default="policy_net_part_freeze_soft.pth",
-        help="Filename used for the best checkpoint saved inside save_dir.",
-    )
     p.add_argument(
         "--resume_checkpoint",
         type=str,
@@ -46,7 +33,7 @@ def parse_args():
     p.add_argument("--image_size", type=int, default=224)
     p.add_argument("--num_candidates", type=int, default=27)
 
-    p.add_argument("--batch_size", type=int, default=32)
+    p.add_argument("--batch_size", type=int, default=16)
     p.add_argument("--epochs", type=int, default=15)
     p.add_argument("--lr", type=float, default=1e-4)
     p.add_argument("--backbone_lr", type=float, default=1e-5)
@@ -57,20 +44,6 @@ def parse_args():
     p.add_argument("--seed", type=int, default=0)
 
     p.add_argument("--pretrained", action="store_true")
-    p.add_argument("--no_pretrained", action="store_true")
-    p.add_argument(
-        "--train_input_sampling",
-        type=str,
-        choices=["baseline", "random_candidate", "fixed_option"],
-        default="random_candidate",
-        help="How to choose the training input image for each scene.",
-    )
-    p.add_argument(
-        "--train_input_option_id",
-        type=int,
-        default=None,
-        help="Candidate option_id used when train_input_sampling='fixed_option'.",
-    )
     p.add_argument(
         "--loss_type",
         type=str,
@@ -82,18 +55,8 @@ def parse_args():
         "--trainable_scope",
         type=str,
         choices=["head_only", "partial_unfreeze", "full_finetune"],
-        default=None,
-        help="Explicit training regime. If omitted, the legacy freeze flags are used.",
-    )
-    p.add_argument(
-        "--freeze_backbone",
-        action="store_true",
-        help="Legacy flag. When trainable_scope is omitted, this maps to partial_unfreeze.",
-    )
-    p.add_argument(
-        "--no_freeze_backbone",
-        action="store_true",
-        help="Legacy flag. When trainable_scope is omitted, this maps to full_finetune.",
+        required=True,
+        help="Explicit training regime.",
     )
 
     return p.parse_args()
@@ -106,31 +69,19 @@ def set_seed(seed: int):
 
 
 def get_pretrained_flag(args) -> bool:
-    if args.no_pretrained:
-        return False
-    return True
+    return bool(args.pretrained)
 
 
 def get_trainable_scope(args) -> str:
-    if args.trainable_scope is not None:
-        return args.trainable_scope
-    if args.no_freeze_backbone:
-        return "full_finetune"
-    return "partial_unfreeze"
+    return args.trainable_scope
 
 
 def build_dataloaders(args):
     tfm = imagenet_preprocess(args.image_size)
 
-    train_ds = PolicyDataset(
-        args.train_json,
-        transform=tfm,
-        manifest_path=args.manifest_json,
-        input_sampling=args.train_input_sampling,
-        fixed_option_id=args.train_input_option_id,
-    )
-    val_ds = PolicyDataset(args.val_json, transform=tfm, input_sampling="baseline")
-    test_ds = PolicyDataset(args.test_json, transform=tfm, input_sampling="baseline")
+    train_ds = PolicyDataset(args.train_json, transform=tfm)
+    val_ds = PolicyDataset(args.val_json, transform=tfm)
+    test_ds = PolicyDataset(args.test_json, transform=tfm)
 
     train_loader = DataLoader(
         train_ds,
@@ -222,6 +173,7 @@ def collect_prediction_distribution(model, loader, device, num_candidates: int) 
 
     softmax_sum = torch.zeros(num_candidates, dtype=torch.float64)
     argmax_hist = torch.zeros(num_candidates, dtype=torch.long)
+    top1_conf_sum_by_pred_index = torch.zeros(num_candidates, dtype=torch.float64)
     total = 0
 
     with torch.no_grad():
@@ -229,21 +181,36 @@ def collect_prediction_distribution(model, loader, device, num_candidates: int) 
             images = batch["image"].to(device, non_blocking=True)
             logits = model(images)
             probs = torch.softmax(logits, dim=-1)
-            preds = torch.argmax(probs, dim=-1)
+            top1_confs, preds = torch.max(probs, dim=-1)
 
             softmax_sum += probs.sum(dim=0).detach().cpu().to(torch.float64)
             argmax_hist += torch.bincount(
                 preds.detach().cpu(),
                 minlength=num_candidates,
             )
+            top1_conf_sum_by_pred_index += torch.bincount(
+                preds.detach().cpu(),
+                weights=top1_confs.detach().cpu().to(torch.float64),
+                minlength=num_candidates,
+            )
             total += probs.shape[0]
 
     mean_softmax_per_index = (softmax_sum / max(1, total)).tolist()
     argmax_hist_list = argmax_hist.tolist()
+    mean_top1_conf_by_pred_index = []
+    for index in range(num_candidates):
+        count = int(argmax_hist[index].item())
+        if count == 0:
+            mean_top1_conf_by_pred_index.append(None)
+        else:
+            mean_top1_conf_by_pred_index.append(
+                float(top1_conf_sum_by_pred_index[index].item() / count)
+            )
 
     return {
         "mean_softmax_per_index": mean_softmax_per_index,
         "argmax_hist": argmax_hist_list,
+        "mean_top1_confidence_by_pred_index": mean_top1_conf_by_pred_index,
     }
 
 
@@ -300,8 +267,6 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "backbone_lr": args.backbone_lr,
         "head_lr": args.lr,
         "loss_type": loss_type,
-        "train_input_sampling": args.train_input_sampling,
-        "train_input_option_id": args.train_input_option_id,
     }
     torch.save(ckpt, path)
 
@@ -320,10 +285,6 @@ def main():
     train_loader, val_loader, test_loader = build_dataloaders(args)
     loss_type = resolve_loss_type(args, train_loader)
     print(f"Using loss_type={loss_type}")
-    print(
-        f"Using train_input_sampling={args.train_input_sampling}, "
-        f"train_input_option_id={args.train_input_option_id}"
-    )
     print(f"Using trainable_scope={trainable_scope}")
 
     print("Building model...")
@@ -388,7 +349,8 @@ def main():
         weight_decay=args.weight_decay,
     )
 
-    best_ckpt_path = os.path.join(args.save_dir, args.checkpoint_name)
+    best_ckpt_path = os.path.join(args.save_dir, "best_checkpoint.pth")
+    last_ckpt_path = os.path.join(args.save_dir, "last_checkpoint.pth")
     history = []
 
     for epoch in range(start_epoch, args.epochs + 1):
@@ -438,9 +400,22 @@ def main():
             "loss_type": loss_type,
             "train_mean_softmax_per_index": train_distribution["mean_softmax_per_index"],
             "train_argmax_hist": train_distribution["argmax_hist"],
+            "train_mean_top1_confidence_by_pred_index": train_distribution["mean_top1_confidence_by_pred_index"],
             "val_mean_softmax_per_index": val_distribution["mean_softmax_per_index"],
             "val_argmax_hist": val_distribution["argmax_hist"],
+            "val_mean_top1_confidence_by_pred_index": val_distribution["mean_top1_confidence_by_pred_index"],
         })
+
+        save_checkpoint(
+            path=last_ckpt_path,
+            model=model,
+            optimizer=optimizer,
+            epoch=epoch,
+            best_val_acc=best_val_acc,
+            args=args,
+            loss_type=loss_type,
+        )
+        print(f"Saved last checkpoint to {last_ckpt_path}")
 
         if val_stats["acc"] > best_val_acc:
             best_val_acc = val_stats["acc"]
@@ -479,7 +454,7 @@ def main():
         f"({test_stats['correct']}/{test_stats['total']})"
     )
 
-    test_result_path = os.path.join(args.save_dir, "test_result.json")
+    test_result_path = os.path.join(args.save_dir, "index_test_result.json")
     with open(test_result_path, "w") as f:
         json.dump(test_stats, f, indent=2)
 

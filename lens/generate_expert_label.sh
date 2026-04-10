@@ -1,9 +1,9 @@
-python3 generate_expert_label.py \
-  --manifest ../data/ImageNet-ES-Diverse/manifest_all.json \
-  --output_dir ../data/ImageNet-ES-Diverse/policy_labels \
+python3 lens/generate_expert_label.py \
+  --manifest data/ImageNet-ES-Diverse/manifest_all.json \
+  --output_dir data/ImageNet-ES-Diverse/policy_labels \
   --model resnet50 \
-  --baseline_option_id 13 \
-  --train_ratio 0.8 \
-  --val_ratio 0.1 \
-  --test_ratio 0.1 \
+  --train_groups_per_class 3 \
+  --val_groups_per_class 1 \
+  --test_groups_per_class 1 \
+  --expected_num_classes 200 \
   --seed 0

@@ -48,6 +48,14 @@ def to_matrix(history: List[Dict[str, Any]], key: str) -> np.ndarray:
     return np.array([item[key] for item in history], dtype=float)
 
 
+def to_zero_filled_matrix(history: List[Dict[str, Any]], key: str) -> np.ndarray:
+    rows = []
+    for item in history:
+        row = [0.0 if value is None else float(value) for value in item[key]]
+        rows.append(row)
+    return np.array(rows, dtype=float)
+
+
 def normalize_rows(matrix: np.ndarray) -> np.ndarray:
     row_sums = matrix.sum(axis=1, keepdims=True)
     row_sums[row_sums == 0] = 1.0
@@ -68,12 +76,18 @@ def main() -> None:
     train_acc = [item["train_acc"] for item in history]
     val_acc = [item["val_acc"] for item in history]
 
-    train_mean_softmax = to_matrix(history, "train_mean_softmax_per_index")
-    val_mean_softmax = to_matrix(history, "val_mean_softmax_per_index")
     train_argmax = normalize_rows(to_matrix(history, "train_argmax_hist"))
     val_argmax = normalize_rows(to_matrix(history, "val_argmax_hist"))
+    train_top1_conf_by_pred_index = to_zero_filled_matrix(
+        history,
+        "train_mean_top1_confidence_by_pred_index",
+    )
+    val_top1_conf_by_pred_index = to_zero_filled_matrix(
+        history,
+        "val_mean_top1_confidence_by_pred_index",
+    )
 
-    num_indices = train_mean_softmax.shape[1]
+    num_indices = train_argmax.shape[1]
 
     fig, axes = plt.subplots(3, 2, figsize=(16, 16), constrained_layout=True)
 
@@ -96,60 +110,80 @@ def main() -> None:
     ax.legend()
 
     im = axes[1, 0].imshow(
-        train_mean_softmax.T,
-        aspect="auto",
-        origin="lower",
-        interpolation="nearest",
-    )
-    axes[1, 0].set_title("Train Mean Softmax Per Index")
-    axes[1, 0].set_xlabel("Epoch")
-    axes[1, 0].set_ylabel("Index")
-    axes[1, 0].set_xticks(range(len(epochs)))
-    axes[1, 0].set_xticklabels(epochs)
-    axes[1, 0].set_yticks(range(num_indices))
-    fig.colorbar(im, ax=axes[1, 0], fraction=0.046, pad=0.04)
-
-    im = axes[1, 1].imshow(
-        val_mean_softmax.T,
-        aspect="auto",
-        origin="lower",
-        interpolation="nearest",
-    )
-    axes[1, 1].set_title("Val Mean Softmax Per Index")
-    axes[1, 1].set_xlabel("Epoch")
-    axes[1, 1].set_ylabel("Index")
-    axes[1, 1].set_xticks(range(len(epochs)))
-    axes[1, 1].set_xticklabels(epochs)
-    axes[1, 1].set_yticks(range(num_indices))
-    fig.colorbar(im, ax=axes[1, 1], fraction=0.046, pad=0.04)
-
-    im = axes[2, 0].imshow(
         train_argmax.T,
         aspect="auto",
         origin="lower",
         interpolation="nearest",
     )
-    axes[2, 0].set_title("Train Argmax Distribution")
-    axes[2, 0].set_xlabel("Epoch")
-    axes[2, 0].set_ylabel("Index")
-    axes[2, 0].set_xticks(range(len(epochs)))
-    axes[2, 0].set_xticklabels(epochs)
-    axes[2, 0].set_yticks(range(num_indices))
-    fig.colorbar(im, ax=axes[2, 0], fraction=0.046, pad=0.04)
+    axes[1, 0].set_title("Train Argmax Distribution\nColor = fraction of samples predicted as this index")
+    axes[1, 0].set_xlabel("Epoch")
+    axes[1, 0].set_ylabel("Index")
+    axes[1, 0].set_xticks(range(len(epochs)))
+    axes[1, 0].set_xticklabels(epochs)
+    axes[1, 0].set_yticks(range(num_indices))
+    cbar = fig.colorbar(im, ax=axes[1, 0], fraction=0.046, pad=0.04)
+    cbar.set_label("Argmax fraction")
 
-    im = axes[2, 1].imshow(
+    im = axes[1, 1].imshow(
         val_argmax.T,
         aspect="auto",
         origin="lower",
         interpolation="nearest",
     )
-    axes[2, 1].set_title("Val Argmax Distribution")
+    axes[1, 1].set_title("Val Argmax Distribution\nColor = fraction of samples predicted as this index")
+    axes[1, 1].set_xlabel("Epoch")
+    axes[1, 1].set_ylabel("Index")
+    axes[1, 1].set_xticks(range(len(epochs)))
+    axes[1, 1].set_xticklabels(epochs)
+    axes[1, 1].set_yticks(range(num_indices))
+    cbar = fig.colorbar(im, ax=axes[1, 1], fraction=0.046, pad=0.04)
+    cbar.set_label("Argmax fraction")
+
+    conf_values = np.concatenate(
+        [train_top1_conf_by_pred_index.ravel(), val_top1_conf_by_pred_index.ravel()]
+    )
+    conf_vmin = float(np.min(conf_values))
+    conf_vmax = float(np.max(conf_values))
+
+    im = axes[2, 0].imshow(
+        train_top1_conf_by_pred_index.T,
+        aspect="auto",
+        origin="lower",
+        interpolation="nearest",
+        vmin=conf_vmin,
+        vmax=conf_vmax,
+    )
+    axes[2, 0].set_title(
+        "Train Mean Top1 Confidence By Pred Index\n"
+        "Color = mean max-softmax; 0 means no sample predicted this index"
+    )
+    axes[2, 0].set_xlabel("Epoch")
+    axes[2, 0].set_ylabel("Index")
+    axes[2, 0].set_xticks(range(len(epochs)))
+    axes[2, 0].set_xticklabels(epochs)
+    axes[2, 0].set_yticks(range(num_indices))
+    cbar = fig.colorbar(im, ax=axes[2, 0], fraction=0.046, pad=0.04)
+    cbar.set_label("Mean top1 confidence")
+
+    im = axes[2, 1].imshow(
+        val_top1_conf_by_pred_index.T,
+        aspect="auto",
+        origin="lower",
+        interpolation="nearest",
+        vmin=conf_vmin,
+        vmax=conf_vmax,
+    )
+    axes[2, 1].set_title(
+        "Val Mean Top1 Confidence By Pred Index\n"
+        "Color = mean max-softmax; 0 means no sample predicted this index"
+    )
     axes[2, 1].set_xlabel("Epoch")
     axes[2, 1].set_ylabel("Index")
     axes[2, 1].set_xticks(range(len(epochs)))
     axes[2, 1].set_xticklabels(epochs)
     axes[2, 1].set_yticks(range(num_indices))
-    fig.colorbar(im, ax=axes[2, 1], fraction=0.046, pad=0.04)
+    cbar = fig.colorbar(im, ax=axes[2, 1], fraction=0.046, pad=0.04)
+    cbar.set_label("Mean top1 confidence")
 
     fig.suptitle(
         f"Training Distribution Summary\n{args.history_json}",
