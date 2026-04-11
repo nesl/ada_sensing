@@ -21,7 +21,7 @@ for extra_path in (ROOT, POLICY_DIR):
         sys.path.insert(0, extra_path_str)
 
 from policy_dataset import PolicyDataset
-from policy_model import SensorPolicyNetwork
+from policy_model import SensorPolicyNetwork, infer_backbone_name_from_checkpoint
 from utils import imagenet_preprocess
 
 
@@ -188,9 +188,11 @@ def main() -> None:
     # num_candidates 如果 checkpoint 里没存，就默认按 27 处理。
     checkpoint = torch.load(args.checkpoint, map_location=device)
     state_dict = normalize_checkpoint_state_dict(checkpoint["model_state_dict"])
+    backbone_name = infer_backbone_name_from_checkpoint(checkpoint)
     model = SensorPolicyNetwork(
         num_candidates=checkpoint.get("num_candidates", 27),
         pretrained=False,
+        backbone_name=backbone_name,
     ).to(device)
     model.load_state_dict(state_dict)
 

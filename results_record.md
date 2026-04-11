@@ -180,20 +180,6 @@ These runs use the corrected `3/1/1` split with `1200` test samples.
 | F-fixed13-newsplit | Oracle label | fixed `option_id=13` | no | full model | hard label | `18.42%` | `19.25%` | `33.92%` |
 | G-fixed13-newsplit | Oracle label | fixed `option_id=13` | no | full model | soft label (`soft_kl`) | `17.58%` | `16.58%` | `30.42%` |
 
-## Fixed Input-13 Result Table After Fixing The Dataset Problem With Top-5 Cumulative
-
-This table keeps the same settings as above and adds downstream cumulative top-5 accuracy from `downstream_test_best.json`.
-
-| ID | Supervision Label | Input Sampling | Backbone Freeze | Unfrozen Parts | Loss | Best Val Index Acc | Test Index Acc | Test Downstream Acc | Test Downstream Top-5 Cumulative Acc |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| A-fixed13-newsplit | Lens label | fixed `option_id=13` | no | full model | hard label | `21.00%` | `18.58%` | `33.25%` | `45.50%` |
-| B-fixed13-newsplit | Lens label | fixed `option_id=13` | yes | `policy_head` only | hard label | `20.33%` | `19.50%` | `34.58%` | `44.58%` |
-| C-fixed13-newsplit | Oracle label | fixed `option_id=13` | yes | `policy_head` only | hard label | `19.92%` | `19.25%` | `33.67%` | `45.42%` |
-| D-fixed13-newsplit | Oracle label | fixed `option_id=13` | yes | `policy_head` only | soft label (`soft_kl`) | `17.50%` | `16.50%` | `31.33%` | `45.00%` |
-| E-fixed13-newsplit | Oracle label | fixed `option_id=13` | partial freeze | `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `18.25%` | `19.00%` | `33.33%` | `45.08%` |
-| F-fixed13-newsplit | Oracle label | fixed `option_id=13` | no | full model | hard label | `18.42%` | `19.25%` | `33.92%` | `45.67%` |
-| G-fixed13-newsplit | Oracle label | fixed `option_id=13` | no | full model | soft label (`soft_kl`) | `17.58%` | `16.58%` | `30.42%` | `45.08%` |
-
 ## Current Best Result After Fixing The Dataset Problem
 
 - Best policy downstream accuracy on the corrected split: `34.58%`
@@ -208,3 +194,31 @@ This table keeps the same settings as above and adds downstream cumulative top-5
 
 - Best fixed-input-13 downstream accuracy on the corrected split: `34.58%`
 - This result comes from setup B-fixed13-newsplit, the Lens-label head-only model trained with fixed `option_id=13` input.
+
+## Fixed Input-13 Downstream Best-vs-Last Summary
+
+This table is read directly from `policy_network/results_fixed_input13/*/downstream_test_best.json` and `downstream_test_last.json`.
+
+| ID | Supervision Label | Freeze | Loss | Test Index Acc | Downstream Best Top-1 | Downstream Best Top-5 Cumulative | Downstream Last Top-1 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | Lens label | no, full model | hard label | `15.08%` | `29.25%` | `45.50%` | `24.58%` |
+| B | Lens label | yes, `policy_head` only | hard label | `15.08%` | `29.50%` | `44.58%` | `27.42%` |
+| C | Oracle hard label | yes, `policy_head` only | hard label | `18.42%` | `31.75%` | `45.42%` | `26.50%` |
+| D | Oracle soft label | yes, `policy_head` only | soft label (`soft_kl`) | `17.92%` | `30.83%` | `45.00%` | `26.33%` |
+| E | Oracle soft label | partial freeze, `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `18.42%` | `31.42%` | `45.08%` | `26.67%` |
+| F | Oracle hard label | no, full model | hard label | `19.33%` | `33.00%` | `45.67%` | `24.17%` |
+| G | Oracle soft label | no, full model | soft label (`soft_kl`) | `19.25%` | `33.33%` | `45.08%` | `27.83%` |
+
+## ResNet18 Downstream Best-vs-Last Summary
+
+This table is read directly from `policy_network/results_resnet18/*/downstream_test_best.json`, `downstream_test_last.json`, and `index_test_result.json`.
+
+| ID | Supervision Label | Freeze | Loss | Test Index Acc | Downstream Best Top-1 | Downstream Best Top-5 Cumulative | Downstream Last Top-1 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | Lens label | no, full model | hard label | `17.58%` | `30.58%` | `45.00%` | `25.75%` |
+| B | Lens label | yes, `policy_head` only | hard label | `16.83%` | `31.50%` | `45.33%` | `30.58%` |
+| C | Oracle hard label | yes, `policy_head` only | hard label | `18.75%` | `30.33%` | `45.75%` | `30.58%` |
+| D | Oracle soft label | yes, `policy_head` only | soft label (`soft_kl`) | `18.50%` | `31.50%` | `46.42%` | `29.42%` |
+| E | Oracle soft label | partial freeze, `layer4` + `policy_head` | soft label (`soft_kl`) | `18.50%` | `31.50%` | `46.42%` | `28.33%` |
+| F | Oracle hard label | no, full model | hard label | `16.33%` | `29.67%` | `45.42%` | `28.17%` |
+| G | Oracle soft label | no, full model | soft label (`soft_kl`) | `15.58%` | `29.08%` | `44.42%` | `27.92%` |

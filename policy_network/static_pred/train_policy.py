@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from utils import imagenet_preprocess
-from policy_model import SensorPolicyNetwork
+from policy_model import SUPPORTED_BACKBONES, SensorPolicyNetwork
 from policy_dataset import PolicyDataset
 
 
@@ -32,6 +32,12 @@ def parse_args():
 
     p.add_argument("--image_size", type=int, default=224)
     p.add_argument("--num_candidates", type=int, default=27)
+    p.add_argument(
+        "--backbone",
+        type=str,
+        choices=SUPPORTED_BACKBONES,
+        default="mobilenet_v3_small",
+    )
 
     p.add_argument("--batch_size", type=int, default=16)
     p.add_argument("--epochs", type=int, default=15)
@@ -264,6 +270,7 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "num_candidates": args.num_candidates,
         "image_size": args.image_size,
         "trainable_scope": get_trainable_scope(args),
+        "backbone_name": args.backbone,
         "backbone_lr": args.backbone_lr,
         "head_lr": args.lr,
         "loss_type": loss_type,
@@ -286,11 +293,13 @@ def main():
     loss_type = resolve_loss_type(args, train_loader)
     print(f"Using loss_type={loss_type}")
     print(f"Using trainable_scope={trainable_scope}")
+    print(f"Using backbone={args.backbone}")
 
     print("Building model...")
     model = SensorPolicyNetwork(
         num_candidates=args.num_candidates,
         pretrained=pretrained,
+        backbone_name=args.backbone,
     ).to(device)
 
     best_val_acc = -1.0
@@ -299,6 +308,12 @@ def main():
     if args.resume_checkpoint:
         print(f"Loading resume checkpoint from {args.resume_checkpoint}")
         resume_ckpt = torch.load(args.resume_checkpoint, map_location=device)
+        resume_backbone = resume_ckpt.get("backbone_name", "mobilenet_v3_small")
+        if resume_backbone != args.backbone:
+            raise ValueError(
+                "Resume checkpoint backbone does not match current --backbone: "
+                f"{resume_backbone} vs {args.backbone}"
+            )
         model.load_state_dict(resume_ckpt["model_state_dict"])
         best_val_acc = float(resume_ckpt.get("best_val_acc", -1.0))
         start_epoch = int(resume_ckpt.get("epoch", 0)) + 1
@@ -317,7 +332,7 @@ def main():
         ]
         print("Backbone frozen. Training policy_head only.")
     elif trainable_scope == "partial_unfreeze":
-        model.unfreeze_backbone_tail(start_idx=9)
+        model.unfreeze_backbone_tail()
         optimizer_param_groups = [
             {
                 "params": model.get_backbone_tail_parameters(),
@@ -329,7 +344,7 @@ def main():
             },
         ]
         print(
-            "Partially unfroze backbone tail (modules 9-12) and feature_proj. "
+            "Partially unfroze the configured backbone tail and feature_proj. "
             f"Using backbone_lr={args.backbone_lr} and head_lr={args.lr}."
         )
     elif trainable_scope == "full_finetune":
@@ -352,6 +367,21 @@ def main():
     best_ckpt_path = os.path.join(args.save_dir, "best_checkpoint.pth")
     last_ckpt_path = os.path.join(args.save_dir, "last_checkpoint.pth")
     history = []
+
+    if args.resume_checkpoint and not os.path.exists(best_ckpt_path):
+        save_checkpoint(
+            path=best_ckpt_path,
+            model=model,
+            optimizer=optimizer,
+            epoch=start_epoch - 1,
+            best_val_acc=best_val_acc,
+            args=args,
+            loss_type=loss_type,
+        )
+        print(
+            "Saved resumed weights as the initial best checkpoint to "
+            f"{best_ckpt_path}"
+        )
 
     for epoch in range(start_epoch, args.epochs + 1):
         train_stats = train_one_epoch(
