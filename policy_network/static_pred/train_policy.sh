@@ -5,8 +5,11 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 TRAIN_SCRIPT="${ROOT_DIR}/policy_network/static_pred/train_policy.py"
-POLICY_BACKBONE="${POLICY_BACKBONE:-resnet18}"
-RESULTS_DIR="${ROOT_DIR}/policy_network/results_${POLICY_BACKBONE}"
+POLICY_BACKBONE="${POLICY_BACKBONE:-mobilenet_v3_small}"
+RESULTS_DIR="${ROOT_DIR}/policy_network/results_dual_${POLICY_BACKBONE}"
+MANIFEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/manifest_all.json"
+POLICY_INPUT_MODE="${POLICY_INPUT_MODE:-dual}"
+ENV_OPTION_ID="${ENV_OPTION_ID:-13}" # param14
 
 LENS_TRAIN_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/policy_labels/policy_train_labels.json"
 LENS_VAL_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/policy_labels/policy_val_labels.json"
@@ -22,8 +25,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${LENS_VAL_JSON}" \
   --test_json "${LENS_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/A_lens_ft_all_hard" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 2e-5 \
@@ -41,8 +47,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${LENS_VAL_JSON}" \
   --test_json "${LENS_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/B_lens_head_hard" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 1e-4 \
@@ -60,8 +69,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${ORACLE_VAL_JSON}" \
   --test_json "${ORACLE_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/C_oracle_head_hard" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 1e-4 \
@@ -79,8 +91,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${ORACLE_VAL_JSON}" \
   --test_json "${ORACLE_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/D_oracle_head_soft" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 1e-4 \
@@ -98,8 +113,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${ORACLE_VAL_JSON}" \
   --test_json "${ORACLE_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/E_oracle_partial_soft" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 5e-5 \
@@ -118,8 +136,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${ORACLE_VAL_JSON}" \
   --test_json "${ORACLE_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/F_oracle_full_hard" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 2e-5 \
@@ -137,8 +158,11 @@ ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/orac
   --val_json "${ORACLE_VAL_JSON}" \
   --test_json "${ORACLE_TEST_JSON}" \
   --save_dir "${RESULTS_DIR}/G_oracle_full_soft" \
+  --manifest_json "${MANIFEST_JSON}" \
   --image_size 224 \
   --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --env_option_id "${ENV_OPTION_ID}" \
   --batch_size 16 \
   --epochs 50 \
   --lr 2e-5 \

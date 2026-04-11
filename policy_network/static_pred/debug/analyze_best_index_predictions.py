@@ -21,7 +21,11 @@ for extra_path in (ROOT, POLICY_DIR):
         sys.path.insert(0, extra_path_str)
 
 from policy_dataset import PolicyDataset
-from policy_model import SensorPolicyNetwork, infer_backbone_name_from_checkpoint
+from policy_model import (
+    SensorPolicyNetwork,
+    infer_backbone_name_from_checkpoint,
+    infer_input_mode_from_checkpoint,
+)
 from utils import imagenet_preprocess
 
 
@@ -34,6 +38,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--checkpoint", type=str, required=True)
     p.add_argument("--data_json", type=str, required=True)
     p.add_argument("--output_json", type=str, required=True)
+    p.add_argument("--manifest", type=str, default=None)
     p.add_argument("--image_size", type=int, default=224)
     p.add_argument("--batch_size", type=int, default=32)
     p.add_argument("--num_workers", type=int, default=4)
@@ -174,8 +179,16 @@ def main() -> None:
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
 
     # 评估时要和训练阶段保持一致的图像预处理。
+    checkpoint = torch.load(args.checkpoint, map_location=device)
     transform = imagenet_preprocess(args.image_size)
-    dataset = PolicyDataset(args.data_json, transform=transform)
+    input_mode = infer_input_mode_from_checkpoint(checkpoint)
+    dataset = PolicyDataset(
+        args.data_json,
+        transform=transform,
+        manifest_path=args.manifest,
+        input_mode=input_mode,
+        env_option_id=checkpoint.get("env_option_id"),
+    )
     loader = DataLoader(
         dataset,
         batch_size=args.batch_size,
@@ -186,13 +199,14 @@ def main() -> None:
 
     # 从 checkpoint 里恢复模型结构参数和权重。
     # num_candidates 如果 checkpoint 里没存，就默认按 27 处理。
-    checkpoint = torch.load(args.checkpoint, map_location=device)
     state_dict = normalize_checkpoint_state_dict(checkpoint["model_state_dict"])
     backbone_name = infer_backbone_name_from_checkpoint(checkpoint)
+    input_mode = infer_input_mode_from_checkpoint(checkpoint)
     model = SensorPolicyNetwork(
         num_candidates=checkpoint.get("num_candidates", 27),
         pretrained=False,
         backbone_name=backbone_name,
+        input_mode=input_mode,
     ).to(device)
     model.load_state_dict(state_dict)
 

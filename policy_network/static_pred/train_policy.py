@@ -23,6 +23,7 @@ def parse_args():
     p.add_argument("--val_json", type=str, required=True)
     p.add_argument("--test_json", type=str, required=True)
     p.add_argument("--save_dir", type=str, required=True)
+    p.add_argument("--manifest_json", type=str, default=None)
     p.add_argument(
         "--resume_checkpoint",
         type=str,
@@ -32,6 +33,13 @@ def parse_args():
 
     p.add_argument("--image_size", type=int, default=224)
     p.add_argument("--num_candidates", type=int, default=27)
+    p.add_argument(
+        "--input_mode",
+        type=str,
+        choices=["single", "dual"],
+        default="single",
+    )
+    p.add_argument("--env_option_id", type=int, default=None)
     p.add_argument(
         "--backbone",
         type=str,
@@ -84,10 +92,16 @@ def get_trainable_scope(args) -> str:
 
 def build_dataloaders(args):
     tfm = imagenet_preprocess(args.image_size)
+    dataset_kwargs = {
+        "transform": tfm,
+        "manifest_path": args.manifest_json,
+        "input_mode": args.input_mode,
+        "env_option_id": args.env_option_id,
+    }
 
-    train_ds = PolicyDataset(args.train_json, transform=tfm)
-    val_ds = PolicyDataset(args.val_json, transform=tfm)
-    test_ds = PolicyDataset(args.test_json, transform=tfm)
+    train_ds = PolicyDataset(args.train_json, **dataset_kwargs)
+    val_ds = PolicyDataset(args.val_json, **dataset_kwargs)
+    test_ds = PolicyDataset(args.test_json, **dataset_kwargs)
 
     train_loader = DataLoader(
         train_ds,
@@ -271,6 +285,8 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "image_size": args.image_size,
         "trainable_scope": get_trainable_scope(args),
         "backbone_name": args.backbone,
+        "input_mode": args.input_mode,
+        "env_option_id": args.env_option_id,
         "backbone_lr": args.backbone_lr,
         "head_lr": args.lr,
         "loss_type": loss_type,
@@ -294,12 +310,14 @@ def main():
     print(f"Using loss_type={loss_type}")
     print(f"Using trainable_scope={trainable_scope}")
     print(f"Using backbone={args.backbone}")
+    print(f"Using input_mode={args.input_mode}")
 
     print("Building model...")
     model = SensorPolicyNetwork(
         num_candidates=args.num_candidates,
         pretrained=pretrained,
         backbone_name=args.backbone,
+        input_mode=args.input_mode,
     ).to(device)
 
     best_val_acc = -1.0
@@ -309,10 +327,16 @@ def main():
         print(f"Loading resume checkpoint from {args.resume_checkpoint}")
         resume_ckpt = torch.load(args.resume_checkpoint, map_location=device)
         resume_backbone = resume_ckpt.get("backbone_name", "mobilenet_v3_small")
+        resume_input_mode = resume_ckpt.get("input_mode", "single")
         if resume_backbone != args.backbone:
             raise ValueError(
                 "Resume checkpoint backbone does not match current --backbone: "
                 f"{resume_backbone} vs {args.backbone}"
+            )
+        if resume_input_mode != args.input_mode:
+            raise ValueError(
+                "Resume checkpoint input_mode does not match current --input_mode: "
+                f"{resume_input_mode} vs {args.input_mode}"
             )
         model.load_state_dict(resume_ckpt["model_state_dict"])
         best_val_acc = float(resume_ckpt.get("best_val_acc", -1.0))

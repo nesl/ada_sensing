@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-POLICY_BACKBONE="${POLICY_BACKBONE:-resnet18}"
-RESULTS_DIR="policy_network/results_${POLICY_BACKBONE}"
+POLICY_BACKBONE="${POLICY_BACKBONE:-mobilenet_v3_small}"
+RESULTS_DIR="policy_network/results_dual_${POLICY_BACKBONE}"
 
 # Downstream accuracy of using policy network: Top1 - Top5 for both best and last pth
 

@@ -23,11 +23,16 @@ class SensorPolicyNetwork(nn.Module):
         num_candidates: int = 27,
         pretrained: bool = True,
         backbone_name: str = "mobilenet_v3_small",
+        input_mode: str = "single",
     ):
         super().__init__()
 
         self.backbone_name = backbone_name
+        self.input_mode = input_mode
         self.partial_unfreeze_start_idx = 0
+        self.num_input_views = 2 if input_mode == "dual" else 1
+        if input_mode not in {"single", "dual"}:
+            raise ValueError(f"Unsupported input_mode={input_mode}")
 
         if backbone_name == "mobilenet_v3_small":
             weights = MobileNet_V3_Small_Weights.DEFAULT if pretrained else None
@@ -63,7 +68,8 @@ class SensorPolicyNetwork(nn.Module):
                 f"Supported: {SUPPORTED_BACKBONES}"
             )
 
-        self.policy_head = nn.Linear(head_in_features, num_candidates)
+        self.feature_dim = head_in_features
+        self.policy_head = nn.Linear(head_in_features * self.num_input_views, num_candidates)
 
     def freeze_backbone(self) -> None:
         for module in (self.backbone, self.avgpool, self.feature_proj):
@@ -97,12 +103,36 @@ class SensorPolicyNetwork(nn.Module):
     def get_trainable_parameters(self):
         return [param for param in self.parameters() if param.requires_grad]
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def encode_single_view(self, x: torch.Tensor) -> torch.Tensor:
         x = self.backbone(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
-        x = self.feature_proj(x)
-        return self.policy_head(x)
+        return self.feature_proj(x)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        if self.input_mode == "single":
+            if x.dim() != 4:
+                raise ValueError(
+                    f"Expected single-view input of shape [B, C, H, W], got {tuple(x.shape)}"
+                )
+            features = self.encode_single_view(x)
+            return self.policy_head(features)
+
+        if x.dim() != 5:
+            raise ValueError(
+                "Expected dual-view input of shape [B, 2, C, H, W], "
+                f"got {tuple(x.shape)}"
+            )
+        batch_size, num_views = x.shape[:2]
+        if num_views != self.num_input_views:
+            raise ValueError(
+                f"Expected {self.num_input_views} views for input_mode={self.input_mode}, got {num_views}"
+            )
+        x = x.view(batch_size * num_views, *x.shape[2:])
+        features = self.encode_single_view(x)
+        features = features.view(batch_size, num_views, self.feature_dim)
+        features = features.reshape(batch_size, num_views * self.feature_dim)
+        return self.policy_head(features)
 
 
 def infer_backbone_name_from_checkpoint(checkpoint: dict) -> str:
@@ -111,3 +141,7 @@ def infer_backbone_name_from_checkpoint(checkpoint: dict) -> str:
     if "backbone" in checkpoint:
         return checkpoint["backbone"]
     return "mobilenet_v3_small"
+
+
+def infer_input_mode_from_checkpoint(checkpoint: dict) -> str:
+    return checkpoint.get("input_mode", "single")

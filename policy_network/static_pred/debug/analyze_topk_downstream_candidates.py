@@ -23,7 +23,11 @@ for extra_path in (ROOT, LENS_DIR, POLICY_DIR):
 
 from lens.data_utils import ManifestLensDataset, imagenet_preprocess, load_image_rgb, load_timm_model
 from policy_dataset import PolicyDataset
-from policy_model import SensorPolicyNetwork, infer_backbone_name_from_checkpoint
+from policy_model import (
+    SensorPolicyNetwork,
+    infer_backbone_name_from_checkpoint,
+    infer_input_mode_from_checkpoint,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -99,8 +103,16 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
             payload = json.load(f)
         return payload["records"]
 
+    checkpoint = torch.load(args.checkpoint, map_location=device)
     transform = imagenet_preprocess(args.image_size)
-    dataset = PolicyDataset(args.data_json, transform=transform)
+    input_mode = infer_input_mode_from_checkpoint(checkpoint)
+    dataset = PolicyDataset(
+        args.data_json,
+        transform=transform,
+        manifest_path=args.manifest,
+        input_mode=input_mode,
+        env_option_id=checkpoint.get("env_option_id"),
+    )
     loader = DataLoader(
         dataset,
         batch_size=args.batch_size,
@@ -108,14 +120,13 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         num_workers=args.num_workers,
         pin_memory=True,
     )
-
-    checkpoint = torch.load(args.checkpoint, map_location=device)
     state_dict = normalize_checkpoint_state_dict(checkpoint["model_state_dict"])
     backbone_name = infer_backbone_name_from_checkpoint(checkpoint)
     model = SensorPolicyNetwork(
         num_candidates=checkpoint.get("num_candidates", 27),
         pretrained=False,
         backbone_name=backbone_name,
+        input_mode=input_mode,
     ).to(device)
     model.load_state_dict(state_dict)
     model.eval()

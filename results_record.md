@@ -222,3 +222,17 @@ This table is read directly from `policy_network/results_resnet18/*/downstream_t
 | E | Oracle soft label | partial freeze, `layer4` + `policy_head` | soft label (`soft_kl`) | `18.50%` | `31.50%` | `46.42%` | `28.33%` |
 | F | Oracle hard label | no, full model | hard label | `16.33%` | `29.67%` | `45.42%` | `28.17%` |
 | G | Oracle soft label | no, full model | soft label (`soft_kl`) | `15.58%` | `29.08%` | `44.42%` | `27.92%` |
+
+## Dual MobileNetV3-Small Downstream Best-vs-Last Summary
+
+This table is read directly from `policy_network/results_dual_mobilenet_v3_small/*/downstream_test_best.json`, `downstream_test_last.json`, and `index_test_result.json`.
+
+| ID | Supervision Label | Freeze | Loss | Test Index Acc | Downstream Best Top-1 | Downstream Best Top-5 Cumulative | Downstream Last Top-1 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | Lens label | no, full model | hard label | `19.00%` | `34.00%` | `47.08%` | `29.08%` |
+| B | Lens label | yes, `policy_head` only | hard label | `19.67%` | `34.67%` | `46.50%` | `31.58%` |
+| C | Oracle hard label | yes, `policy_head` only | hard label | `19.58%` | `34.50%` | `48.00%` | `33.50%` |
+| D | Oracle soft label | yes, `policy_head` only | soft label (`soft_kl`) | `18.83%` | `33.58%` | `47.42%` | `31.50%` |
+| E | Oracle soft label | partial freeze, `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `18.83%` | `33.58%` | `47.42%` | `31.67%` |
+| F | Oracle hard label | no, full model | hard label | `21.33%` | `34.75%` | `47.42%` | `32.25%` |
+| G | Oracle soft label | no, full model | soft label (`soft_kl`) | `19.58%` | `33.83%` | `47.67%` | `31.00%` |

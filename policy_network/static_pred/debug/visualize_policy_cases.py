@@ -26,7 +26,11 @@ for extra_path in (ROOT, LENS_DIR, POLICY_DIR):
 
 from lens.data_utils import ManifestLensDataset, imagenet_preprocess, load_image_rgb, load_timm_model
 from policy_dataset import PolicyDataset
-from policy_model import SensorPolicyNetwork, infer_backbone_name_from_checkpoint
+from policy_model import (
+    SensorPolicyNetwork,
+    infer_backbone_name_from_checkpoint,
+    infer_input_mode_from_checkpoint,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -106,8 +110,16 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
             payload = json.load(f)
         return payload["records"]
 
+    checkpoint = torch.load(args.checkpoint, map_location=device)
     transform = imagenet_preprocess(args.image_size)
-    dataset = PolicyDataset(args.data_json, transform=transform)
+    input_mode = infer_input_mode_from_checkpoint(checkpoint)
+    dataset = PolicyDataset(
+        args.data_json,
+        transform=transform,
+        manifest_path=args.manifest,
+        input_mode=input_mode,
+        env_option_id=checkpoint.get("env_option_id"),
+    )
     loader = DataLoader(
         dataset,
         batch_size=args.batch_size,
@@ -115,14 +127,13 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         num_workers=args.num_workers,
         pin_memory=True,
     )
-
-    checkpoint = torch.load(args.checkpoint, map_location=device)
     state_dict = normalize_checkpoint_state_dict(checkpoint["model_state_dict"])
     backbone_name = infer_backbone_name_from_checkpoint(checkpoint)
     model = SensorPolicyNetwork(
         num_candidates=checkpoint.get("num_candidates", 27),
         pretrained=False,
         backbone_name=backbone_name,
+        input_mode=input_mode,
     ).to(device)
     model.load_state_dict(state_dict)
     model.eval()
@@ -325,6 +336,10 @@ def main() -> None:
     prediction_records = load_prediction_records(args, device)
     manifest_index = build_manifest_index(args.manifest)
     data_index = build_data_index(args.data_json)
+    checkpoint_env_option_id = None
+    if args.checkpoint is not None:
+        checkpoint_meta = torch.load(args.checkpoint, map_location="cpu")
+        checkpoint_env_option_id = checkpoint_meta.get("env_option_id")
 
     if args.sample_ids:
         wanted_ids = {str(sample_id) for sample_id in args.sample_ids}
@@ -352,6 +367,9 @@ def main() -> None:
         target_option_id = choose_target_option(data_item)
         if target_option_id not in option_id_to_pos:
             continue
+        env_input_path = data_item["baseline_path"]
+        if checkpoint_env_option_id is not None and checkpoint_env_option_id in option_id_to_pos:
+            env_input_path = candidates[option_id_to_pos[checkpoint_env_option_id]]["path"]
 
         with torch.no_grad():
             logits = classifier(candidate_tensor.to(device, non_blocking=True))
@@ -382,6 +400,7 @@ def main() -> None:
             "target_class_prediction": target_pred_label,
             "target_class_correct": target_pred_label == label,
             "baseline_path": data_item["baseline_path"],
+            "env_input_path": env_input_path,
             "policy_path": candidates[policy_pos]["path"],
             "lens_path": candidates[lens_pos]["path"],
             "target_path": data_item.get("best_path", candidates[target_pos]["path"]),
@@ -412,10 +431,24 @@ def main() -> None:
                 make_text_lines(
                     "Policy input",
                     {
-                        "path": Path(case["baseline_path"]).name,
+                        "path": case["baseline_path"],
                     },
                 ),
             ),
+        ]
+        if case.get("env_input_path") and case["env_input_path"] != case["baseline_path"]:
+            panels.append(
+                (
+                    load_image_rgb(case["env_input_path"]),
+                    make_text_lines(
+                        "Env input",
+                        {
+                            "path": case["env_input_path"],
+                        },
+                    ),
+                )
+            )
+        panels.extend([
             (
                 load_image_rgb(case["policy_path"]),
                 make_text_lines(
@@ -451,9 +484,11 @@ def main() -> None:
                     },
                 ),
             ),
-        ]
+        ])
         footer_lines = [
             f"GT label: {case['label']}",
+            f"baseline_path: {case['baseline_path']}",
+            f"env_input_path: {case['env_input_path']}",
             f"policy_path: {case['policy_path']}",
             f"lens_path: {case['lens_path']}",
             f"target_path: {case['target_path']}",
