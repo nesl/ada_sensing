@@ -30,6 +30,19 @@ def parse_args():
         default=None,
         help="Optional checkpoint to load model weights from before training.",
     )
+    p.add_argument(
+        "--input_variant",
+        type=str,
+        choices=["real", "random_noise_per_sample"],
+        default="real",
+        help="Variant applied to the policy input image before preprocessing.",
+    )
+    p.add_argument(
+        "--noise_seed",
+        type=int,
+        default=0,
+        help="Base seed used for deterministic noise generation when input_variant uses noise.",
+    )
 
     p.add_argument("--image_size", type=int, default=224)
     p.add_argument("--num_candidates", type=int, default=27)
@@ -97,6 +110,8 @@ def build_dataloaders(args):
         "manifest_path": args.manifest_json,
         "input_mode": args.input_mode,
         "env_option_id": args.env_option_id,
+        "input_variant": args.input_variant,
+        "noise_seed": args.noise_seed,
     }
 
     train_ds = PolicyDataset(args.train_json, **dataset_kwargs)
@@ -284,12 +299,15 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "num_candidates": args.num_candidates,
         "image_size": args.image_size,
         "trainable_scope": get_trainable_scope(args),
+        "effective_trainable_scope": getattr(args, "effective_trainable_scope", get_trainable_scope(args)),
         "backbone_name": args.backbone,
         "input_mode": args.input_mode,
         "env_option_id": args.env_option_id,
         "backbone_lr": args.backbone_lr,
         "head_lr": args.lr,
         "loss_type": loss_type,
+        "input_variant": args.input_variant,
+        "noise_seed": args.noise_seed,
     }
     torch.save(ckpt, path)
 
@@ -311,6 +329,7 @@ def main():
     print(f"Using trainable_scope={trainable_scope}")
     print(f"Using backbone={args.backbone}")
     print(f"Using input_mode={args.input_mode}")
+    print(f"Using input_variant={args.input_variant}")
 
     print("Building model...")
     model = SensorPolicyNetwork(
@@ -319,6 +338,15 @@ def main():
         backbone_name=args.backbone,
         input_mode=args.input_mode,
     ).to(device)
+    effective_trainable_scope = trainable_scope
+    if model.requires_full_training and trainable_scope != "full_finetune":
+        effective_trainable_scope = "full_finetune"
+        print(
+            f"Backbone {args.backbone} is trained from scratch; "
+            f"using effective_trainable_scope={effective_trainable_scope} "
+            f"for requested trainable_scope={trainable_scope}."
+        )
+    args.effective_trainable_scope = effective_trainable_scope
 
     best_val_acc = -1.0
     start_epoch = 1
@@ -346,7 +374,7 @@ def main():
             f"with best_val_acc={best_val_acc:.2f}"
         )
 
-    if trainable_scope == "head_only":
+    if effective_trainable_scope == "head_only":
         model.freeze_backbone()
         optimizer_param_groups = [
             {
@@ -355,7 +383,7 @@ def main():
             },
         ]
         print("Backbone frozen. Training policy_head only.")
-    elif trainable_scope == "partial_unfreeze":
+    elif effective_trainable_scope == "partial_unfreeze":
         model.unfreeze_backbone_tail()
         optimizer_param_groups = [
             {
@@ -371,7 +399,7 @@ def main():
             "Partially unfroze the configured backbone tail and feature_proj. "
             f"Using backbone_lr={args.backbone_lr} and head_lr={args.lr}."
         )
-    elif trainable_scope == "full_finetune":
+    elif effective_trainable_scope == "full_finetune":
         model.unfreeze_backbone()
         optimizer_param_groups = [
             {
@@ -381,7 +409,7 @@ def main():
         ]
         print("Backbone unfrozen. Training the full network.")
     else:
-        raise ValueError(f"Unsupported trainable_scope: {trainable_scope}")
+        raise ValueError(f"Unsupported trainable_scope: {effective_trainable_scope}")
 
     optimizer = AdamW(
         optimizer_param_groups,

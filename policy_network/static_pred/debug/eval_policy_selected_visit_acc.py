@@ -46,6 +46,7 @@ from policy_model import (
     SensorPolicyNetwork,
     infer_backbone_name_from_checkpoint,
     infer_input_mode_from_checkpoint,
+    normalize_policy_checkpoint_state_dict,
 )
 
 
@@ -88,28 +89,6 @@ def validate_args(args: argparse.Namespace) -> None:
         )
 
 
-def normalize_checkpoint_state_dict(raw_state_dict: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-    if any(key.startswith("backbone.features.") for key in raw_state_dict):
-        normalized: Dict[str, torch.Tensor] = {}
-        for key, value in raw_state_dict.items():
-            if key.startswith("backbone.features."):
-                new_key = "backbone." + key[len("backbone.features."):]
-            elif key.startswith("backbone.classifier.0"):
-                new_key = "feature_proj.0" + key[len("backbone.classifier.0"):]
-            elif key.startswith("backbone.classifier.1"):
-                new_key = "feature_proj.1" + key[len("backbone.classifier.1"):]
-            elif key.startswith("backbone.classifier.2"):
-                new_key = "feature_proj.2" + key[len("backbone.classifier.2"):]
-            elif key.startswith("backbone.classifier.3"):
-                new_key = "policy_head" + key[len("backbone.classifier.3"):]
-            else:
-                new_key = key
-            normalized[new_key] = value
-        return normalized
-
-    return raw_state_dict
-
-
 def load_prediction_records(args: argparse.Namespace, device: torch.device) -> List[Dict[str, Any]]:
     """
     返回 policy 的预测结果列表，每个元素至少包含：
@@ -134,6 +113,8 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         manifest_path=args.manifest,
         input_mode=input_mode,
         env_option_id=checkpoint.get("env_option_id"),
+        input_variant=checkpoint.get("input_variant") or "real",
+        noise_seed=checkpoint.get("noise_seed", 0),
     )
     loader = DataLoader(
         dataset,
@@ -142,8 +123,11 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         num_workers=args.num_workers,
         pin_memory=True,
     )
-    state_dict = normalize_checkpoint_state_dict(checkpoint["model_state_dict"])
     backbone_name = infer_backbone_name_from_checkpoint(checkpoint)
+    state_dict = normalize_policy_checkpoint_state_dict(
+        checkpoint["model_state_dict"],
+        backbone_name,
+    )
     model = SensorPolicyNetwork(
         num_candidates=checkpoint.get("num_candidates", 27),
         pretrained=False,

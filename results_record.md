@@ -236,3 +236,18 @@ This table is read directly from `policy_network/results_dual_mobilenet_v3_small
 | E | Oracle soft label | partial freeze, `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `18.83%` | `33.58%` | `47.42%` | `31.67%` |
 | F | Oracle hard label | no, full model | hard label | `21.33%` | `34.75%` | `47.42%` | `32.25%` |
 | G | Oracle soft label | no, full model | soft label (`soft_kl`) | `19.58%` | `33.83%` | `47.67%` | `31.00%` |
+
+## Number Probe Sanity Check
+
+Experiment design: do not read images. Encode only metadata numbers with sinusoidal encoding, then train a small MLP to predict the 27-way `best_option_id`. The class number uses the 200-class subset index (`class_id -> 0..199`), and the lightning number uses the raw environment number (`l1/l2/l3/l4/l6/l7 -> 1/2/3/4/6/7`). The downstream test accuracy selects the predicted `option_id` candidate from the manifest and evaluates it with `resnet50`.
+
+| ID | Input Features | Label Source | Best Epoch | Best Val Index Acc | Test Index Acc | Test Downstream Acc |
+| --- | --- | --- | --- | --- | --- | --- |
+| number-probe-lightning-class | sinusoidal lightning + sinusoidal class | Oracle label | `3` | `22.00%` | `21.58%` | `35.33% (424 / 1200)` |
+| number-probe-lightning | sinusoidal lightning only | Oracle label | `1` | `21.17%` | `21.58%` | `34.50% (414 / 1200)` |
+| number-probe-class | sinusoidal class only | Oracle label | `3` | `20.00%` | `19.92%` | `35.17% (422 / 1200)` |
+
+Artifacts:
+- Training script: [`policy_network/static_pred/debug/train_number_probe.py`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/static_pred/debug/train_number_probe.py)
+- Downstream eval script: [`policy_network/static_pred/debug/eval_number_probe_downstream.py`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/static_pred/debug/eval_number_probe_downstream.py)
+- Summary: [`policy_network/results_number_probe/oracle/number_probe_downstream_summary.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_number_probe/oracle/number_probe_downstream_summary.json)

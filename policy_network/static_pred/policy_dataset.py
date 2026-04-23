@@ -1,7 +1,9 @@
+import hashlib
 import json
 from typing import Any, Dict, List, Optional
 
 import torch
+from PIL import Image
 from torch.utils.data import Dataset
 
 from utils import load_image_rgb
@@ -30,6 +32,8 @@ class PolicyDataset(Dataset):
         manifest_path: Optional[str] = None,
         input_mode: str = "single",
         env_option_id: Optional[int] = None,
+        input_variant: str = "real",
+        noise_seed: int = 0,
     ):
         with open(json_path, "r") as f:
             self.items: List[Dict[str, Any]] = json.load(f)
@@ -38,10 +42,14 @@ class PolicyDataset(Dataset):
         self.has_soft_targets = any("soft_target" in item for item in self.items)
         self.input_mode = input_mode
         self.env_option_id = env_option_id
+        self.input_variant = input_variant
+        self.noise_seed = noise_seed
         self.env_path_by_sample_id: Dict[str, str] = {}
 
         if self.input_mode not in {"single", "dual"}:
             raise ValueError(f"Unsupported input_mode={self.input_mode}")
+        if self.input_variant not in {"real", "random_noise_per_sample"}:
+            raise ValueError(f"Unsupported input_variant={self.input_variant}")
 
         if self.input_mode == "dual":
             if manifest_path is None:
@@ -63,6 +71,24 @@ class PolicyDataset(Dataset):
                     )
                 self.env_path_by_sample_id[sample_id] = env_path
 
+    def _seed_for_sample(self, sample_id: Any) -> int:
+        seed_material = f"{self.noise_seed}:{sample_id}".encode("utf-8")
+        digest = hashlib.sha256(seed_material).digest()
+        return int.from_bytes(digest[:8], byteorder="big", signed=False)
+
+    def _make_random_noise_image(self, sample_id: Any, image: Image.Image) -> Image.Image:
+        width, height = image.size
+        generator = torch.Generator()
+        #generator.manual_seed(self._seed_for_sample(sample_id))
+        noise = torch.randint(
+            low=0,
+            high=256,
+            size=(height, width, 3),
+            generator=generator,
+            dtype=torch.uint8,
+        )
+        return Image.fromarray(noise.numpy(), mode="RGB")
+
     def __len__(self) -> int:
         return len(self.items)
 
@@ -71,6 +97,8 @@ class PolicyDataset(Dataset):
 
         image_path = item["baseline_path"]
         img = load_image_rgb(image_path)
+        if self.input_variant == "random_noise_per_sample":
+            img = self._make_random_noise_image(item["sample_id"], img)
         if self.transform is not None:
             img = self.transform(img)
 

@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import timm
 from torchvision.models import (
     MobileNet_V3_Small_Weights,
     ResNet18_Weights,
@@ -8,7 +9,53 @@ from torchvision.models import (
 )
 
 
-SUPPORTED_BACKBONES = ("mobilenet_v3_small", "resnet18")
+SUPPORTED_BACKBONES = (
+    "mobilenet_v3_small",
+    "resnet18",
+    "tiny_conv_scratch",
+    "dinov2_vits14",
+)
+
+
+class TinyConvBackbone(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.features = nn.Sequential(
+            nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1, bias=False),
+            nn.BatchNorm2d(16),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(16, 32, kernel_size=3, stride=2, padding=1, bias=False),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1, bias=False),
+            nn.BatchNorm2d(64),
+            nn.ReLU(inplace=True),
+        )
+        self.pool = nn.AdaptiveAvgPool2d((1, 1))
+        self.num_features = 64
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.features(x)
+        x = self.pool(x)
+        return torch.flatten(x, 1)
+
+
+def build_dinov2_vits14(pretrained: bool) -> nn.Module:
+    try:
+        return timm.create_model(
+            "vit_small_patch14_dinov2.lvd142m",
+            pretrained=pretrained,
+            num_classes=0,
+            img_size=224,
+        )
+    except Exception as exc:
+        raise RuntimeError(
+            "Failed to build dinov2_vits14 with timm model "
+            "'vit_small_patch14_dinov2.lvd142m'. Check that the lens conda "
+            "environment has a timm version with DINOv2 support and, for "
+            "pretrained runs, access to the cached/downloadable weights."
+        ) from exc
 
 
 class SensorPolicyNetwork(nn.Module):
@@ -31,6 +78,7 @@ class SensorPolicyNetwork(nn.Module):
         self.input_mode = input_mode
         self.partial_unfreeze_start_idx = 0
         self.num_input_views = 2 if input_mode == "dual" else 1
+        self.requires_full_training = False
         if input_mode not in {"single", "dual"}:
             raise ValueError(f"Unsupported input_mode={input_mode}")
 
@@ -62,6 +110,21 @@ class SensorPolicyNetwork(nn.Module):
             self.avgpool = nn.Identity()
             self.feature_proj = nn.Identity()
             self.partial_unfreeze_start_idx = 7
+        elif backbone_name == "tiny_conv_scratch":
+            base_model = TinyConvBackbone()
+            head_in_features = base_model.num_features
+            self.backbone = base_model
+            self.avgpool = nn.Identity()
+            self.feature_proj = nn.Identity()
+            self.partial_unfreeze_start_idx = 0
+            self.requires_full_training = True
+        elif backbone_name == "dinov2_vits14":
+            base_model = build_dinov2_vits14(pretrained=pretrained)
+            head_in_features = base_model.num_features
+            self.backbone = base_model
+            self.avgpool = nn.Identity()
+            self.feature_proj = nn.Identity()
+            self.partial_unfreeze_start_idx = -2
         else:
             raise ValueError(
                 f"Unsupported backbone_name={backbone_name}. "
@@ -85,6 +148,15 @@ class SensorPolicyNetwork(nn.Module):
         if start_idx is None:
             start_idx = self.partial_unfreeze_start_idx
         self.freeze_backbone()
+        if hasattr(self.backbone, "blocks"):
+            blocks = list(self.backbone.blocks)
+            for module in blocks[start_idx:]:
+                for param in module.parameters():
+                    param.requires_grad = True
+            if hasattr(self.backbone, "norm"):
+                for param in self.backbone.norm.parameters():
+                    param.requires_grad = True
+            return
         for module in list(self.backbone.children())[start_idx:]:
             for param in module.parameters():
                 param.requires_grad = True
@@ -94,6 +166,14 @@ class SensorPolicyNetwork(nn.Module):
     def get_backbone_tail_parameters(self, start_idx: int | None = None):
         if start_idx is None:
             start_idx = self.partial_unfreeze_start_idx
+        if hasattr(self.backbone, "blocks"):
+            params = []
+            blocks = list(self.backbone.blocks)
+            for module in blocks[start_idx:]:
+                params.extend(list(module.parameters()))
+            if hasattr(self.backbone, "norm"):
+                params.extend(list(self.backbone.norm.parameters()))
+            return [param for param in params if param.requires_grad]
         params = []
         for module in list(self.backbone.children())[start_idx:]:
             params.extend(list(module.parameters()))
@@ -133,6 +213,51 @@ class SensorPolicyNetwork(nn.Module):
         features = features.view(batch_size, num_views, self.feature_dim)
         features = features.reshape(batch_size, num_views * self.feature_dim)
         return self.policy_head(features)
+
+
+def normalize_policy_checkpoint_state_dict(
+    raw_state_dict: dict[str, torch.Tensor],
+    backbone_name: str,
+) -> dict[str, torch.Tensor]:
+    """
+    Keep evaluation scripts compatible with checkpoints saved by older model
+    layouts. The tiny conv backbone used to save its feature stack directly as
+    backbone.N.*, while the current TinyConvBackbone wraps it as
+    backbone.features.N.*.
+    """
+    if backbone_name == "tiny_conv_scratch" and not any(
+        key.startswith("backbone.features.") for key in raw_state_dict
+    ):
+        normalized: dict[str, torch.Tensor] = {}
+        for key, value in raw_state_dict.items():
+            if key.startswith("backbone.") and key.split(".", 2)[1].isdigit():
+                new_key = "backbone.features." + key[len("backbone."):]
+            else:
+                new_key = key
+            normalized[new_key] = value
+        return normalized
+
+    if backbone_name == "mobilenet_v3_small" and any(
+        key.startswith("backbone.features.") for key in raw_state_dict
+    ):
+        normalized: dict[str, torch.Tensor] = {}
+        for key, value in raw_state_dict.items():
+            if key.startswith("backbone.features."):
+                new_key = "backbone." + key[len("backbone.features."):]
+            elif key.startswith("backbone.classifier.0"):
+                new_key = "feature_proj.0" + key[len("backbone.classifier.0"):]
+            elif key.startswith("backbone.classifier.1"):
+                new_key = "feature_proj.1" + key[len("backbone.classifier.1"):]
+            elif key.startswith("backbone.classifier.2"):
+                new_key = "feature_proj.2" + key[len("backbone.classifier.2"):]
+            elif key.startswith("backbone.classifier.3"):
+                new_key = "policy_head" + key[len("backbone.classifier.3"):]
+            else:
+                new_key = key
+            normalized[new_key] = value
+        return normalized
+
+    return raw_state_dict
 
 
 def infer_backbone_name_from_checkpoint(checkpoint: dict) -> str:
