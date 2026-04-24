@@ -237,6 +237,20 @@ This table is read directly from `policy_network/results_dual_mobilenet_v3_small
 | F | Oracle hard label | no, full model | hard label | `21.33%` | `34.75%` | `47.42%` | `32.25%` |
 | G | Oracle soft label | no, full model | soft label (`soft_kl`) | `19.58%` | `33.83%` | `47.67%` | `31.00%` |
 
+## Random Noise Downstream Best-vs-Last Summary
+
+This table is read directly from `policy_network/results_random_noise/*/downstream_test_best.json`, `downstream_test_last.json`, `index_test_result.json`, and `train_history.json`.
+
+| ID | Supervision Label | Freeze | Loss | Best Val Index Acc | Test Index Acc | Downstream Best Top-1 | Downstream Best Top-5 Cumulative | Downstream Last Top-1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A | Lens label | no, full model | hard label | `15.08%` | `14.92%` | `32.08%` | `45.83%` | `24.33%` |
+| B | Lens label | yes, `policy_head` only | hard label | `14.83%` | `14.42%` | `29.17%` | `45.08%` | `28.75%` |
+| C | Oracle hard label | yes, `policy_head` only | hard label | `18.08%` | `18.83%` | `33.08%` | `47.00%` | `30.83%` |
+| D | Oracle soft label | yes, `policy_head` only | soft label (`soft_kl`) | `18.67%` | `17.42%` | `32.33%` | `46.58%` | `28.75%` |
+| E | Oracle soft label | partial freeze, `backbone[9:12]` + `feature_proj` + `policy_head` | soft label (`soft_kl`) | `18.50%` | `17.42%` | `32.33%` | `46.58%` | `29.83%` |
+| F | Oracle hard label | no, full model | hard label | `18.42%` | `18.17%` | `33.17%` | `46.83%` | `25.67%` |
+| G | Oracle soft label | no, full model | soft label (`soft_kl`) | `18.58%` | `17.75%` | `33.92%` | `46.50%` | `24.67%` |
+
 ## Number Probe Sanity Check
 
 Experiment design: do not read images. Encode only metadata numbers with sinusoidal encoding, then train a small MLP to predict the 27-way `best_option_id`. The class number uses the 200-class subset index (`class_id -> 0..199`), and the lightning number uses the raw environment number (`l1/l2/l3/l4/l6/l7 -> 1/2/3/4/6/7`). The downstream test accuracy selects the predicted `option_id` candidate from the manifest and evaluates it with `resnet50`.
