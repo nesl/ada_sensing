@@ -251,3 +251,13 @@ Artifacts:
 - Training script: [`policy_network/static_pred/debug/train_number_probe.py`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/static_pred/debug/train_number_probe.py)
 - Downstream eval script: [`policy_network/static_pred/debug/eval_number_probe_downstream.py`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/static_pred/debug/eval_number_probe_downstream.py)
 - Summary: [`policy_network/results_number_probe/oracle/number_probe_downstream_summary.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results_number_probe/oracle/number_probe_downstream_summary.json)
+
+## Baselines
+This is a replicated basline of lens method in their paper.
+| Method | Description | Accuracy |
+|---|---|---|
+| Auto-Exposure (AE) | Standard sensor control that adjusts exposure for human perception, but not necessarily for optimal computer vision performance | 11.75% |
+| Random | Randomly selects sensor parameters; performance is computed as the average over all available 27 options | 9.54% |
+| Oracle-Specific (Oracle-S) | Selects the best parameter setting for each sample and model (if only one made right prediction for downstream task, choose this one. Otherwise, choose the one with least GT loss), representing the **upper bound** | 51.0% |
+| Oracle-Fixed (Oracle-F) | Test on all the test samples, choose the best fixed index (e.g. always use param setting k) | 33.92% |
+| Lens | Korean paper, select the parameter with highest confidence | 32.17% |
