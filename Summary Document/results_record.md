@@ -275,3 +275,52 @@ This is a replicated basline of lens method in their paper.
 | Oracle-Specific (Oracle-S) | Selects the best parameter setting for each sample and model (if only one made right prediction for downstream task, choose this one. Otherwise, choose the one with least GT loss), representing the **upper bound** | 51.0% |
 | Oracle-Fixed (Oracle-F) | Test on all the test samples, choose the best fixed index (e.g. always use param setting k) | 33.92% |
 | Lens | Korean paper, select the parameter with highest confidence | 32.17% |
+
+## Baselines Rerun on CUDA
+
+This table is read from [`policy_network/results/acquisition_baselines_test_cuda.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results/acquisition_baselines_test_cuda.json), using `resnet50` on `cuda` and the oracle-policy test split (`1200` samples).
+
+| Method | Correct / Total | Accuracy |
+|---|---:|---:|
+| Auto-Exposure (AE) | 140 / 1200 | 11.67% |
+| Random | - | 9.55% |
+| Lens | 387 / 1200 | 32.25% |
+| Oracle-Specific (Oracle-S) | 612 / 1200 | 51.00% |
+| Oracle-Fixed (Oracle-F, option_id=24, `param_1`) | 408 / 1200 | 34.00% |
+
+
+## All options fixed index for Oracle-F
+
+This table is read from [`policy_network/results/acquisition_baselines_test.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results/acquisition_baselines_test.json), using the manifest's true `option_id -> option_name` mapping.
+
+| Rank | Option ID | Param | Correct / Total | Accuracy |
+|---:|---:|---|---:|---:|
+| 1 | 24 | `param_1` | 407 / 1200 | 33.92% |
+| 2 | 8 | `param_11` | 369 / 1200 | 30.75% |
+| 3 | 12 | `param_2` | 316 / 1200 | 26.33% |
+| 4 | 21 | `param_10` | 290 / 1200 | 24.17% |
+| 5 | 2 | `param_20` | 273 / 1200 | 22.75% |
+| 6 | 3 | `param_6` | 253 / 1200 | 21.08% |
+| 7 | 18 | `param_21` | 239 / 1200 | 19.92% |
+| 8 | 9 | `param_5` | 217 / 1200 | 18.08% |
+| 9 | 15 | `param_15` | 162 / 1200 | 13.50% |
+| 10 | 25 | `param_12` | 158 / 1200 | 13.17% |
+| 11 | 16 | `param_19` | 124 / 1200 | 10.33% |
+| 12 | 10 | `param_4` | 75 / 1200 | 6.25% |
+| 13 | 13 | `param_14` | 70 / 1200 | 5.83% |
+| 14 | 20 | `param_24` | 48 / 1200 | 4.00% |
+| 15 | 11 | `param_3` | 43 / 1200 | 3.58% |
+| 16 | 6 | `param_9` | 33 / 1200 | 2.75% |
+| 17 | 14 | `param_13` | 5 / 1200 | 0.42% |
+| 18 | 17 | `param_23` | 5 / 1200 | 0.42% |
+| 19 | 4 | `param_18` | 2 / 1200 | 0.17% |
+| 20 | 19 | `param_8` | 2 / 1200 | 0.17% |
+| 21 | 0 | `param_22` | 0 / 1200 | 0.00% |
+| 22 | 1 | `param_17` | 0 / 1200 | 0.00% |
+| 23 | 5 | `param_26` | 0 / 1200 | 0.00% |
+| 24 | 7 | `param_25` | 0 / 1200 | 0.00% |
+| 25 | 22 | `param_16` | 0 / 1200 | 0.00% |
+| 26 | 23 | `param_27` | 0 / 1200 | 0.00% |
+| 27 | 26 | `param_7` | 0 / 1200 | 0.00% |
+
+Visualization: [`policy_network/results/acquisition_baselines_fixed_options.png`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results/acquisition_baselines_fixed_options.png)

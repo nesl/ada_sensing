@@ -72,6 +72,21 @@ def filter_manifest_items(
     return [item for item in items if str(item.get("id")) in allowed_sample_ids]
 
 
+def build_option_name_map(items: List[Dict[str, Any]]) -> Dict[int, str]:
+    option_id_to_name: Dict[int, str] = {}
+    for item in items:
+        for candidate in item["candidates"]:
+            option_id = int(candidate["option_id"])
+            option_name = str(candidate.get("meta", {}).get("option_name", ""))
+            previous = option_id_to_name.get(option_id)
+            if previous is not None and previous != option_name:
+                raise ValueError(
+                    f"option_id={option_id} maps to both {previous} and {option_name}"
+                )
+            option_id_to_name[option_id] = option_name
+    return option_id_to_name
+
+
 def resolve_ae_path(sample_id: str, candidate_path: str) -> str:
     parts = sample_id.split("__")
     if len(parts) < 3:
@@ -129,6 +144,7 @@ def main() -> None:
     classifier = load_timm_model(args.model, device=device)
     allowed_sample_ids = load_allowed_sample_ids(args.data_json)
     items = filter_manifest_items(dataset.items, allowed_sample_ids)
+    option_id_to_name = build_option_name_map(items)
 
     ae_hits: List[int] = []
     lens_hits: List[int] = []
@@ -242,7 +258,9 @@ def main() -> None:
             "oracle_specific": summarize_binary_hits(oracle_s_hits),
             "oracle_fixed": {
                 **best_fixed_option,
-                "best_option_name": f"param_{best_fixed_option['option_id'] + 1}",
+                "best_option_name": option_id_to_name.get(
+                    int(best_fixed_option["option_id"]), ""
+                ),
             },
         },
         "all_fixed_option_results": option_acc,
