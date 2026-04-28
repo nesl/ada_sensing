@@ -288,10 +288,14 @@ This table is read from [`policy_network/results/acquisition_baselines_test_cuda
 | Oracle-Specific (Oracle-S) | 612 / 1200 | 51.00% |
 | Oracle-Fixed (Oracle-F, option_id=24, `param_1`) | 408 / 1200 | 34.00% |
 
+Key script: [`policy_network/static_pred/debug/eval_acquisition_baselines.py`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/static_pred/debug/eval_acquisition_baselines.py)
+
 
 ## All options fixed index for Oracle-F
 
 This table is read from [`policy_network/results/acquisition_baselines_test.json`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/results/acquisition_baselines_test.json), using the manifest's true `option_id -> option_name` mapping.
+
+Key script: [`policy_network/static_pred/debug/eval_acquisition_baselines.py`](/mnt/hdd1/yuyang/adaptive_sensing/Lenz/policy_network/static_pred/debug/eval_acquisition_baselines.py)
 
 | Rank | Option ID | Param | Correct / Total | Accuracy |
 |---:|---:|---|---:|---:|
