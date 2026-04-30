@@ -40,6 +40,8 @@ I fixed the dataset problem and got the new one under `data/oracle_policy_labels
 5. Problem of input image
 Original we use fixed index 13 as the parameter setting of inup image for policy network. Bu† we discovered that the image is too dark for policy network to extract useful information. Currently we use the auto_exposure param1 as the input for policy network. Rectified correspoing scripts: `policy_dataset.py` `train_policy.py`and all the dataset label generation scripts.
 
+New strategy: dual input. AE param 1 + image with fixed index to policy network. 
+
 6. Debug by changing the input image of policy network to random noise. also tested on random noise data. We ended up getting similar accuracy comparing to using auto exposure / fixed index images as input. This possibilly proves that the policy network is only learning the index distribution without prio (the image's information of both lightness and classes) 
 
 7. Debug by sending the lighting and class information directly to the MLP in. order to select the index for downstream task. Enocde the lightiing and class by sinusodal encoder
