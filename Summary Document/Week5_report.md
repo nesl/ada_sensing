@@ -198,8 +198,8 @@ Selected probe images under each lighting condition:
 ![Random3 seed2 probe images](../policy_network/vis_results/multiview_visualizations/random3_seed2_selected_images_by_lighting.png)
 
 Predicted vs ground-truth test index distribution:
-![H1 pred vs GT](../policy_network/results_hist3_multiview/H1_hist3_only/pred_vs_gt_index_distribution.png)
-![H2 pred vs GT](../policy_network/results_hist3_multiview/H2_ae_hist3/pred_vs_gt_index_distribution.png)
-![R1 seed0 pred vs GT](../policy_network/results_hist3_multiview/R1_random3_seed0/pred_vs_gt_index_distribution.png)
-![R1 seed1 pred vs GT](../policy_network/results_hist3_multiview/R1_random3_seed1/pred_vs_gt_index_distribution.png)
-![R1 seed2 pred vs GT](../policy_network/results_hist3_multiview/R1_random3_seed2/pred_vs_gt_index_distribution.png)
+![H1 pred vs GT](../policy_network/vis_results/multiview_index_distribution/H1.png)
+![H2 pred vs GT](../policy_network/vis_results/multiview_index_distribution/H2.png)
+![R1 seed0 pred vs GT](../policy_network/vis_results/multiview_index_distribution/R1_seed0.png)
+![R1 seed1 pred vs GT](../policy_network/vis_results/multiview_index_distribution/R1_seed1.png)
+![R1 seed2 pred vs GT](../policy_network/vis_results/multiview_index_distribution/R1_seed2.png)
