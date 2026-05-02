@@ -30,6 +30,7 @@ from policy_model import (
     SensorPolicyNetwork,
     infer_backbone_name_from_checkpoint,
     infer_input_mode_from_checkpoint,
+    infer_num_input_views_from_checkpoint,
     normalize_policy_checkpoint_state_dict,
 )
 
@@ -98,6 +99,8 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         manifest_path=args.manifest,
         input_mode=input_mode,
         env_option_id=checkpoint.get("env_option_id"),
+        env_option_ids=checkpoint.get("env_option_ids"),
+        include_ae_input=bool(checkpoint.get("include_ae_input", False)),
         input_variant=checkpoint.get("input_variant") or "real",
         noise_seed=checkpoint.get("noise_seed", 0),
     )
@@ -118,6 +121,7 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         pretrained=False,
         backbone_name=backbone_name,
         input_mode=input_mode,
+        num_input_views=infer_num_input_views_from_checkpoint(checkpoint),
     ).to(device)
     model.load_state_dict(state_dict)
     model.eval()

@@ -71,16 +71,24 @@ class SensorPolicyNetwork(nn.Module):
         pretrained: bool = True,
         backbone_name: str = "mobilenet_v3_small",
         input_mode: str = "single",
+        num_input_views: int | None = None,
     ):
         super().__init__()
 
         self.backbone_name = backbone_name
         self.input_mode = input_mode
         self.partial_unfreeze_start_idx = 0
-        self.num_input_views = 2 if input_mode == "dual" else 1
-        self.requires_full_training = False
-        if input_mode not in {"single", "dual"}:
+        if input_mode == "single":
+            self.num_input_views = 1
+        elif input_mode == "dual":
+            self.num_input_views = 2
+        elif input_mode == "multiview":
+            if num_input_views is None or num_input_views < 1:
+                raise ValueError("num_input_views must be >= 1 when input_mode='multiview'.")
+            self.num_input_views = int(num_input_views)
+        else:
             raise ValueError(f"Unsupported input_mode={input_mode}")
+        self.requires_full_training = False
 
         if backbone_name == "mobilenet_v3_small":
             weights = MobileNet_V3_Small_Weights.DEFAULT if pretrained else None
@@ -200,7 +208,7 @@ class SensorPolicyNetwork(nn.Module):
 
         if x.dim() != 5:
             raise ValueError(
-                "Expected dual-view input of shape [B, 2, C, H, W], "
+                "Expected multi-view input of shape [B, V, C, H, W], "
                 f"got {tuple(x.shape)}"
             )
         batch_size, num_views = x.shape[:2]
@@ -270,3 +278,18 @@ def infer_backbone_name_from_checkpoint(checkpoint: dict) -> str:
 
 def infer_input_mode_from_checkpoint(checkpoint: dict) -> str:
     return checkpoint.get("input_mode", "single")
+
+
+def infer_num_input_views_from_checkpoint(checkpoint: dict) -> int | None:
+    if "num_input_views" in checkpoint:
+        return int(checkpoint["num_input_views"])
+    input_mode = infer_input_mode_from_checkpoint(checkpoint)
+    if input_mode == "single":
+        return 1
+    if input_mode == "dual":
+        return 2
+    env_option_ids = checkpoint.get("env_option_ids") or []
+    include_ae_input = bool(checkpoint.get("include_ae_input", False))
+    if input_mode == "multiview" and env_option_ids:
+        return len(env_option_ids) + int(include_ae_input)
+    return None

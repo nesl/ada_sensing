@@ -49,10 +49,21 @@ def parse_args():
     p.add_argument(
         "--input_mode",
         type=str,
-        choices=["single", "dual"],
+        choices=["single", "dual", "multiview"],
         default="single",
     )
     p.add_argument("--env_option_id", type=int, default=None)
+    p.add_argument(
+        "--env_option_ids",
+        type=str,
+        default=None,
+        help="Comma-separated option ids for multiview input, e.g. '2,8,24'.",
+    )
+    p.add_argument(
+        "--include_ae_input",
+        action="store_true",
+        help="For multiview input, prepend the auto-exposure baseline image.",
+    )
     p.add_argument(
         "--backbone",
         type=str,
@@ -103,6 +114,21 @@ def get_trainable_scope(args) -> str:
     return args.trainable_scope
 
 
+def parse_env_option_ids(raw: str | None) -> list[int]:
+    if raw is None or raw.strip() == "":
+        return []
+    return [int(part.strip()) for part in raw.split(",") if part.strip()]
+
+
+def get_num_input_views(args) -> int:
+    if args.input_mode == "single":
+        return 1
+    if args.input_mode == "dual":
+        return 2
+    env_option_ids = parse_env_option_ids(args.env_option_ids)
+    return len(env_option_ids) + int(bool(args.include_ae_input))
+
+
 def build_dataloaders(args):
     tfm = imagenet_preprocess(args.image_size)
     dataset_kwargs = {
@@ -110,6 +136,8 @@ def build_dataloaders(args):
         "manifest_path": args.manifest_json,
         "input_mode": args.input_mode,
         "env_option_id": args.env_option_id,
+        "env_option_ids": parse_env_option_ids(args.env_option_ids),
+        "include_ae_input": args.include_ae_input,
         "input_variant": args.input_variant,
         "noise_seed": args.noise_seed,
     }
@@ -303,6 +331,9 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "backbone_name": args.backbone,
         "input_mode": args.input_mode,
         "env_option_id": args.env_option_id,
+        "env_option_ids": parse_env_option_ids(args.env_option_ids),
+        "include_ae_input": args.include_ae_input,
+        "num_input_views": get_num_input_views(args),
         "backbone_lr": args.backbone_lr,
         "head_lr": args.lr,
         "loss_type": loss_type,
@@ -329,6 +360,10 @@ def main():
     print(f"Using trainable_scope={trainable_scope}")
     print(f"Using backbone={args.backbone}")
     print(f"Using input_mode={args.input_mode}")
+    print(f"Using num_input_views={get_num_input_views(args)}")
+    if args.input_mode == "multiview":
+        print(f"Using env_option_ids={parse_env_option_ids(args.env_option_ids)}")
+        print(f"Using include_ae_input={args.include_ae_input}")
     print(f"Using input_variant={args.input_variant}")
 
     print("Building model...")
@@ -337,6 +372,7 @@ def main():
         pretrained=pretrained,
         backbone_name=args.backbone,
         input_mode=args.input_mode,
+        num_input_views=get_num_input_views(args),
     ).to(device)
     effective_trainable_scope = trainable_scope
     if model.requires_full_training and trainable_scope != "full_finetune":

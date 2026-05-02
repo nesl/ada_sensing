@@ -1,6 +1,6 @@
 import hashlib
 import json
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Sequence
 
 import torch
 from PIL import Image
@@ -32,6 +32,8 @@ class PolicyDataset(Dataset):
         manifest_path: Optional[str] = None,
         input_mode: str = "single",
         env_option_id: Optional[int] = None,
+        env_option_ids: Optional[Sequence[int]] = None,
+        include_ae_input: bool = False,
         input_variant: str = "real",
         noise_seed: int = 0,
     ):
@@ -42,11 +44,13 @@ class PolicyDataset(Dataset):
         self.has_soft_targets = any("soft_target" in item for item in self.items)
         self.input_mode = input_mode
         self.env_option_id = env_option_id
+        self.env_option_ids = [int(x) for x in env_option_ids] if env_option_ids else []
+        self.include_ae_input = include_ae_input
         self.input_variant = input_variant
         self.noise_seed = noise_seed
-        self.env_path_by_sample_id: Dict[str, str] = {}
+        self.env_paths_by_sample_id: Dict[str, Dict[int, str]] = {}
 
-        if self.input_mode not in {"single", "dual"}:
+        if self.input_mode not in {"single", "dual", "multiview"}:
             raise ValueError(f"Unsupported input_mode={self.input_mode}")
         if self.input_variant not in {"real", "random_noise_per_sample"}:
             raise ValueError(f"Unsupported input_variant={self.input_variant}")
@@ -56,20 +60,29 @@ class PolicyDataset(Dataset):
                 raise ValueError("manifest_path is required when input_mode='dual'.")
             if env_option_id is None:
                 raise ValueError("env_option_id is required when input_mode='dual'.")
+            self.env_option_ids = [int(env_option_id)]
+            self.include_ae_input = True
+        elif self.input_mode == "multiview":
+            if manifest_path is None:
+                raise ValueError("manifest_path is required when input_mode='multiview'.")
+            if not self.env_option_ids:
+                raise ValueError("env_option_ids is required when input_mode='multiview'.")
+
+        if self.input_mode in {"dual", "multiview"}:
             with open(manifest_path, "r") as f:
                 manifest_items: List[Dict[str, Any]] = json.load(f)
             for manifest_item in manifest_items:
                 sample_id = str(manifest_item["id"])
-                env_path = None
-                for candidate in manifest_item["candidates"]:
-                    if int(candidate["option_id"]) == int(env_option_id):
-                        env_path = candidate["path"]
-                        break
-                if env_path is None:
-                    raise KeyError(
-                        f"Could not find option_id={env_option_id} for sample_id={sample_id}."
-                    )
-                self.env_path_by_sample_id[sample_id] = env_path
+                option_paths = {
+                    int(candidate["option_id"]): candidate["path"]
+                    for candidate in manifest_item["candidates"]
+                }
+                for option_id in self.env_option_ids:
+                    if option_id not in option_paths:
+                        raise KeyError(
+                            f"Could not find option_id={option_id} for sample_id={sample_id}."
+                        )
+                self.env_paths_by_sample_id[sample_id] = option_paths
 
     def _seed_for_sample(self, sample_id: Any) -> int:
         seed_material = f"{self.noise_seed}:{sample_id}".encode("utf-8")
@@ -103,14 +116,18 @@ class PolicyDataset(Dataset):
             img = self.transform(img)
 
         input_paths: List[str] = [image_path]
-        if self.input_mode == "dual":
+        if self.input_mode in {"dual", "multiview"}:
             sample_id = str(item["sample_id"])
-            env_image_path = self.env_path_by_sample_id[sample_id]
-            env_img = load_image_rgb(env_image_path)
-            if self.transform is not None:
-                env_img = self.transform(env_img)
-            image_tensor = torch.stack([img, env_img], dim=0)
-            input_paths.append(env_image_path)
+            view_tensors = [img] if self.include_ae_input else []
+            input_paths = [image_path] if self.include_ae_input else []
+            for option_id in self.env_option_ids:
+                env_image_path = self.env_paths_by_sample_id[sample_id][option_id]
+                env_img = load_image_rgb(env_image_path)
+                if self.transform is not None:
+                    env_img = self.transform(env_img)
+                view_tensors.append(env_img)
+                input_paths.append(env_image_path)
+            image_tensor = torch.stack(view_tensors, dim=0)
         else:
             image_tensor = img
 
