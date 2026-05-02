@@ -192,10 +192,10 @@ The table below uses the best checkpoint for each run:
 
 ### Visualizations
 Selected probe images under each lighting condition:
-![Hist3 probe images](../policy_network/results_hist3_multiview/probe_visualizations/hist3_selected_images_by_lighting.png)
-![Random3 seed0 probe images](../policy_network/results_hist3_multiview/probe_visualizations/random3_seed0_selected_images_by_lighting.png)
-![Random3 seed1 probe images](../policy_network/results_hist3_multiview/probe_visualizations/random3_seed1_selected_images_by_lighting.png)
-![Random3 seed2 probe images](../policy_network/results_hist3_multiview/probe_visualizations/random3_seed2_selected_images_by_lighting.png)
+![Hist3 probe images](../policy_network/vis_results/multiview_visualizations/hist3_selected_images_by_lighting.png)
+![Random3 seed0 probe images](../policy_network/vis_results/multiview_visualizations/random3_seed0_selected_images_by_lighting.png)
+![Random3 seed1 probe images](../policy_network/vis_results/multiview_visualizations/random3_seed1_selected_images_by_lighting.png)
+![Random3 seed2 probe images](../policy_network/vis_results/multiview_visualizations/random3_seed2_selected_images_by_lighting.png)
 
 Predicted vs ground-truth test index distribution:
 ![H1 pred vs GT](../policy_network/results_hist3_multiview/H1_hist3_only/pred_vs_gt_index_distribution.png)
