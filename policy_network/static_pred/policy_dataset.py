@@ -35,6 +35,9 @@ class PolicyDataset(Dataset):
         env_option_ids: Optional[Sequence[int]] = None,
         include_ae_input: bool = False,
         input_variant: str = "real",
+        ae_input_variant: Optional[str] = None,
+        env_input_variant: Optional[str] = None,
+        single_input_source: str = "baseline",
         noise_seed: int = 0,
     ):
         with open(json_path, "r") as f:
@@ -47,15 +50,36 @@ class PolicyDataset(Dataset):
         self.env_option_ids = [int(x) for x in env_option_ids] if env_option_ids else []
         self.include_ae_input = include_ae_input
         self.input_variant = input_variant
+        self.ae_input_variant = ae_input_variant or input_variant
+        self.env_input_variant = env_input_variant or "real"
+        self.single_input_source = single_input_source
         self.noise_seed = noise_seed
         self.env_paths_by_sample_id: Dict[str, Dict[int, str]] = {}
 
         if self.input_mode not in {"single", "dual", "multiview"}:
             raise ValueError(f"Unsupported input_mode={self.input_mode}")
-        if self.input_variant not in {"real", "random_noise_per_sample"}:
-            raise ValueError(f"Unsupported input_variant={self.input_variant}")
+        for variant_name, variant in (
+            ("input_variant", self.input_variant),
+            ("ae_input_variant", self.ae_input_variant),
+            ("env_input_variant", self.env_input_variant),
+        ):
+            if variant not in {"real", "random_noise_per_sample"}:
+                raise ValueError(f"Unsupported {variant_name}={variant}")
+        if self.single_input_source not in {"baseline", "env"}:
+            raise ValueError(f"Unsupported single_input_source={self.single_input_source}")
 
-        if self.input_mode == "dual":
+        if self.input_mode == "single":
+            if self.single_input_source == "env":
+                if manifest_path is None:
+                    raise ValueError(
+                        "manifest_path is required when single_input_source='env'."
+                    )
+                if env_option_id is None:
+                    raise ValueError(
+                        "env_option_id is required when single_input_source='env'."
+                    )
+                self.env_option_ids = [int(env_option_id)]
+        elif self.input_mode == "dual":
             if manifest_path is None:
                 raise ValueError("manifest_path is required when input_mode='dual'.")
             if env_option_id is None:
@@ -68,7 +92,7 @@ class PolicyDataset(Dataset):
             if not self.env_option_ids:
                 raise ValueError("env_option_ids is required when input_mode='multiview'.")
 
-        if self.input_mode in {"dual", "multiview"}:
+        if self.input_mode in {"dual", "multiview"} or self.single_input_source == "env":
             with open(manifest_path, "r") as f:
                 manifest_items: List[Dict[str, Any]] = json.load(f)
             for manifest_item in manifest_items:
@@ -84,15 +108,20 @@ class PolicyDataset(Dataset):
                         )
                 self.env_paths_by_sample_id[sample_id] = option_paths
 
-    def _seed_for_sample(self, sample_id: Any) -> int:
-        seed_material = f"{self.noise_seed}:{sample_id}".encode("utf-8")
+    def _seed_for_sample(self, sample_id: Any, view_name: str) -> int:
+        seed_material = f"{self.noise_seed}:{view_name}:{sample_id}".encode("utf-8")
         digest = hashlib.sha256(seed_material).digest()
         return int.from_bytes(digest[:8], byteorder="big", signed=False)
 
-    def _make_random_noise_image(self, sample_id: Any, image: Image.Image) -> Image.Image:
+    def _make_random_noise_image(
+        self,
+        sample_id: Any,
+        image: Image.Image,
+        view_name: str,
+    ) -> Image.Image:
         width, height = image.size
         generator = torch.Generator()
-        #generator.manual_seed(self._seed_for_sample(sample_id))
+        generator.manual_seed(self._seed_for_sample(sample_id, view_name))
         noise = torch.randint(
             low=0,
             high=256,
@@ -102,27 +131,48 @@ class PolicyDataset(Dataset):
         )
         return Image.fromarray(noise.numpy(), mode="RGB")
 
+    def _apply_variant(
+        self,
+        img: Image.Image,
+        variant: str,
+        sample_id: Any,
+        view_name: str,
+    ) -> Image.Image:
+        if variant == "random_noise_per_sample":
+            return self._make_random_noise_image(sample_id, img, view_name)
+        return img
+
     def __len__(self) -> int:
         return len(self.items)
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         item = self.items[idx]
 
+        sample_id = str(item["sample_id"])
         image_path = item["baseline_path"]
-        img = load_image_rgb(image_path)
-        if self.input_variant == "random_noise_per_sample":
-            img = self._make_random_noise_image(item["sample_id"], img)
+        if self.input_mode == "single" and self.single_input_source == "env":
+            image_path = self.env_paths_by_sample_id[sample_id][int(self.env_option_id)]
+            img = load_image_rgb(image_path)
+            img = self._apply_variant(img, self.env_input_variant, sample_id, "single_env")
+        else:
+            img = load_image_rgb(image_path)
+            img = self._apply_variant(img, self.ae_input_variant, sample_id, "ae")
         if self.transform is not None:
             img = self.transform(img)
 
         input_paths: List[str] = [image_path]
         if self.input_mode in {"dual", "multiview"}:
-            sample_id = str(item["sample_id"])
             view_tensors = [img] if self.include_ae_input else []
-            input_paths = [image_path] if self.include_ae_input else []
+            input_paths = [item["baseline_path"]] if self.include_ae_input else []
             for option_id in self.env_option_ids:
                 env_image_path = self.env_paths_by_sample_id[sample_id][option_id]
                 env_img = load_image_rgb(env_image_path)
+                env_img = self._apply_variant(
+                    env_img,
+                    self.env_input_variant,
+                    sample_id,
+                    f"env_{option_id}",
+                )
                 if self.transform is not None:
                     env_img = self.transform(env_img)
                 view_tensors.append(env_img)
@@ -142,4 +192,6 @@ class PolicyDataset(Dataset):
         }
         if "soft_target" in item:
             record["soft_target"] = torch.tensor(item["soft_target"], dtype=torch.float32)
+        if "sample_weight" in item:
+            record["sample_weight"] = torch.tensor(float(item["sample_weight"]), dtype=torch.float32)
         return record

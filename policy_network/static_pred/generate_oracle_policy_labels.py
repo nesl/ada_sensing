@@ -70,6 +70,25 @@ def parse_args() -> argparse.Namespace:
         default="confidence_correct",
         help="How to distribute probability mass across oracle-correct candidates.",
     )
+    parser.add_argument(
+        "--all_wrong_soft_target_mode",
+        type=str,
+        choices=["fallback_onehot", "uniform"],
+        default="fallback_onehot",
+        help=(
+            "How to build soft_target when no candidate is downstream-correct. "
+            "The default preserves the original fallback one-hot behavior."
+        ),
+    )
+    parser.add_argument(
+        "--all_wrong_sample_weight",
+        type=float,
+        default=1.0,
+        help=(
+            "Training sample weight to write for all-wrong samples. "
+            "Use 0.1 with --all_wrong_soft_target_mode uniform for v2 labels."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -261,6 +280,7 @@ def build_soft_target(
     label: int,
     num_candidates: int,
     soft_label_mode: str,
+    all_wrong_soft_target_mode: str,
     best_idx: int,
     correct_candidate_positions: List[int],
 ) -> Tuple[List[float], List[int], List[float]]:
@@ -282,6 +302,12 @@ def build_soft_target(
             soft_target[option_id] = float(weight)
         return soft_target.tolist(), correct_option_ids, weights.tolist()
 
+    if all_wrong_soft_target_mode == "uniform":
+        soft_target.fill_(1.0 / float(num_candidates))
+        return soft_target.tolist(), [], []
+    if all_wrong_soft_target_mode != "fallback_onehot":
+        raise ValueError(f"Unsupported all_wrong_soft_target_mode: {all_wrong_soft_target_mode}")
+
     fallback_option_id = int(candidates[best_idx]["option_id"])
     soft_target[fallback_option_id] = 1.0
     return soft_target.tolist(), [fallback_option_id], [1.0]
@@ -298,6 +324,7 @@ def build_record(
     correct_option_ids: List[int],
     correct_option_weights: List[float],
     soft_target: List[float],
+    sample_weight: float,
 ) -> Dict[str, Any]:
     sample_id = sample["id"]
     group_id = parse_group_id(sample_id)
@@ -314,6 +341,7 @@ def build_record(
         "oracle_correct_option_ids": [int(option_id) for option_id in correct_option_ids],
         "oracle_correct_option_weights": [float(weight) for weight in correct_option_weights],
         "soft_target": [float(value) for value in soft_target],
+        "sample_weight": float(sample_weight),
         "baseline_path": policy_input_path,
 
         "best_idx_in_candidates": int(best_idx),
@@ -384,9 +412,11 @@ def main() -> None:
             label=label,
             num_candidates=args.num_candidates,
             soft_label_mode=args.soft_label_mode,
+            all_wrong_soft_target_mode=args.all_wrong_soft_target_mode,
             best_idx=best_idx,
             correct_candidate_positions=correct_candidate_positions,
         )
+        sample_weight = 1.0 if had_correct_candidate else float(args.all_wrong_sample_weight)
 
         oracle_records.append(
             build_record(
@@ -400,6 +430,7 @@ def main() -> None:
                 correct_option_ids=correct_option_ids,
                 correct_option_weights=correct_option_weights,
                 soft_target=soft_target,
+                sample_weight=sample_weight,
             )
         )
 

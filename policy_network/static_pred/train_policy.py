@@ -38,6 +38,27 @@ def parse_args():
         help="Variant applied to the policy input image before preprocessing.",
     )
     p.add_argument(
+        "--ae_input_variant",
+        type=str,
+        choices=["real", "random_noise_per_sample"],
+        default=None,
+        help="Optional variant for the auto-exposure/baseline input view.",
+    )
+    p.add_argument(
+        "--env_input_variant",
+        type=str,
+        choices=["real", "random_noise_per_sample"],
+        default=None,
+        help="Optional variant for fixed environment option input views.",
+    )
+    p.add_argument(
+        "--single_input_source",
+        type=str,
+        choices=["baseline", "env"],
+        default="baseline",
+        help="For input_mode=single, choose baseline AE image or fixed env_option_id image.",
+    )
+    p.add_argument(
         "--noise_seed",
         type=int,
         default=0,
@@ -139,6 +160,9 @@ def build_dataloaders(args):
         "env_option_ids": parse_env_option_ids(args.env_option_ids),
         "include_ae_input": args.include_ae_input,
         "input_variant": args.input_variant,
+        "ae_input_variant": args.ae_input_variant,
+        "env_input_variant": args.env_input_variant,
+        "single_input_source": args.single_input_source,
         "noise_seed": args.noise_seed,
     }
 
@@ -190,11 +214,15 @@ def compute_loss(logits, batch, loss_type: str, device: torch.device):
         if "soft_target" not in batch:
             raise KeyError("Batch is missing 'soft_target' required for soft_kl.")
         soft_targets = batch["soft_target"].to(device, non_blocking=True)
-        loss = nn.functional.kl_div(
+        per_sample_loss = nn.functional.kl_div(
             nn.functional.log_softmax(logits, dim=-1),
             soft_targets,
-            reduction="batchmean",
-        )
+            reduction="none",
+        ).sum(dim=-1)
+        if "sample_weight" in batch:
+            sample_weight = batch["sample_weight"].to(device, non_blocking=True)
+            per_sample_loss = per_sample_loss * sample_weight
+        loss = per_sample_loss.mean()
         return loss, hard_targets
 
     raise ValueError(f"Unsupported loss_type: {loss_type}")
@@ -338,6 +366,9 @@ def save_checkpoint(path: str, model, optimizer, epoch: int, best_val_acc: float
         "head_lr": args.lr,
         "loss_type": loss_type,
         "input_variant": args.input_variant,
+        "ae_input_variant": args.ae_input_variant,
+        "env_input_variant": args.env_input_variant,
+        "single_input_source": args.single_input_source,
         "noise_seed": args.noise_seed,
     }
     torch.save(ckpt, path)
@@ -365,6 +396,10 @@ def main():
         print(f"Using env_option_ids={parse_env_option_ids(args.env_option_ids)}")
         print(f"Using include_ae_input={args.include_ae_input}")
     print(f"Using input_variant={args.input_variant}")
+    print(f"Using ae_input_variant={args.ae_input_variant or args.input_variant}")
+    print(f"Using env_input_variant={args.env_input_variant or 'real'}")
+    if args.input_mode == "single":
+        print(f"Using single_input_source={args.single_input_source}")
 
     print("Building model...")
     model = SensorPolicyNetwork(

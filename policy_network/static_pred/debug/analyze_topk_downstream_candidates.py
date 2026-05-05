@@ -51,6 +51,33 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num_workers", type=int, default=4)
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--topk", type=int, default=5)
+    parser.add_argument(
+        "--eval_ae_input_variant",
+        type=str,
+        choices=["real", "random_noise_per_sample"],
+        default=None,
+        help="Inference-time override for the AE/baseline view.",
+    )
+    parser.add_argument(
+        "--eval_env_input_variant",
+        type=str,
+        choices=["real", "random_noise_per_sample"],
+        default=None,
+        help="Inference-time override for fixed option views.",
+    )
+    parser.add_argument(
+        "--eval_single_input_source",
+        type=str,
+        choices=["baseline", "env"],
+        default=None,
+        help="Inference-time override for single-input source.",
+    )
+    parser.add_argument(
+        "--eval_noise_seed",
+        type=int,
+        default=None,
+        help="Inference-time noise seed override.",
+    )
     return parser.parse_args()
 
 
@@ -79,6 +106,27 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
     checkpoint = torch.load(args.checkpoint, map_location=device)
     transform = imagenet_preprocess(args.image_size)
     input_mode = infer_input_mode_from_checkpoint(checkpoint)
+    checkpoint_input_variant = checkpoint.get("input_variant") or "real"
+    ae_input_variant = (
+        args.eval_ae_input_variant
+        or checkpoint.get("ae_input_variant")
+        or checkpoint_input_variant
+    )
+    env_input_variant = (
+        args.eval_env_input_variant
+        or checkpoint.get("env_input_variant")
+        or "real"
+    )
+    single_input_source = (
+        args.eval_single_input_source
+        or checkpoint.get("single_input_source")
+        or "baseline"
+    )
+    noise_seed = (
+        args.eval_noise_seed
+        if args.eval_noise_seed is not None
+        else int(checkpoint.get("noise_seed", 0))
+    )
     dataset = PolicyDataset(
         args.data_json,
         transform=transform,
@@ -87,8 +135,11 @@ def load_prediction_records(args: argparse.Namespace, device: torch.device) -> L
         env_option_id=checkpoint.get("env_option_id"),
         env_option_ids=checkpoint.get("env_option_ids"),
         include_ae_input=bool(checkpoint.get("include_ae_input", False)),
-        input_variant=checkpoint.get("input_variant") or "real",
-        noise_seed=checkpoint.get("noise_seed", 0),
+        input_variant=checkpoint_input_variant,
+        ae_input_variant=ae_input_variant,
+        env_input_variant=env_input_variant,
+        single_input_source=single_input_source,
+        noise_seed=noise_seed,
     )
     loader = DataLoader(
         dataset,
@@ -302,6 +353,10 @@ def main() -> None:
             "image_size": args.image_size,
             "device": str(device),
             "topk": args.topk,
+            "eval_ae_input_variant": args.eval_ae_input_variant,
+            "eval_env_input_variant": args.eval_env_input_variant,
+            "eval_single_input_source": args.eval_single_input_source,
+            "eval_noise_seed": args.eval_noise_seed,
         },
         "summary": {
             "evaluated_samples": total,
