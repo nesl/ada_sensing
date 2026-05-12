@@ -43,6 +43,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--manifest", type=str, required=True)
     parser.add_argument("--output_json", type=str, required=True)
     parser.add_argument("--predictions_json", type=str, default=None)
+    parser.add_argument("--downstream_cache_json", type=str, default=None)
     parser.add_argument("--checkpoint", type=str, default=None)
     parser.add_argument("--data_json", type=str, default=None)
     parser.add_argument("--model", type=str, default="resnet50")
@@ -211,6 +212,12 @@ def build_candidate_tensor(
     return torch.stack(images, dim=0), option_id_to_pos
 
 
+def load_downstream_cache(cache_json: str) -> Dict[str, Any]:
+    with open(cache_json, "r") as f:
+        payload = json.load(f)
+    return payload["records"]
+
+
 def accuracy_payload(correct: int, total: int) -> Dict[str, Any]:
     return {
         "correct": correct,
@@ -229,8 +236,17 @@ def main() -> None:
     os.makedirs(os.path.dirname(args.output_json) or ".", exist_ok=True)
 
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
-    transform = imagenet_preprocess(args.image_size)
-    classifier = load_timm_model(args.model, device=device)
+    downstream_cache = (
+        load_downstream_cache(args.downstream_cache_json)
+        if args.downstream_cache_json
+        else None
+    )
+    transform = None if downstream_cache is not None else imagenet_preprocess(args.image_size)
+    classifier = (
+        None
+        if downstream_cache is not None
+        else load_timm_model(args.model, device=device)
+    )
 
     prediction_records = load_prediction_records(args, device)
     manifest_index = build_manifest_index(args.manifest)
@@ -251,15 +267,26 @@ def main() -> None:
             missing_samples.append(sample_id)
             continue
 
-        label = int(manifest_item["label"])
-        candidates = manifest_item["candidates"]
-        candidate_tensor, option_id_to_pos = build_candidate_tensor(candidates, transform)
+        if downstream_cache is not None:
+            cache_record = downstream_cache.get(sample_id)
+            if cache_record is None:
+                missing_samples.append(sample_id)
+                continue
+            label = int(cache_record["label"])
+            cached_candidates = cache_record["candidates"]
+            option_id_to_pos = None
+            candidate_pred_labels = None
+            candidate_pred_confs = None
+        else:
+            label = int(manifest_item["label"])
+            candidates = manifest_item["candidates"]
+            candidate_tensor, option_id_to_pos = build_candidate_tensor(candidates, transform)
 
-        with torch.no_grad():
-            logits = classifier(candidate_tensor.to(device, non_blocking=True))
-            class_probs = torch.softmax(logits, dim=-1)
-            candidate_pred_labels = torch.argmax(logits, dim=-1)
-            candidate_pred_confs = class_probs.max(dim=-1).values
+            with torch.no_grad():
+                logits = classifier(candidate_tensor.to(device, non_blocking=True))
+                class_probs = torch.softmax(logits, dim=-1)
+                candidate_pred_labels = torch.argmax(logits, dim=-1)
+                candidate_pred_confs = class_probs.max(dim=-1).values
 
         policy_top_indices = record.get("top5_pred_indices")
         policy_top_confs = record.get("top5_confidences")
@@ -280,15 +307,25 @@ def main() -> None:
             policy_conf = float(policy_top_confs[rank])
             rank_conf_sums[rank] += policy_conf
             rank_conf_counts[rank] += 1
-            if option_id not in option_id_to_pos:
-                raise ValueError(
-                    f"Predicted option_id {option_id} not found in manifest candidates for {sample_id}."
-                )
+            if downstream_cache is not None:
+                cached_candidate = cached_candidates.get(str(option_id))
+                if cached_candidate is None:
+                    raise ValueError(
+                        f"Predicted option_id {option_id} not found in downstream cache for {sample_id}."
+                    )
+                downstream_pred = int(cached_candidate["pred_label"])
+                downstream_conf = float(cached_candidate["pred_confidence"])
+                downstream_correct = bool(cached_candidate["correct"])
+            else:
+                if option_id not in option_id_to_pos:
+                    raise ValueError(
+                        f"Predicted option_id {option_id} not found in manifest candidates for {sample_id}."
+                    )
 
-            pos = option_id_to_pos[option_id]
-            downstream_pred = int(candidate_pred_labels[pos].item())
-            downstream_conf = float(candidate_pred_confs[pos].item())
-            downstream_correct = downstream_pred == label
+                pos = option_id_to_pos[option_id]
+                downstream_pred = int(candidate_pred_labels[pos].item())
+                downstream_conf = float(candidate_pred_confs[pos].item())
+                downstream_correct = downstream_pred == label
 
             rank_correct[rank] += int(downstream_correct)
             prefix_has_correct = prefix_has_correct or downstream_correct
@@ -350,6 +387,7 @@ def main() -> None:
             "checkpoint": args.checkpoint,
             "data_json": args.data_json,
             "model": args.model,
+            "downstream_cache_json": args.downstream_cache_json,
             "image_size": args.image_size,
             "device": str(device),
             "topk": args.topk,

@@ -8,13 +8,14 @@ Downstream Top-1 results are summarized in Excel, with one sheet per input setti
 Oracle top-k index distribution is plotted using **true downstream-correct candidates only** (`oracle_num_correct_candidates > 0`); no-correct fallback labels are excluded from these corrected plots.
 
 ![GT index distribution](../policy_network/vis_results/oracle_policy_index_distribution.png)
+![Oracle top-1 correct index distribution](../policy_network/vis_results/oracle_policy_top1_correct_index_distribution.png)
 ![Oracle top-3 correct index distribution](../policy_network/vis_results/oracle_policy_top3_correct_index_distribution.png)
 ![Oracle top-5 correct index distribution](../policy_network/vis_results/oracle_policy_top5_correct_index_distribution.png)
 
 Top-k correct-candidate entries:
 
-| Split | Positive samples | Top-3 entries | Top-5 entries |
-| --- | ---: | ---: | ---: |
-| train | `1796 / 3600` | `4517` | `6476` |
-| val | `588 / 1200` | `1456` | `2071` |
-| test | `612 / 1200` | `1494` | `2132` |
+| Split | Positive samples | Top-1 entries | Top-3 entries | Top-5 entries |
+| --- | ---: | ---: | ---: | ---: |
+| train | `1796 / 3600` | `1796` | `4517` | `6476` |
+| val | `588 / 1200` | `588` | `1456` | `2071` |
+| test | `612 / 1200` | `612` | `1494` | `2132` |

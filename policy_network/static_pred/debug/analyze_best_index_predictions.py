@@ -45,6 +45,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--batch_size", type=int, default=32)
     p.add_argument("--num_workers", type=int, default=4)
     p.add_argument("--device", type=str, default="cuda")
+    p.add_argument("--topk", type=int, default=5)
     p.add_argument(
         "--eval_ae_input_variant",
         type=str,
@@ -75,7 +76,12 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
+def evaluate_predictions(
+    model,
+    loader,
+    device: torch.device,
+    topk: int,
+) -> Dict[str, Any]:
     # 切换到 eval 模式，关闭 dropout / 使用 BN 的推理行为。
     model.eval()
 
@@ -85,7 +91,7 @@ def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
     y_true: List[int] = []
     y_pred: List[int] = []
     confidences: List[float] = []
-    top5_hits = 0
+    topk_hits = 0
 
     # 这里只做推理和分析，不需要反向传播。
     with torch.no_grad():
@@ -103,9 +109,9 @@ def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
             probs = torch.softmax(logits, dim=-1)
             confs, preds = torch.max(probs, dim=-1)
             # top-k 用于衡量“正确标签是否出现在前几个高概率候选里”。
-            # 如果类别总数少于 5，就退化成 top-num_classes。
-            topk = min(5, probs.shape[-1])
-            topk_confs, topk_preds = torch.topk(probs, k=topk, dim=-1)
+            # 如果类别总数少于 requested topk，就退化成 top-num_classes。
+            effective_topk = min(topk, probs.shape[-1])
+            topk_confs, topk_preds = torch.topk(probs, k=effective_topk, dim=-1)
 
             sample_ids = batch["sample_id"]
             for sample_id, target, pred, conf, topk_pred, topk_conf in zip(
@@ -117,12 +123,12 @@ def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
                 conf_float = float(conf.item())
                 topk_pred_list = [int(x) for x in topk_pred.tolist()]
                 topk_conf_list = [float(x) for x in topk_conf.tolist()]
-                top5_hit = target_int in topk_pred_list
+                topk_hit = target_int in topk_pred_list
                 y_true.append(target_int)
                 y_pred.append(pred_int)
                 confidences.append(conf_float)
-                top5_hits += int(top5_hit)
-                records.append({
+                topk_hits += int(topk_hit)
+                record = {
                     "sample_id": sample_id,
                     # 数据集中标注的最佳 index
                     "target_best_index": target_int,
@@ -130,11 +136,20 @@ def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
                     "pred_best_index": pred_int,
                     # top-1 概率，表示模型对自己当前预测的确信程度
                     "top1_confidence": conf_float,
-                    # top-5 候选及其概率，可以看 Lens label 是否只是没排到第 1。
-                    "top5_pred_indices": topk_pred_list,
-                    "top5_confidences": topk_conf_list,
-                    "top5_hit": top5_hit,
-                })
+                    # top-k 候选及其概率，可以看 label 是否只是没排到第 1。
+                    "topk_pred_indices": topk_pred_list,
+                    "topk_confidences": topk_conf_list,
+                    "topk_hit": topk_hit,
+                }
+                if topk == 5:
+                    record.update(
+                        {
+                            "top5_pred_indices": topk_pred_list,
+                            "top5_confidences": topk_conf_list,
+                            "top5_hit": topk_hit,
+                        }
+                    )
+                records.append(record)
 
     # 下面开始做整体统计，而不是单样本结果。
     total = len(records)
@@ -148,24 +163,30 @@ def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
     majority_label, majority_count = true_counter.most_common(1)[0]
     sorted_conf = sorted(confidences)
 
+    summary = {
+        "total": total,
+        # 为兼容旧脚本，acc 仍然表示 top-1 accuracy。
+        "correct": top1_correct,
+        "acc": 100.0 * top1_correct / max(1, total),
+        "top1_correct": top1_correct,
+        "top1_acc": 100.0 * top1_correct / max(1, total),
+        "topk": topk,
+        "topk_correct": topk_hits,
+        "topk_acc": 100.0 * topk_hits / max(1, total),
+        "majority_label": majority_label,
+        "majority_baseline_acc": 100.0 * majority_count / max(1, total),
+        "num_true_classes": len(true_counter),
+        "num_pred_classes": len(pred_counter),
+        "mean_confidence": sum(confidences) / max(1, len(confidences)),
+        "median_confidence": sorted_conf[len(sorted_conf) // 2] if sorted_conf else 0.0,
+        "high_conf_ratio_0_9": sum(c > 0.9 for c in confidences) / max(1, len(confidences)),
+    }
+    if topk == 5:
+        summary["top5_correct"] = topk_hits
+        summary["top5_acc"] = 100.0 * topk_hits / max(1, total)
+
     return {
-        "summary": {
-            "total": total,
-            # 为兼容旧脚本，acc 仍然表示 top-1 accuracy。
-            "correct": top1_correct,
-            "acc": 100.0 * top1_correct / max(1, total),
-            "top1_correct": top1_correct,
-            "top1_acc": 100.0 * top1_correct / max(1, total),
-            "top5_correct": top5_hits,
-            "top5_acc": 100.0 * top5_hits / max(1, total),
-            "majority_label": majority_label,
-            "majority_baseline_acc": 100.0 * majority_count / max(1, total),
-            "num_true_classes": len(true_counter),
-            "num_pred_classes": len(pred_counter),
-            "mean_confidence": sum(confidences) / max(1, len(confidences)),
-            "median_confidence": sorted_conf[len(sorted_conf) // 2] if sorted_conf else 0.0,
-            "high_conf_ratio_0_9": sum(c > 0.9 for c in confidences) / max(1, len(confidences)),
-        },
+        "summary": summary,
         # 真实标签分布 / 预测标签分布
         "true_best_index_distribution": dict(sorted(true_counter.items())),
         "pred_best_index_distribution": dict(sorted(pred_counter.items())),
@@ -179,6 +200,8 @@ def evaluate_predictions(model, loader, device: torch.device) -> Dict[str, Any]:
 
 def main() -> None:
     args = parse_args()
+    if args.topk < 1:
+        raise ValueError("--topk must be >= 1.")
     # 确保输出目录存在，避免写 json 时报错。
     os.makedirs(os.path.dirname(args.output_json) or ".", exist_ok=True)
 
@@ -250,13 +273,14 @@ def main() -> None:
     model.load_state_dict(state_dict)
 
     # 跑完整个数据集并生成统计结果。
-    result = evaluate_predictions(model, loader, device)
+    result = evaluate_predictions(model, loader, device, args.topk)
     result["config"] = {
         "checkpoint": args.checkpoint,
         "data_json": args.data_json,
         "manifest": args.manifest,
         "image_size": args.image_size,
         "device": str(device),
+        "topk": args.topk,
         "checkpoint_input_variant": checkpoint_input_variant,
         "checkpoint_ae_input_variant": checkpoint.get("ae_input_variant"),
         "checkpoint_env_input_variant": checkpoint.get("env_input_variant"),
