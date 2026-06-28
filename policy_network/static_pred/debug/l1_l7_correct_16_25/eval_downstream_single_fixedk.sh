@@ -6,7 +6,7 @@ EXPERIMENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${EXPERIMENT_DIR}/../../../.." && pwd)"
 
 PYTHON_BIN="${PYTHON_BIN:-/mnt/hdd1/yuyang/install/conda_envs/lens/bin/python}"
-EVAL_SCRIPT="${ROOT_DIR}/policy_network/static_pred/debug/analyze_topk_downstream_candidates.py"
+EVAL_SCRIPT="${ROOT_DIR}/policy_network/static_pred/debug/downstream_eval/analyze_topk_downstream_candidates.py"
 MANIFEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/manifest_all.json"
 LABEL_DIR="${LABEL_DIR:-${EXPERIMENT_DIR}/outputs/labels}"
 RESULTS_DIR="${RESULTS_DIR:-${EXPERIMENT_DIR}/outputs/results_single_fixedk}"

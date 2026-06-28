@@ -7,3 +7,5 @@ openclip_ds_policy/results/
 policy_network/static_pred/debug/l1_l7_correct_16_25/outputs
 *.csv
 outputs/
+.codex
+.agents

@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+TRAIN_SCRIPT="${ROOT_DIR}/policy_network/static_pred/train_policy.py"
+POLICY_BACKBONE="${POLICY_BACKBONE:-mobilenet_v3_small}"
+POLICY_INPUT_MODE="${POLICY_INPUT_MODE:-single}"
+POLICY_INPUT_VARIANT="${POLICY_INPUT_VARIANT:-random_noise_per_sample}"
+NOISE_SEED="${NOISE_SEED:-0}"
+RESULTS_DIR="${ROOT_DIR}/policy_network/results_${POLICY_INPUT_VARIANT}_${POLICY_BACKBONE}"
+MANIFEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/manifest_all.json"
+ENV_OPTION_ID="${ENV_OPTION_ID:-13}"
+
+LENS_TRAIN_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/policy_labels/policy_train_labels.json"
+LENS_VAL_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/policy_labels/policy_val_labels.json"
+LENS_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/policy_labels/policy_test_labels.json"
+
+ORACLE_TRAIN_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/oracle_policy_train_labels.json"
+ORACLE_VAL_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/oracle_policy_val_labels.json"
+ORACLE_TEST_JSON="${ROOT_DIR}/data/ImageNet-ES-Diverse/oracle_policy_labels/oracle_policy_test_labels.json"
+
+# # A. Lens label + full finetune + hard label + configured input variant
+# "${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+#   --train_json "${LENS_TRAIN_JSON}" \
+#   --val_json "${LENS_VAL_JSON}" \
+#   --test_json "${LENS_TEST_JSON}" \
+#   --save_dir "${RESULTS_DIR}/A_lens_ft_all_hard" \
+#   --manifest_json "${MANIFEST_JSON}" \
+#   --image_size 224 \
+#   --backbone "${POLICY_BACKBONE}" \
+#   --input_mode "${POLICY_INPUT_MODE}" \
+#   --input_variant "${POLICY_INPUT_VARIANT}" \
+#   --noise_seed "${NOISE_SEED}" \
+#   --env_option_id "${ENV_OPTION_ID}" \
+#   --batch_size 16 \
+#   --epochs 50 \
+#   --lr 2e-5 \
+#   --backbone_lr 1e-6 \
+#   --weight_decay 5e-4 \
+#   --device cuda \
+#   --num_workers 4 \
+#   --pretrained \
+#   --trainable_scope full_finetune \
+#   --loss_type hard_ce
+
+# # B. Lens label + head only + hard label + configured input variant
+# "${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+#   --train_json "${LENS_TRAIN_JSON}" \
+#   --val_json "${LENS_VAL_JSON}" \
+#   --test_json "${LENS_TEST_JSON}" \
+#   --save_dir "${RESULTS_DIR}/B_lens_head_hard" \
+#   --manifest_json "${MANIFEST_JSON}" \
+#   --image_size 224 \
+#   --backbone "${POLICY_BACKBONE}" \
+#   --input_mode "${POLICY_INPUT_MODE}" \
+#   --input_variant "${POLICY_INPUT_VARIANT}" \
+#   --noise_seed "${NOISE_SEED}" \
+#   --env_option_id "${ENV_OPTION_ID}" \
+#   --batch_size 16 \
+#   --epochs 50 \
+#   --lr 1e-4 \
+#   --backbone_lr 5e-6 \
+#   --weight_decay 5e-4 \
+#   --device cuda \
+#   --num_workers 4 \
+#   --pretrained \
+#   --trainable_scope head_only \
+#   --loss_type hard_ce
+
+# # C. Oracle label + head only + hard label + configured input variant
+# "${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+#   --train_json "${ORACLE_TRAIN_JSON}" \
+#   --val_json "${ORACLE_VAL_JSON}" \
+#   --test_json "${ORACLE_TEST_JSON}" \
+#   --save_dir "${RESULTS_DIR}/C_oracle_head_hard" \
+#   --manifest_json "${MANIFEST_JSON}" \
+#   --image_size 224 \
+#   --backbone "${POLICY_BACKBONE}" \
+#   --input_mode "${POLICY_INPUT_MODE}" \
+#   --input_variant "${POLICY_INPUT_VARIANT}" \
+#   --noise_seed "${NOISE_SEED}" \
+#   --env_option_id "${ENV_OPTION_ID}" \
+#   --batch_size 16 \
+#   --epochs 50 \
+#   --lr 1e-4 \
+#   --backbone_lr 5e-6 \
+#   --weight_decay 5e-4 \
+#   --device cuda \
+#   --num_workers 4 \
+#   --pretrained \
+#   --trainable_scope head_only \
+#   --loss_type hard_ce
+
+# D. Oracle label + head only + soft label + configured input variant
+"${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+  --train_json "${ORACLE_TRAIN_JSON}" \
+  --val_json "${ORACLE_VAL_JSON}" \
+  --test_json "${ORACLE_TEST_JSON}" \
+  --save_dir "${RESULTS_DIR}/D_oracle_head_soft" \
+  --manifest_json "${MANIFEST_JSON}" \
+  --image_size 224 \
+  --backbone "${POLICY_BACKBONE}" \
+  --input_mode "${POLICY_INPUT_MODE}" \
+  --input_variant "${POLICY_INPUT_VARIANT}" \
+  --noise_seed "${NOISE_SEED}" \
+  --env_option_id "${ENV_OPTION_ID}" \
+  --batch_size 16 \
+  --epochs 50 \
+  --lr 1e-4 \
+  --backbone_lr 5e-6 \
+  --weight_decay 5e-4 \
+  --device cuda \
+  --num_workers 4 \
+  --pretrained \
+  --trainable_scope head_only \
+  --loss_type soft_kl
+
+# # E. Oracle label + partial unfreeze + soft label + configured input variant
+# "${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+#   --train_json "${ORACLE_TRAIN_JSON}" \
+#   --val_json "${ORACLE_VAL_JSON}" \
+#   --test_json "${ORACLE_TEST_JSON}" \
+#   --save_dir "${RESULTS_DIR}/E_oracle_partial_soft" \
+#   --manifest_json "${MANIFEST_JSON}" \
+#   --image_size 224 \
+#   --backbone "${POLICY_BACKBONE}" \
+#   --input_mode "${POLICY_INPUT_MODE}" \
+#   --input_variant "${POLICY_INPUT_VARIANT}" \
+#   --noise_seed "${NOISE_SEED}" \
+#   --env_option_id "${ENV_OPTION_ID}" \
+#   --batch_size 16 \
+#   --epochs 50 \
+#   --lr 5e-5 \
+#   --backbone_lr 2e-6 \
+#   --weight_decay 5e-4 \
+#   --device cuda \
+#   --num_workers 4 \
+#   --pretrained \
+#   --resume_checkpoint "${RESULTS_DIR}/D_oracle_head_soft/best_checkpoint.pth" \
+#   --trainable_scope partial_unfreeze \
+#   --loss_type soft_kl
+
+# # F. Oracle label + full finetune + hard label + configured input variant
+# "${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+#   --train_json "${ORACLE_TRAIN_JSON}" \
+#   --val_json "${ORACLE_VAL_JSON}" \
+#   --test_json "${ORACLE_TEST_JSON}" \
+#   --save_dir "${RESULTS_DIR}/F_oracle_full_hard" \
+#   --manifest_json "${MANIFEST_JSON}" \
+#   --image_size 224 \
+#   --backbone "${POLICY_BACKBONE}" \
+#   --input_mode "${POLICY_INPUT_MODE}" \
+#   --input_variant "${POLICY_INPUT_VARIANT}" \
+#   --noise_seed "${NOISE_SEED}" \
+#   --env_option_id "${ENV_OPTION_ID}" \
+#   --batch_size 16 \
+#   --epochs 50 \
+#   --lr 2e-5 \
+#   --backbone_lr 1e-6 \
+#   --weight_decay 5e-4 \
+#   --device cuda \
+#   --num_workers 4 \
+#   --pretrained \
+#   --trainable_scope full_finetune \
+#   --loss_type hard_ce
+
+# # G. Oracle label + full finetune + soft label + configured input variant
+# "${PYTHON_BIN}" "${TRAIN_SCRIPT}" \
+#   --train_json "${ORACLE_TRAIN_JSON}" \
+#   --val_json "${ORACLE_VAL_JSON}" \
+#   --test_json "${ORACLE_TEST_JSON}" \
+#   --save_dir "${RESULTS_DIR}/G_oracle_full_soft" \
+#   --manifest_json "${MANIFEST_JSON}" \
+#   --image_size 224 \
+#   --backbone "${POLICY_BACKBONE}" \
+#   --input_mode "${POLICY_INPUT_MODE}" \
+#   --input_variant "${POLICY_INPUT_VARIANT}" \
+#   --noise_seed "${NOISE_SEED}" \
+#   --env_option_id "${ENV_OPTION_ID}" \
+#   --batch_size 16 \
+#   --epochs 50 \
+#   --lr 2e-5 \
+#   --backbone_lr 1e-6 \
+#   --weight_decay 5e-4 \
+#   --device cuda \
+#   --num_workers 4 \
+#   --pretrained \
+#   --trainable_scope full_finetune \
+#   --loss_type soft_kl
