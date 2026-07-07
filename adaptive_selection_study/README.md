@@ -177,3 +177,91 @@ Rough order:
 3. `extract_gtprob.py`, `build_feature_cache.py` — GT-class prob + 2048-d features.
 4. Analyses: `measure_visit_rank.py`, `analyze_confidence_hist.py`, `analyze_gate.py`, `analyze_luminance_match.py`, `analyze_fidelity.py`.
 5. Policies / scorers: `train_policy_grid.py` (A–G), `train_fidelity_policy.py` (H, I), `train_scorer.py` (independent), `train_relative_scorer.py` (relative).
+
+---
+
+## Appendix: how much of the 51% is actually recoverable?
+
+(Added after the main writeup. Nothing above is changed — this refines what
+"Oracle-S = 51%" really means.)
+
+**Oracle-S = 51% is the only *hard* ceiling** — it is the fraction of test scenes
+where at least one of the 27 configs classifies correctly; the other **49.0% are
+impossible** for any method. But 51% badly overstates what a real selector can
+reach, for two reasons: (1) it assumes an oracle that already knows the GT label,
+and (2) many "recoverable" scenes are recoverable only via a **low-confidence
+correct config** — a lucky guess the model itself is unsure about.
+
+### What our two signals reach (and an important caveat)
+
+Two deployable selectors and the fraction of **all 1,200 test scenes** on which
+each lands on a correct config:
+
+| Selector | picks | finds a correct config on |
+|---|---|---:|
+| confidence (VisiT) | argmax max-softmax | 32.2% |
+| feature-distance | argmin distance-to-clean | 40.8% |
+| either, picked perfectly | union of the two | 42.8% |
+| **missed by BOTH** | — | **8.2%** |
+
+**Caveat — 40.8% / 42.8% are NOT a "learnable ceiling."** They only describe the
+two signals we happened to test. A different signal (better features, a separate
+degradation model, an ensemble, cues the classifier's confidence doesn't capture)
+could recover some of the 8.2% "missed-by-both" scenes. The **only proven hard
+ceiling is Oracle-S (51%)**; the true learnable ceiling is unknown, bounded below
+by our best deployable method (relative scorer, **36.4%**) and above by 51%.
+
+### A confidence-grounded estimate of "reliably recoverable"
+
+Treat a scene as *reliably* recoverable only if it has a correct config the model
+is actually **confident** about (≥50%). Scenes whose only correct config fires
+**below 50% confidence** are lucky guesses — the correct classification is a fluke,
+statistically indistinguishable from the sea of wrong low-confidence captures, so
+no confidence-based selector can reliably find it.
+
+**Table 1 — max confidence of the correct config, per recoverable scene, in 5%
+buckets (% of all 1,200 test scenes):**
+
+| Correct config's max confidence | % of all test | Cumulative |
+|---|---:|---:|
+| [0, 5) | 0.42% | 0.42% |
+| [5, 10) | 3.08% | 3.50% |
+| [10, 15) | 2.67% | 6.17% |
+| [15, 20) | 1.50% | 7.67% |
+| [20, 25) | 1.83% | 9.50% |
+| [25, 30) | 1.00% | 10.50% |
+| [30, 35) | 1.50% | 12.00% |
+| [35, 40) | 2.08% | 14.08% |
+| [40, 45) | 1.17% | 15.25% |
+| [45, 50) | 1.25% | **16.50%** |
+| [50, 55) | 1.75% | 18.25% |
+| [55, 60) | 0.58% | 18.83% |
+| [60, 65) | 1.83% | 20.67% |
+| [65, 70) | 1.08% | 21.75% |
+| [70, 75) | 0.75% | 22.50% |
+| [75, 80) | 1.42% | 23.92% |
+| [80, 85) | 1.83% | 25.75% |
+| [85, 90) | 1.92% | 27.67% |
+| [90, 95) | 2.42% | 30.08% |
+| [95, 100) | **20.92%** | 51.00% |
+
+*(the other 49.0% — no correct config — is not in this table)*
+
+The cumulative column crosses **16.5% at the 50% mark**: that's the share of all
+test scenes whose *only* correct config is below 50% confidence. The big pile at
+**[95,100) = 20.9%** is the easy core; below 50% it's a thin, flat tail of flukes.
+
+**Table 2 — decomposition of all test scenes:**
+
+| Band | % of all test | Interpretation |
+|---|---:|---|
+| Impossible (no config correct) | **49.0%** | hard ceiling (Oracle-S = 51% recoverable) |
+| Lucky guess (correct config < 50% conf) | **16.5%** | probably unrecoverable |
+| Reliably recoverable (≥50%-confident correct config exists) | **34.5%** | defensible confidence-grounded target |
+
+**Takeaway:** don't benchmark against 51%. Only **34.5%** of scenes have a
+confident-correct config, and our best methods already sit right at it
+(fixed-config 34.0%, relative scorer 36.4%). The remaining **16.5%** are lucky
+guesses we treat as probably unrecoverable, and **49.0%** are impossible. The true
+learnable ceiling somewhere in (36.4%, 51%] remains open, but 34.5% is the honest,
+confidence-grounded anchor.
