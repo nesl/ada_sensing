@@ -152,15 +152,17 @@ def main():
 
     @torch.no_grad()
     def evaluate(dl):
-        model.eval(); dscorr = []; picks = []
+        model.eval(); dscorr = []; top5 = []; picks = []
         for img, g in dl:
             logits = model(img.to(dev))
             sel = logits.argmax(1).cpu().numpy()
-            for gg, s in zip(g.numpy(), sel):
+            t5 = logits.topk(5, dim=1).indices.cpu().numpy()
+            for gg, s, row in zip(g.numpy(), sel, t5):
                 dscorr.append(COR[gg, s]); picks.append(s)
+                top5.append(bool(COR[gg, row].any()))
         picks = np.array(picks)
-        # policy-index acc (vs hard fidelity label) + collapse check
-        return 100 * np.mean(dscorr), np.bincount(picks, minlength=27)
+        # (downstream top-1, top-5 contains-correct, argmax histogram)
+        return 100 * np.mean(dscorr), 100 * np.mean(top5), np.bincount(picks, minlength=27)
 
     best_va, best_te, best_ep = -1, -1, -1
     for ep in range(1, a.epochs + 1):
@@ -173,14 +175,12 @@ def main():
             else:
                 loss = F.cross_entropy(logits, HARD[g].to(dev))
             opt.zero_grad(); loss.backward(); opt.step(); tot += float(loss)
-        va, _ = evaluate(dl_va)
-        te, hist = evaluate(dl_te)
-        top = hist.argsort()[::-1][:3]
+        va, va5, _ = evaluate(dl_va)
+        te, te5, hist = evaluate(dl_te)
         if va > best_va:
-            best_va, best_te, best_ep = va, te, ep
-        print(f"ep{ep:02d} loss={tot/len(dl_tr):.4f} | val_DS={va:5.2f} test_DS={te:5.2f} "
-              f"| top3 configs={[f'p{t+1}:{hist[t]}' for t in top]}")
-    print(f"\nBEST (by val) @ep{best_ep}: val_DS={best_va:.2f}  test_DS={best_te:.2f}")
+            best_va, best_te, best_te5, best_ep = va, te, te5, ep
+        print(f"ep{ep:02d} loss={tot/len(dl_tr):.4f} | val_DS={va:5.2f} test_DS={te:5.2f} test_top5={te5:5.2f}")
+    print(f"\nBEST (by val) @ep{best_ep}: val_DS={best_va:.2f}  test_DS={best_te:.2f}  test_top5_contains_correct={best_te5:.2f}")
 
 if __name__ == "__main__":
     main()

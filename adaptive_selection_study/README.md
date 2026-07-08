@@ -265,3 +265,98 @@ confident-correct config, and our best methods already sit right at it
 guesses we treat as probably unrecoverable, and **49.0%** are impossible. The true
 learnable ceiling somewhere in (36.4%, 51%] remains open, but 34.5% is the honest,
 confidence-grounded anchor.
+
+---
+
+## Budgeted multi-shot: reaching the ceiling with far fewer captures
+
+The relative scorer (36.4%) beats a fixed config, but it needs **all 27 captures**
+at deploy — same cost as VisiT. Question: **can we reach that accuracy with fewer
+than 27 shots?** This combines the *sequential/budgeted-capture* idea with our
+*feature-distance* method, and the answer is **yes — ~8 curated shots suffice.**
+
+### Method
+
+One set-transformer over the configs **captured so far** produces two outputs:
+
+- **capture head** — which un-captured config to shoot next.
+- **selector head** — a relative quality score over the captured configs, for the
+  final pick.
+
+Feature-distance-to-clean is used **only as the training signal** — at deploy the
+model sees just the captured images' features and confidences (no clean image).
+
+Each captured config is a token: `Linear(2048→128)` on its ResNet-50 feature `+`
+`Linear(1→128)` on its confidence `+` a 27-way param-id embedding. Two
+`TransformerEncoder` layers (4 heads). The **capture head** reads the pooled
+context → 27-way logits (mask captured, argmax = next shot). The **selector head**
+is a per-token `Linear(→1)`; because it sits on top of self-attention, its score
+for a config depends on the others in the set (it is *relative*).
+
+### Training (both heads jointly, per batch)
+
+1. **Capture head — imitate the oracle order.** Sort each scene's 27 configs by
+   increasing feature-distance-to-clean (the oracle "best-first" order). Pick a
+   random prefix length `L`, feed the `L` best-so-far as the captured set, and
+   train (cross-entropy) to predict the `(L+1)`-th config — i.e. "given what
+   you've seen, what's the next-best config to shoot."
+2. **Selector head — subset-robust relative ranking.** Sample a **random** subset
+   of size `M ∈ [2,27]` per scene, and train the selector's scores with a listwise
+   `KL(log_softmax(scores) ‖ softmax(−distance/τ))`, `τ=0.05`. Random subsets make
+   the selector robust to *any* capture size (not just full 27-sets).
+
+Optimizer AdamW (lr 1e-3, wd 1e-4), batch 256 scenes, 60 epochs. The first shot is
+fixed to the **best fixed config on train** (a smart default).
+
+### Deployment (greedy rollout)
+
+Start at the fixed first config → encode captured set → capture head picks the next
+config → repeat until budget `K` → final pick = selector argmax over the `K`
+captured. Never uses the clean image.
+
+### Results (test, mean ± std over 3 seeds)
+
+| K (shots) | Downstream Top-1 | note |
+|---:|---:|---|
+| 1 | 34.00 ± 0.00 | = fixed config |
+| 3 | 35.31 ± 0.08 | |
+| 4 | 35.78 ± 0.42 | |
+| **8** | **36.33 ± 0.66** | **≈ all-27 relative scorer (36.4)** |
+| 10 | 36.92 ± 0.36 | |
+| **16** | **37.14 ± 0.21** | peak |
+| 20 | 36.94 ± 0.04 | |
+| 27 | 36.81 ± 0.08 | = the relative scorer on all 27 |
+
+**~8 curated shots match the all-27 relative scorer (36.4%); K=10–16 slightly
+exceed it (~37%).** That is the accuracy of the best all-27 selector at **≈30% of
+the capture cost** (and ≈15% at K=4 for ~35.8%).
+
+Recall / reliable-recall along the same rollout (single seed): raw recall (a correct
+config in hand) rises 34→51% with K, but **reliable-recall** (a *≥50%-confident*
+correct config in hand) **plateaus at ~34.5% by K≈10** — the extra shots only add
+low-confidence needles.
+
+### Why fewer shots is enough — and why it very slightly *beats* all-27
+
+- **It's the curation, not "fewer candidates".** Same selector on a *random* K-set
+  is far worse: at K=10, adaptive **37.3%** vs random **32.5%** (all-27 = 36.8%).
+  Random capture *underperforms* all-27; only the adaptive (feature-distance-guided)
+  capture matches/beats it. The win is capturing the *right* configs.
+- **The extra shots are unusable.** Reliable-recall plateaus ~34.5% by K≈10, so
+  everything captured after that is a low-confidence needle no selector can pick.
+- **The small "fewer > all-27" (~+0.3%) is a set-attention context effect, near
+  noise.** It is *not* distractor-avoidance — on the scenes where K=10 wins, 92% of
+  the time all-27's wrong pick was *also* in the K=10 set. Rather, the relative
+  selector is a set function, so a larger/noisier candidate pool slightly perturbs
+  its attention context; a smaller curated pool is a cleaner context. The effect is
+  ~0.3% (≈1σ across seeds) — real-but-tiny, not something to lean on.
+
+### Takeaway
+
+The budgeted policy's contribution is **efficiency**: reach the ~36–37% accuracy
+ceiling with **~8 adaptively-chosen shots instead of 27**. The ceiling itself is
+unchanged (~37%, set by reliable-recall), so the story here is *fewer captures for
+the same accuracy*, not higher accuracy.
+
+Code: `train_budget_policy.py` (accepts a seed arg; prints the accuracy-vs-K curve,
+recall/reliable-recall, and the adaptive-vs-random mechanism analysis).
