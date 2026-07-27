@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "imagenet-es-in-ae-reproduction"
+version = "0.1.0"
+description = "Paper-faithful reproduction of the IN and AE columns in Adaptive Camera Sensor for Vision Models."
+requires-python = ">=3.9"
+dependencies = [
+  "torch==2.0.1",
+  "torchvision==0.15.2",
+  "timm==0.9.7",
+  "numpy<2",
+  "Pillow>=9.5,<11",
+  "tqdm>=4.65",
+]
+
+[project.scripts]
+reproduce-in-ae = "reproduce_in_ae.evaluate:main"
+reproduce-in-ae-report = "reproduce_in_ae.report:main"
+reproduce-in-ae-audit = "reproduce_in_ae.audit_results:main"
+reproduce-in-ae-merge-shards = "reproduce_in_ae.merge_shards:main"
+reproduce-in-ae-validate = "reproduce_in_ae.validate_data:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

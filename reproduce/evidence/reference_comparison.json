@@ -1,0 +1,12 @@
+{
+  "original_root": "/mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES/es-test/sampled_tin_no_resize2",
+  "diverse_root": "/mnt/hdd1/yuyang/adaptive_sensing/Lenz/data/ImageNet-ES-Diverse/es-diverse-test/sampled_tin_no_resize2",
+  "original_files": 1000,
+  "diverse_files": 1000,
+  "same_relative_paths": true,
+  "same_bytes_at_relative_paths": true,
+  "same_content_multiset_per_class": true,
+  "only_original_paths": [],
+  "only_diverse_paths": [],
+  "changed_paths": []
+}

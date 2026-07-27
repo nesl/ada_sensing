@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: imagenet-es-in-ae-reproduction
+Version: 0.1.0
+Summary: Paper-faithful reproduction of the IN and AE columns in Adaptive Camera Sensor for Vision Models.
+Requires-Python: >=3.9
+Requires-Dist: torch==2.0.1
+Requires-Dist: torchvision==0.15.2
+Requires-Dist: timm==0.9.7
+Requires-Dist: Pillow<11,>=9.5
+Requires-Dist: tqdm>=4.65

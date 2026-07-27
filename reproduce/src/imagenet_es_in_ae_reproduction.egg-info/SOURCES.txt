@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+src/imagenet_es_in_ae_reproduction.egg-info/PKG-INFO
+src/imagenet_es_in_ae_reproduction.egg-info/SOURCES.txt
+src/imagenet_es_in_ae_reproduction.egg-info/dependency_links.txt
+src/imagenet_es_in_ae_reproduction.egg-info/entry_points.txt
+src/imagenet_es_in_ae_reproduction.egg-info/requires.txt
+src/imagenet_es_in_ae_reproduction.egg-info/top_level.txt
+src/reproduce_in_ae/__init__.py
+src/reproduce_in_ae/datasets.py
+src/reproduce_in_ae/evaluate.py
+src/reproduce_in_ae/models.py
+src/reproduce_in_ae/protocol.py
+src/reproduce_in_ae/report.py
+src/reproduce_in_ae/validate_data.py
+tests/test_protocol.py

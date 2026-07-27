@@ -1,0 +1,4 @@
+[console_scripts]
+reproduce-in-ae = reproduce_in_ae.evaluate:main
+reproduce-in-ae-report = reproduce_in_ae.report:main
+reproduce-in-ae-validate = reproduce_in_ae.validate_data:main

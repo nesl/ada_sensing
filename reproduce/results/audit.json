@@ -1,0 +1,262 @@
+{
+  "status": "pass",
+  "runtime_python": "/mnt/hdd1/yuyang/install/conda_envs/lens/bin/python",
+  "expected_production_artifacts": 36,
+  "actual_production_artifacts": 36,
+  "checked": [
+    {
+      "artifact": "resnet50__in.json",
+      "accuracy": 86.3,
+      "paper_value": 86.0,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet50__ae_imagenet_es.json",
+      "accuracy": 32.93,
+      "paper_value": 32.1,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet50__ae_imagenet_es_diverse.json",
+      "accuracy": 17.676666666666666,
+      "paper_value": 17.6,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet50_deepaugment_augmix__in.json",
+      "accuracy": 87.0,
+      "paper_value": 87.0,
+      "paper_rounding_match": true,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet50_deepaugment_augmix__ae_imagenet_es.json",
+      "accuracy": 54.34,
+      "paper_value": 53.2,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet50_deepaugment_augmix__ae_imagenet_es_diverse.json",
+      "accuracy": 36.36333333333334,
+      "paper_value": 36.2,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet152__in.json",
+      "accuracy": 87.6,
+      "paper_value": 87.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet152__ae_imagenet_es.json",
+      "accuracy": 41.9,
+      "paper_value": 41.1,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "resnet152__ae_imagenet_es_diverse.json",
+      "accuracy": 22.153333333333332,
+      "paper_value": 21.9,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "efficientnet_b0__in.json",
+      "accuracy": 88.2,
+      "paper_value": 88.2,
+      "paper_rounding_match": true,
+      "checks_passed": true
+    },
+    {
+      "artifact": "efficientnet_b0__ae_imagenet_es.json",
+      "accuracy": 52.33,
+      "paper_value": 51.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "efficientnet_b0__ae_imagenet_es_diverse.json",
+      "accuracy": 21.95,
+      "paper_value": 21.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "efficientnet_b3__in.json",
+      "accuracy": 88.3,
+      "paper_value": 88.1,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "efficientnet_b3__ae_imagenet_es.json",
+      "accuracy": 62.79,
+      "paper_value": 62.0,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "efficientnet_b3__ae_imagenet_es_diverse.json",
+      "accuracy": 33.83,
+      "paper_value": 33.6,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_t__in.json",
+      "accuracy": 90.7,
+      "paper_value": 90.6,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_t__ae_imagenet_es.json",
+      "accuracy": 54.71,
+      "paper_value": 54.1,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_t__ae_imagenet_es_diverse.json",
+      "accuracy": 26.586666666666666,
+      "paper_value": 26.5,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_s__in.json",
+      "accuracy": 91.8,
+      "paper_value": 91.7,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_s__ae_imagenet_es.json",
+      "accuracy": 60.6,
+      "paper_value": 59.9,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_s__ae_imagenet_es_diverse.json",
+      "accuracy": 31.09,
+      "paper_value": 30.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_b__in.json",
+      "accuracy": 91.9,
+      "paper_value": 91.9,
+      "paper_rounding_match": true,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_b__ae_imagenet_es.json",
+      "accuracy": 60.71,
+      "paper_value": 60.0,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "swin_v2_b__ae_imagenet_es_diverse.json",
+      "accuracy": 31.036666666666665,
+      "paper_value": 30.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "openclip_b__in.json",
+      "accuracy": 94.2,
+      "paper_value": 94.3,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "openclip_b__ae_imagenet_es.json",
+      "accuracy": 66.84,
+      "paper_value": 66.1,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "openclip_b__ae_imagenet_es_diverse.json",
+      "accuracy": 39.04333333333334,
+      "paper_value": 38.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "openclip_h__in.json",
+      "accuracy": 94.7,
+      "paper_value": 94.9,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "openclip_h__ae_imagenet_es.json",
+      "accuracy": 79.53,
+      "paper_value": 79.0,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "openclip_h__ae_imagenet_es_diverse.json",
+      "accuracy": 45.56,
+      "paper_value": 45.5,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "dinov2_b__in.json",
+      "accuracy": 93.6,
+      "paper_value": 93.6,
+      "paper_rounding_match": true,
+      "checks_passed": true
+    },
+    {
+      "artifact": "dinov2_b__ae_imagenet_es.json",
+      "accuracy": 74.96,
+      "paper_value": 74.5,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "dinov2_b__ae_imagenet_es_diverse.json",
+      "accuracy": 44.593333333333334,
+      "paper_value": 44.5,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "dinov2_g__in.json",
+      "accuracy": 94.7,
+      "paper_value": 94.7,
+      "paper_rounding_match": true,
+      "checks_passed": true
+    },
+    {
+      "artifact": "dinov2_g__ae_imagenet_es.json",
+      "accuracy": 84.63,
+      "paper_value": 84.3,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    },
+    {
+      "artifact": "dinov2_g__ae_imagenet_es_diverse.json",
+      "accuracy": 62.88333333333333,
+      "paper_value": 62.8,
+      "paper_rounding_match": false,
+      "checks_passed": true
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

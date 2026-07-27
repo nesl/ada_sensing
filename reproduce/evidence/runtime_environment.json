@@ -1,0 +1,17 @@
+{
+  "environment_policy": "Use the existing lens environment; never modify base.",
+  "python_executable": "/mnt/hdd1/yuyang/install/conda_envs/lens/bin/python",
+  "python": "3.10.19",
+  "torch": "2.10.0+cu128",
+  "torchvision": "0.25.0+cu128",
+  "timm": "1.0.24",
+  "numpy": "2.2.6",
+  "pillow": "12.1.1",
+  "cuda_runtime": "12.8",
+  "cuda_available": true,
+  "gpus": [
+    "NVIDIA GeForce RTX 3090",
+    "NVIDIA GeForce RTX 3090"
+  ],
+  "base_environment_modified": false
+}

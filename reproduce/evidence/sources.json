@@ -1,0 +1,77 @@
+{
+  "P1": {
+    "kind": "paper",
+    "description": "Adaptive Camera Sensor for Vision Models, Table 1",
+    "url": "https://openreview.net/pdf?id=He2FGdmsas"
+  },
+  "P2": {
+    "kind": "paper",
+    "description": "Adaptive Camera Sensor for Vision Models, Appendix E.3.1",
+    "url": "https://openreview.net/pdf?id=He2FGdmsas"
+  },
+  "P3": {
+    "kind": "paper",
+    "description": "Adaptive Camera Sensor for Vision Models, Appendix E.1 and Tables 7/9",
+    "url": "https://openreview.net/pdf?id=He2FGdmsas"
+  },
+  "P4": {
+    "kind": "paper",
+    "description": "Unexplored Faces of Robustness and Out-of-Distribution: Covariate Shifts in Environment Specifics, CVPR 2024, Table 3",
+    "url": "https://openaccess.thecvf.com/content/CVPR2024/papers/Baek_Unexplored_Faces_of_Robustness_and_Out-of-Distribution_Covariate_Shifts_in_Environment_CVPR_2024_paper.pdf"
+  },
+  "C1": {
+    "kind": "official_code_or_readme",
+    "description": "ImageNet-ES model mapping at the publication-era commit",
+    "url": "https://github.com/Edw2n/ImageNet-ES/blob/a7e9fa13e633a0dbe217d0cec88c20258beab9dc/configs/datasets.py"
+  },
+  "C2": {
+    "kind": "official_code_or_readme",
+    "description": "ImageNet-ES evaluation transform and dataset construction",
+    "url": "https://github.com/Edw2n/ImageNet-ES/blob/a7e9fa13e633a0dbe217d0cec88c20258beab9dc/utils/dg_param_controls/modules/datasets.py"
+  },
+  "C3": {
+    "kind": "official_code_or_readme",
+    "description": "ImageNet-ES model/checkpoint loader",
+    "url": "https://github.com/Edw2n/ImageNet-ES/blob/a7e9fa13e633a0dbe217d0cec88c20258beab9dc/utils/dg_param_controls/modules/pretrained_models.py"
+  },
+  "C4": {
+    "kind": "official_code_or_readme",
+    "description": "ImageNet-ES 200-way output filtering and accuracy",
+    "url": "https://github.com/Edw2n/ImageNet-ES/blob/a7e9fa13e633a0dbe217d0cec88c20258beab9dc/utils/dg_param_controls/modules/validate.py"
+  },
+  "C5": {
+    "kind": "official_code_or_readme",
+    "description": "ImageNet-ES official pinned package versions",
+    "url": "https://github.com/Edw2n/ImageNet-ES/blob/a7e9fa13e633a0dbe217d0cec88c20258beab9dc/requirements.txt"
+  },
+  "D1": {
+    "kind": "official_code_or_readme",
+    "description": "ImageNet-ES-Diverse official dataset card and file counts",
+    "url": "https://huggingface.co/datasets/edw2n/ImageNet-ES-Diverse/blob/main/README.md"
+  },
+  "D3": {
+    "kind": "official_code_or_readme",
+    "description": "Downloaded ImageNet-ES Hub snapshot daa6a83600cc4a13e8e59a6375987cd18981ff59; archive object etag f6d4b5f1291d773ea7088482f0e66761ec6c3487e6fba8d81fbf5e61769b1ba0",
+    "url": "https://huggingface.co/datasets/Edw2n/ImageNet-ES/commit/daa6a83600cc4a13e8e59a6375987cd18981ff59"
+  },
+  "H1": {
+    "kind": "official_code_or_readme",
+    "description": "DeepAugment+AugMix checkpoint publisher README",
+    "url": "https://github.com/hendrycks/imagenet-r"
+  },
+  "T1": {
+    "kind": "official_weight_config",
+    "description": "Torchvision IMAGENET1K_V1 weight enums and transforms",
+    "url": "https://docs.pytorch.org/vision/stable/models.html"
+  },
+  "T2": {
+    "kind": "official_weight_config",
+    "description": "timm OpenCLIP ImageNet-1K fine-tuned model cards/configs",
+    "url": "https://huggingface.co/timm"
+  },
+  "D2": {
+    "kind": "official_weight_config",
+    "description": "DINOv2 linear-classifier Hub implementation",
+    "url": "https://github.com/facebookresearch/dinov2/blob/7764ea0f912e53c92e82eb78a2a1631e92725fc8/dinov2/hub/classifiers.py"
+  }
+}

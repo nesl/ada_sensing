@@ -1,0 +1,70 @@
+[
+  {
+    "dataset": "in",
+    "issues": [],
+    "root_classes": 200,
+    "setting_counts": {
+      "in/reference": 1000
+    },
+    "status": "ok",
+    "total": 1000
+  },
+  {
+    "dataset": "ae_imagenet_es",
+    "issues": [],
+    "root_classes": 200,
+    "setting_counts": {
+      "l1/param_1": 1000,
+      "l1/param_2": 1000,
+      "l1/param_3": 1000,
+      "l1/param_4": 1000,
+      "l1/param_5": 1000,
+      "l5/param_1": 1000,
+      "l5/param_2": 1000,
+      "l5/param_3": 1000,
+      "l5/param_4": 1000,
+      "l5/param_5": 1000
+    },
+    "status": "ok",
+    "total": 10000
+  },
+  {
+    "dataset": "ae_imagenet_es_diverse",
+    "issues": [],
+    "root_classes": 200,
+    "setting_counts": {
+      "l1/param_1": 1000,
+      "l1/param_2": 1000,
+      "l1/param_3": 1000,
+      "l1/param_4": 1000,
+      "l1/param_5": 1000,
+      "l2/param_1": 1000,
+      "l2/param_2": 1000,
+      "l2/param_3": 1000,
+      "l2/param_4": 1000,
+      "l2/param_5": 1000,
+      "l3/param_1": 1000,
+      "l3/param_2": 1000,
+      "l3/param_3": 1000,
+      "l3/param_4": 1000,
+      "l3/param_5": 1000,
+      "l4/param_1": 1000,
+      "l4/param_2": 1000,
+      "l4/param_3": 1000,
+      "l4/param_4": 1000,
+      "l4/param_5": 1000,
+      "l6/param_1": 1000,
+      "l6/param_2": 1000,
+      "l6/param_3": 1000,
+      "l6/param_4": 1000,
+      "l6/param_5": 1000,
+      "l7/param_1": 1000,
+      "l7/param_2": 1000,
+      "l7/param_3": 1000,
+      "l7/param_4": 1000,
+      "l7/param_5": 1000
+    },
+    "status": "ok",
+    "total": 30000
+  }
+]

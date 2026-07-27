@@ -1,0 +1,100 @@
+{
+  "hash_algorithm": "sha256",
+  "note": "Hashes were computed from the exact local files used by the lens-environment evaluation. DINOv2 models have separate backbone and linear-head files.",
+  "models": {
+    "resnet50": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/resnet50-0676ba61.pth",
+        "bytes": 102530333,
+        "sha256": "0676ba61b6795bbe1773cffd859882e5e297624d384b6993f7c9e683e722fb8a"
+      }
+    ],
+    "resnet50_deepaugment_augmix": [
+      {
+        "file": "checkpoints/deepaugment_and_augmix.pth.tar",
+        "bytes": 204756921,
+        "sha256": "4a564cd7f62d77ed129e33792760d92f349247a6f7b5707be05fd1ec8148ac64"
+      }
+    ],
+    "resnet152": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/resnet152-394f9c45.pth",
+        "bytes": 241627721,
+        "sha256": "394f9c45966e3651a89bbb78a48410a6755854ce4a5ab64927cf1c7247f85e58"
+      }
+    ],
+    "efficientnet_b0": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/efficientnet_b0_rwightman-7f5810bc.pth",
+        "bytes": 21444401,
+        "sha256": "7f5810bc96def8f7552d5b7e68d53c4786f81167d28291b21c0d90e1fca14934"
+      }
+    ],
+    "efficientnet_b3": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/efficientnet_b3_rwightman-b3899882.pth",
+        "bytes": 49475909,
+        "sha256": "b3899882250c22946d0229d266049fcd133c169233530b36b9ffa7983988362f"
+      }
+    ],
+    "swin_v2_t": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/swin_v2_t-b137f0e2.pth",
+        "bytes": 113902449,
+        "sha256": "b137f0e2d744bbe1e82ad10ddb8dc938676cf04a4332eae66e45c2048ac09711"
+      }
+    ],
+    "swin_v2_s": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/swin_v2_s-637d8ceb.pth",
+        "bytes": 199936785,
+        "sha256": "637d8ceb3e2d62644d005f96e24280aeba5c433c03c7cc0f9d842d202b87fd9f"
+      }
+    ],
+    "swin_v2_b": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/swin_v2_b-781e5279.pth",
+        "bytes": 352711377,
+        "sha256": "781e527929786d129968a5de1d494f7d3d4daba99610f7df2c575ae98df77648"
+      }
+    ],
+    "openclip_b": [
+      {
+        "file": "checkpoints/huggingface/hub/models--timm--vit_base_patch16_clip_224.laion2b_ft_in1k/blobs/f681dfe264405b7c935eb8d6a1efda3b6e41c617ae99a5eb87d61de15894640b",
+        "bytes": 346287868,
+        "sha256": "f681dfe264405b7c935eb8d6a1efda3b6e41c617ae99a5eb87d61de15894640b"
+      }
+    ],
+    "openclip_h": [
+      {
+        "file": "checkpoints/huggingface/hub/models--timm--vit_huge_patch14_clip_224.laion2b_ft_in1k/blobs/376b9f51bfdbb8cd983e9edc6b74c2da7852b725dc991f6bd01d16b26f22063d",
+        "bytes": 2528226090,
+        "sha256": "376b9f51bfdbb8cd983e9edc6b74c2da7852b725dc991f6bd01d16b26f22063d"
+      }
+    ],
+    "dinov2_b": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/dinov2_vitb14_pretrain.pth",
+        "bytes": 346378731,
+        "sha256": "0b8b82f85de91b424aded121c7e1dcc2b7bc6d0adeea651bf73a13307fad8c73"
+      },
+      {
+        "file": "checkpoints/torch_hub/checkpoints/dinov2_vitb14_linear4_head.pth",
+        "bytes": 15365159,
+        "sha256": "4102f55746ac4037647f4d9f62882dededeb9ed67d0bf87e10b64e4066da05f8"
+      }
+    ],
+    "dinov2_g": [
+      {
+        "file": "checkpoints/torch_hub/checkpoints/dinov2_vitg14_pretrain.pth",
+        "bytes": 4546108579,
+        "sha256": "baf8467e50af277596bbbafa06887c177ee899ab46033649c383577d7e9309d3"
+      },
+      {
+        "file": "checkpoints/torch_hub/checkpoints/dinov2_vitg14_linear4_head.pth",
+        "bytes": 30725159,
+        "sha256": "ab61850e248839f9e242d7a5a1284feb3eace2dd109fa28f530a75d1bd17942a"
+      }
+    ]
+  }
+}

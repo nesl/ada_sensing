@@ -1,0 +1,18 @@
+name: imagenet-es-reproduce
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pytorch=2.0.1
+  - torchvision=0.15.2
+  - pytorch-cuda=11.8
+  - numpy<2
+  - pip
+  - pip:
+      - timm==0.9.7
+      - Pillow>=9.5,<11
+      - tqdm>=4.65
+      - gdown>=5,<6
+      - -e .
