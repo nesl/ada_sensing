@@ -82,6 +82,34 @@ PYTHONPATH=src python -m reproduce_in_ae.evaluate \
 files to `results/in_ae_reproduction.*`. Smoke-test results are intentionally
 excluded from the final reproduced columns.
 
+## Full-image AE luminance and digital-exposure sweep
+
+The follow-up exposure experiment analyzes only the original full-resolution
+AE JPEG pixels. It does not use resized or cropped images for luminance
+statistics. Generate the 40,000-image luminance index and plots with:
+
+```bash
+PYTHONPATH=src python -m reproduce_in_ae.analyze_luminance
+```
+
+The downstream sweep applies digital gain to the full decoded image before
+the locked model resize/crop. It evaluates 17 fixed-EV values and 12
+per-image target-mean-luminance values. The full two-GPU run is resumable:
+
+```bash
+cd /mnt/hdd1/yuyang/adaptive_sensing/Lenz
+bash reproduce/scripts/run_ae_exposure_raw.sh
+```
+
+Raw JSON and compressed prediction arrays are written to
+`reproduce/results/ae_exposure_raw/`. Re-running the command skips complete
+model × dataset × exposure artifacts. To inspect partial or completed output:
+
+```bash
+PYTHONPATH=reproduce/src python -m reproduce_in_ae.audit_exposure \
+  --allow-incomplete
+```
+
 For a model too large to evaluate efficiently on one GPU, deterministic
 interleaved shards can be run on separate devices and merged by exact
 `correct`/`total` counts:

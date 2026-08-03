@@ -2,8 +2,8 @@ checkpoints/
 downloads/
 .cache/
 .conda-env/
-results/raw/
-results/logs/
-results/diagnostics/
+results/
 __pycache__/
 *.pyc
+evidence/
+src/
