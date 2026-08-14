@@ -16,6 +16,7 @@ downstream recognition performance.
 | `policy_network/results/` | Checkpoints, JSON metrics, cached downstream results, and experiment summaries. |
 | `policy_network/vis_results/` | Generated plots and visualizations for option/index distributions and multiview probes. |
 | `openclip_ds_policy/` | OpenCLIP-based downstream experiments, including soft-label generation, baselines, policy evaluation, and xlsx result summaries. |
+| `reproduce/src/reproduce_in_ae/print_pdf.py` | Converts original ImageNet images into directly printable US Letter PDF pages. |
 
 ## Core Workflow
 
@@ -60,3 +61,28 @@ models, and DINOv2 through a shared `SensorPolicyNetwork` interface.
 - The code assumes a Python environment with PyTorch, torchvision, timm, and
   related scientific Python packages. OpenCLIP experiments additionally require
   `open_clip_torch`.
+
+## Letter-size ImageNet Print PDF
+
+The print utility follows the ImageNet-ES-Diverse paper layout: one source image
+per page, centered without cropping and with its aspect ratio preserved. The
+paper size is US Letter rather than A4, and the default image width is 60% of
+the page (5.1 inches). Run it from the repository root after installing the
+`reproduce` package dependencies:
+
+```bash
+PYTHONPATH=reproduce/src python -m reproduce_in_ae.print_pdf \
+  --output-pdf imagenet_letter_print.pdf
+```
+
+The default input is the 1,000-image
+`data/ImageNet-ES-Diverse/es-diverse-test/sampled_tin_no_resize2` reference set.
+Use `--input-dir` for another image tree, `--label none` for pages without file
+names, or `--max-pages-per-pdf 500` to split a large job. A CSV manifest is
+written beside the PDF. Existing outputs are protected unless `--overwrite` is
+passed.
+
+Print using **US Letter**, **Portrait**, **Actual Size / 100%**, with
+**Fit-to-page disabled**, and select the printer's **600 DPI** (or highest
+quality) mode. The PDF embeds the source raster data without applying ImageNet
+preprocessing or artificial 600-DPI upsampling.

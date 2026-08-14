@@ -19,6 +19,10 @@ from reproduce_in_ae.exposure import (
     srgb_u8_to_linear,
 )
 from reproduce_in_ae.evaluate_exposure import result_is_complete
+from reproduce_in_ae.report_exposure import (
+    bootstrap_intervals,
+    clustered_curve_values,
+)
 
 
 class ExposureTests(unittest.TestCase):
@@ -131,6 +135,24 @@ class ExposureTests(unittest.TestCase):
             )
             self.assertTrue(result_is_complete(json_path, npz_path, 2))
             self.assertFalse(result_is_complete(json_path, npz_path, 3))
+
+    def test_clustered_curve_values_keep_repeated_shots_together(self) -> None:
+        baseline = np.asarray([False, True, False, False], dtype=np.bool_)
+        adjusted = np.asarray([True, True, False, True], dtype=np.bool_)
+        clusters = np.asarray([0, 0, 1, 1], dtype=np.int32)
+        counts = np.asarray([2, 2], dtype=np.int64)
+        values = clustered_curve_values(adjusted, baseline, clusters, counts)
+        np.testing.assert_allclose(values, [0.5, 0.5])
+
+    def test_cluster_bootstrap_is_deterministic_and_contains_observed_delta(self) -> None:
+        curves = np.asarray([[0.0, 0.5, -0.5, 1.0]], dtype=np.float64)
+        low1, high1 = bootstrap_intervals(curves, replicates=500, seed=17)
+        low2, high2 = bootstrap_intervals(curves, replicates=500, seed=17)
+        np.testing.assert_array_equal(low1, low2)
+        np.testing.assert_array_equal(high1, high2)
+        observed_pp = 100.0 * curves.mean(axis=1)
+        self.assertLessEqual(low1[0], observed_pp[0])
+        self.assertGreaterEqual(high1[0], observed_pp[0])
 
 
 if __name__ == "__main__":

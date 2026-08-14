@@ -110,6 +110,13 @@ PYTHONPATH=reproduce/src python -m reproduce_in_ae.audit_exposure \
   --allow-incomplete
 ```
 
+After the strict raw audit passes, build all paired cluster-bootstrap tables,
+curves, luminance-bin diagnostics, and the final Markdown report with:
+
+```bash
+PYTHONPATH=reproduce/src python -m reproduce_in_ae.report_exposure
+```
+
 For a model too large to evaluate efficiently on one GPU, deterministic
 interleaved shards can be run on separate devices and merged by exact
 `correct`/`total` counts:
