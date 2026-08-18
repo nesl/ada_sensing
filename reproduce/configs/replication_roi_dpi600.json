@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "dataset": "dpi600",
+  "coordinate_convention": "PIL half-open box [left, top, right, bottom]",
+  "representative_relative_path": "b500/ae/ae_01.jpg",
+  "rois": [
+    {
+      "sample_id": "ILSVRC2012_val_00038504",
+      "zoom_id": "z001",
+      "box": [3080, 2080, 3400, 2320]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00038504",
+      "zoom_id": "z002",
+      "box": [2755, 1940, 3590, 2565]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00034232",
+      "zoom_id": "z001",
+      "box": [3075, 2085, 3395, 2325]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00034232",
+      "zoom_id": "z002",
+      "box": [2740, 1940, 3585, 2575]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00048338",
+      "zoom_id": "z001",
+      "box": [3105, 2045, 3350, 2365]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00048338",
+      "zoom_id": "z002",
+      "box": [2810, 1850, 3455, 2690]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00011857",
+      "zoom_id": "z001",
+      "box": [3060, 2085, 3380, 2325]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00011857",
+      "zoom_id": "z002",
+      "box": [2685, 1955, 3520, 2580]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00011526",
+      "zoom_id": "z001",
+      "box": [3070, 2085, 3390, 2332]
+    },
+    {
+      "sample_id": "ILSVRC2012_val_00011526",
+      "zoom_id": "z002",
+      "box": [2715, 1955, 3555, 2603]
+    }
+  ]
+}

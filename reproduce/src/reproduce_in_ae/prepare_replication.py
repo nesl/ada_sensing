@@ -17,6 +17,8 @@ from .replication import (
     default_cropped_root,
     default_roi_config,
     default_source_root,
+    deduplicate_capture_rows,
+    load_jsonl,
     load_source_capture_rows,
     parameter_key,
     sha256_file,
@@ -30,7 +32,7 @@ JPEG_SUBSAMPLING = 0
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create the approved 600-image cropped replication dataset."
+        description="Create an approved cropped replication dataset."
     )
     parser.add_argument("--source-root", type=Path, default=default_source_root())
     parser.add_argument("--output-root", type=Path, default=default_cropped_root())
@@ -133,6 +135,8 @@ def prepare_dataset(
     overwrite: bool = False,
 ) -> dict[str, Any]:
     source_rows = load_source_capture_rows(source_root)
+    raw_source_rows = load_jsonl(source_root / "captures.jsonl")
+    _deduplicated_rows, duplicate_attempt_rows = deduplicate_capture_rows(raw_source_rows)
     _representative, specs, config_payload = load_config(roi_config)
     roi_by_key = _roi_map(specs)
     observed_keys = {(str(row["sample_id"]), str(row["zoom_id"])) for row in source_rows}
@@ -166,6 +170,8 @@ def prepare_dataset(
         "source_root": str(source_root.resolve()),
         "output_root": str(output_root.resolve()),
         "source_manifest_sha256": sha256_file(source_root / "captures.jsonl"),
+        "source_manifest_rows": len(raw_source_rows),
+        "duplicate_attempt_rows_ignored": duplicate_attempt_rows,
         "crop_manifest_sha256": manifest_sha256,
         "roi_config_sha256": sha256_file(roi_config),
         "counts": counts,

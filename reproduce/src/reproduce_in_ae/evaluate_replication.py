@@ -17,7 +17,6 @@ from .datasets import paper_transform, rgb_loader
 from .models import load_model, parameter_count
 from .protocol import DINOV2_HUB_REF, MODEL_BY_KEY, iter_specs, parse_model_keys, project_root
 from .replication import (
-    EXPECTED_CAPTURE_COUNT,
     atomic_csv_dump,
     atomic_json_dump,
     closed_class_metadata,
@@ -281,10 +280,6 @@ def main() -> None:
     else:
         evaluated_total = len(full_dataset)
         dataset = full_dataset
-        if evaluated_total != EXPECTED_CAPTURE_COUNT:
-            raise ValueError(
-                f"Formal run requires {EXPECTED_CAPTURE_COUNT} images, found {evaluated_total}"
-            )
 
     for spec in iter_specs(parse_model_keys(args.models)):
         json_path, csv_path = _result_paths(args.result_root, spec.key, args.max_samples)

@@ -11,7 +11,6 @@ from PIL import ExifTags, Image
 
 from .audit_replication import audit_predictions
 from .replication import (
-    EXPECTED_CAPTURE_COUNT,
     REPLICATION_MODEL_KEYS,
     atomic_csv_dump,
     atomic_json_dump,
@@ -76,11 +75,12 @@ def load_prediction_payloads(
             f"{audit['incomplete_models']}"
         )
     payloads: dict[str, dict[str, Any]] = {}
+    expected_count = len(load_cropped_manifest(dataset_root))
     for model_key in model_keys:
         payload = _read_json(result_root / "predictions" / f"{model_key}.json")
         records = payload.get("records")
-        if not isinstance(records, list) or len(records) != EXPECTED_CAPTURE_COUNT:
-            raise ValueError(f"{model_key}: expected 600 records")
+        if not isinstance(records, list) or len(records) != expected_count:
+            raise ValueError(f"{model_key}: expected {expected_count} records")
         payloads[model_key] = payload
     return payloads
 
@@ -109,9 +109,11 @@ def model_top1_rows(
         for zoom_id in ZOOM_IDS:
             subset = [row for row in records if row["zoom_id"] == zoom_id]
             zoom_correct = sum(int(bool(row["correct"])) for row in subset)
-            if len(subset) != EXPECTED_CAPTURE_COUNT // 2:
+            expected_zoom_count = len(records) // len(ZOOM_IDS)
+            if len(subset) != expected_zoom_count:
                 raise ValueError(
-                    f"{model_key}/{zoom_id}: expected 300 records, found {len(subset)}"
+                    f"{model_key}/{zoom_id}: expected {expected_zoom_count} records, "
+                    f"found {len(subset)}"
                 )
             by_zoom.append(
                 {
@@ -165,11 +167,9 @@ def parameter_condition_tables(
         for zoom_id in ZOOM_IDS:
             zoom_records = [row for row in records if row["zoom_id"] == zoom_id]
             condition_keys = {_condition_key(row) for row in zoom_records}
-            if len(condition_keys) != EXPECTED_CONDITIONS_PER_ZOOM:
-                raise ValueError(
-                    f"{model_key}/{zoom_id}: expected 10 conditions, "
-                    f"found {len(condition_keys)}"
-                )
+            expected_conditions = len(condition_keys)
+            if expected_conditions == 0:
+                raise ValueError(f"{model_key}/{zoom_id}: no conditions")
             correct_counts: Counter[int] = Counter()
             for parameter_key in ALL_PARAMETER_KEYS:
                 subset = [
@@ -177,9 +177,10 @@ def parameter_condition_tables(
                     for row in zoom_records
                     if row["parameter_key"] == parameter_key
                 ]
-                if len(subset) != EXPECTED_CONDITIONS_PER_ZOOM:
+                if len(subset) != expected_conditions:
                     raise ValueError(
-                        f"{model_key}/{zoom_id}/{parameter_key}: expected 10 records, "
+                        f"{model_key}/{zoom_id}/{parameter_key}: expected "
+                        f"{expected_conditions} records, "
                         f"found {len(subset)}"
                     )
                 if len({_condition_key(row) for row in subset}) != len(subset):
@@ -195,9 +196,9 @@ def parameter_condition_tables(
                         "zoom_id": zoom_id,
                         **metadata[parameter_key],
                         "correct_conditions": correct,
-                        "total_conditions": EXPECTED_CONDITIONS_PER_ZOOM,
+                        "total_conditions": expected_conditions,
                         "top1_accuracy": _accuracy(
-                            correct, EXPECTED_CONDITIONS_PER_ZOOM
+                            correct, expected_conditions
                         ),
                     }
                 )
@@ -206,7 +207,7 @@ def parameter_condition_tables(
                 "paper_name": paper_name,
                 "zoom_id": zoom_id,
             }
-            for correct in range(EXPECTED_CONDITIONS_PER_ZOOM + 1):
+            for correct in range(expected_conditions + 1):
                 distribution_row[f"parameters_correct_{correct}"] = correct_counts[correct]
             distribution_row["parameter_total"] = sum(correct_counts.values())
             if distribution_row["parameter_total"] != len(ALL_PARAMETER_KEYS):
@@ -228,8 +229,9 @@ def downstream_baseline_tables(
             for row in records:
                 if row["zoom_id"] == zoom_id:
                     grouped[_condition_key(row)].append(row)
-            if len(grouped) != EXPECTED_CONDITIONS_PER_ZOOM:
-                raise ValueError(f"{model_key}/{zoom_id}: expected 10 conditions")
+            expected_conditions = len(grouped)
+            if expected_conditions == 0:
+                raise ValueError(f"{model_key}/{zoom_id}: no conditions")
 
             ae_correct = 0
             lens_correct = 0
@@ -302,7 +304,7 @@ def downstream_baseline_tables(
             fixed_results = [
                 (key, sum(hits)) for key, hits in sorted(manual_parameter_hits.items())
             ]
-            if any(len(hits) != EXPECTED_CONDITIONS_PER_ZOOM for hits in manual_parameter_hits.values()):
+            if any(len(hits) != expected_conditions for hits in manual_parameter_hits.values()):
                 raise ValueError(f"{model_key}/{zoom_id}: incomplete fixed parameters")
             oracle_f_key, oracle_f_correct = min(
                 fixed_results, key=lambda item: (-item[1], item[0])
@@ -313,28 +315,28 @@ def downstream_baseline_tables(
                     "paper_name": paper_name,
                     "zoom_id": zoom_id,
                     "ae_correct": ae_correct,
-                    "ae_total": EXPECTED_AE_PER_ZOOM,
-                    "ae_top1_accuracy": _accuracy(ae_correct, EXPECTED_AE_PER_ZOOM),
+                    "ae_total": 3 * expected_conditions,
+                    "ae_top1_accuracy": _accuracy(ae_correct, 3 * expected_conditions),
                     "lens_correct": lens_correct,
-                    "lens_total": EXPECTED_CONDITIONS_PER_ZOOM,
+                    "lens_total": expected_conditions,
                     "lens_top1_accuracy": _accuracy(
-                        lens_correct, EXPECTED_CONDITIONS_PER_ZOOM
+                        lens_correct, expected_conditions
                     ),
                     "oracle_s_correct": oracle_s_correct,
-                    "oracle_s_total": EXPECTED_CONDITIONS_PER_ZOOM,
+                    "oracle_s_total": expected_conditions,
                     "oracle_s_top1_accuracy": _accuracy(
-                        oracle_s_correct, EXPECTED_CONDITIONS_PER_ZOOM
+                        oracle_s_correct, expected_conditions
                     ),
                     "oracle_f_parameter_key": oracle_f_key,
                     "oracle_f_correct": oracle_f_correct,
-                    "oracle_f_total": EXPECTED_CONDITIONS_PER_ZOOM,
+                    "oracle_f_total": expected_conditions,
                     "oracle_f_top1_accuracy": _accuracy(
-                        oracle_f_correct, EXPECTED_CONDITIONS_PER_ZOOM
+                        oracle_f_correct, expected_conditions
                     ),
                     "random_expected_correct": random_expected_correct,
-                    "random_total": EXPECTED_CONDITIONS_PER_ZOOM,
+                    "random_total": expected_conditions,
                     "random_top1_accuracy": _accuracy(
-                        random_expected_correct, EXPECTED_CONDITIONS_PER_ZOOM
+                        random_expected_correct, expected_conditions
                     ),
                 }
             )
@@ -434,8 +436,11 @@ def extract_auto_exposure_parameters(
                 "focal_length_mm": _number(_exif_value(exif, "FocalLength")),
             }
         )
-    if len(output) != 60:
-        raise ValueError(f"Expected 60 AE captures, found {len(output)}")
+    expected_ae_count = sum(
+        1 for row in source_rows if row["exposure_mode"] == "auto"
+    )
+    if len(output) != expected_ae_count:
+        raise ValueError(f"Expected {expected_ae_count} AE captures, found {len(output)}")
 
     group_fields = (
         "zoom_id",
@@ -492,13 +497,16 @@ def write_markdown_report(
     distribution_tables: Mapping[str, Sequence[Mapping[str, Any]]],
     baseline_tables: Mapping[str, Sequence[Mapping[str, Any]]],
     ae_frequency_rows: Sequence[Mapping[str, Any]],
+    capture_count: int,
+    ae_capture_count: int,
+    conditions_per_zoom: int,
 ) -> None:
     sections = [
         "# Replicated capture analysis",
         "",
         "All accuracies use the closed 200-way label space. No plots are generated.",
         "",
-        "## Overall per-model Top-1 (600 images)",
+        f"## Overall per-model Top-1 ({capture_count} images)",
         "",
         _markdown_table(
             overall_rows,
@@ -512,10 +520,10 @@ def write_markdown_report(
         "",
         "## Acquisition baseline definitions",
         "",
-        "- AE: mean Top-1 over all 3 AE shots per condition (30 images per zoom).",
+        f"- AE: mean Top-1 over all 3 AE shots per condition ({3 * conditions_per_zoom} images per zoom).",
         "- Lens: select the manual candidate with maximum closed-200 Top-1 confidence.",
         "- Oracle-S: a condition is correct if any of its 27 manual candidates is correct.",
-        "- Oracle-F: best single fixed manual parameter over the 10 conditions in that zoom.",
+        f"- Oracle-F: best single fixed manual parameter over the {conditions_per_zoom} conditions in that zoom.",
         "- Random: expected accuracy under uniform random selection among 27 manual candidates.",
         "",
     ]
@@ -530,7 +538,7 @@ def write_markdown_report(
                         [("paper_name", "Model")]
                         + [
                             (f"parameters_correct_{correct}", str(correct))
-                            for correct in range(EXPECTED_CONDITIONS_PER_ZOOM + 1)
+                            for correct in range(conditions_per_zoom + 1)
                         ]
                         + [("parameter_total", "Total")]
                     ),
@@ -557,7 +565,7 @@ def write_markdown_report(
         [
             "## Auto-exposure EXIF summary",
             "",
-            f"The 60 AE captures contain {len(ae_frequency_rows)} distinct settings when grouped by zoom, lighting, aperture, shutter speed, ISO, exposure program, and exposure mode.",
+            f"The {ae_capture_count} AE captures contain {len(ae_frequency_rows)} distinct settings when grouped by zoom, lighting, aperture, shutter speed, ISO, exposure program, and exposure mode.",
             "",
             "See `auto_exposure_parameters.csv` for all captures and `auto_exposure_parameter_frequency.csv` for grouped settings.",
             "",
@@ -581,9 +589,14 @@ def run_analysis(
     score_tables, distribution_tables = parameter_condition_tables(payloads)
     baseline_tables, condition_tables = downstream_baseline_tables(payloads)
     ae_rows, ae_frequency_rows = extract_auto_exposure_parameters(source_root)
+    sample_count = len({str(row["sample_id"]) for row in manifest_rows})
+    light_count = len({str(row["light_id"]) for row in manifest_rows})
+    conditions_per_zoom = sample_count * light_count
 
     output_dir = result_root / "analysis"
-    atomic_csv_dump(overall_rows, output_dir / "model_top1_600.csv")
+    atomic_csv_dump(
+        overall_rows, output_dir / f"model_top1_{len(manifest_rows)}.csv"
+    )
     atomic_csv_dump(by_zoom_rows, output_dir / "model_top1_by_zoom.csv")
     atomic_csv_dump(ae_rows, output_dir / "auto_exposure_parameters.csv")
     atomic_csv_dump(
@@ -611,13 +624,16 @@ def run_analysis(
         "status": "complete",
         "protocol": {
             "label_space": "closed 200-way sorted ImageNet-ES WNIDs",
-            "conditions_per_zoom": EXPECTED_CONDITIONS_PER_ZOOM,
-            "conditions": "2 samples x 5 lighting levels",
+            "conditions_per_zoom": conditions_per_zoom,
+            "conditions": f"{sample_count} samples x {light_count} lighting levels",
             "parameters": "3 AE shots + 27 manual settings",
             "ae": "mean Top-1 over all 3 AE shots per condition",
             "lens": "manual candidate with maximum closed-200 Top-1 confidence",
             "oracle_s": "condition correct iff any of 27 manual candidates is correct",
-            "oracle_f": "best single fixed manual parameter over 10 conditions per zoom",
+            "oracle_f": (
+                "best single fixed manual parameter over "
+                f"{conditions_per_zoom} conditions per zoom"
+            ),
             "oracle_f_tie_break": "smallest parameter_key",
             "random": "expected accuracy under uniform random manual-parameter selection",
         },
@@ -638,6 +654,9 @@ def run_analysis(
         distribution_tables=distribution_tables,
         baseline_tables=baseline_tables,
         ae_frequency_rows=ae_frequency_rows,
+        capture_count=len(manifest_rows),
+        ae_capture_count=len(ae_rows),
+        conditions_per_zoom=conditions_per_zoom,
     )
     return summary
 

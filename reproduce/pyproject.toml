@@ -23,6 +23,7 @@ reproduce-in-ae-report = "reproduce_in_ae.report:main"
 reproduce-in-ae-audit = "reproduce_in_ae.audit_results:main"
 reproduce-in-ae-merge-shards = "reproduce_in_ae.merge_shards:main"
 reproduce-in-ae-print-pdf = "reproduce_in_ae.print_pdf:main"
+reproduce-in-ae-print-bitmap-pdf = "reproduce_in_ae.print_bitmap_pdf:main"
 reproduce-in-ae-validate = "reproduce_in_ae.validate_data:main"
 
 [tool.setuptools]

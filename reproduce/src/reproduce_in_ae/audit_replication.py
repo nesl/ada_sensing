@@ -11,7 +11,6 @@ import torch
 
 from .protocol import MODEL_BY_KEY, parse_model_keys, project_root
 from .replication import (
-    EXPECTED_CAPTURE_COUNT,
     EXPECTED_CLOSED_CLASSES,
     REPLICATION_MODEL_KEYS,
     atomic_json_dump,
@@ -90,14 +89,15 @@ def run_preflight(
     required_gpus: int,
 ) -> dict[str, Any]:
     rows = load_cropped_manifest(dataset_root)
+    expected_count = len(rows)
     closed_wnids, output_indices, _names = closed_class_metadata(
         reference_root, class_index_json
     )
     checkpoint_checks = _checkpoint_checks(checkpoint_dir, model_keys)
     cuda_count = torch.cuda.device_count() if torch.cuda.is_available() else 0
     checks = {
-        "dataset_count": len(rows) == EXPECTED_CAPTURE_COUNT,
-        "unique_capture_keys": len(capture_key_set(rows)) == EXPECTED_CAPTURE_COUNT,
+        "dataset_count": expected_count > 0,
+        "unique_capture_keys": len(capture_key_set(rows)) == expected_count,
         "closed_class_count": len(closed_wnids) == EXPECTED_CLOSED_CLASSES,
         "unique_output_indices": len(set(output_indices)) == EXPECTED_CLOSED_CLASSES,
         "checkpoints_present": all(
@@ -152,6 +152,7 @@ def audit_model_result(
         records = []
         errors.append("records_not_list")
     expected_keys = [str(row["capture_key"]) for row in manifest_rows]
+    expected_count = len(expected_keys)
     actual_keys = [str(row.get("capture_key", "")) for row in records]
     if payload.get("status") != "complete":
         errors.append("status_not_complete")
@@ -161,14 +162,14 @@ def audit_model_result(
         errors.append("formal_result_marked_smoke")
     if payload.get("dataset_manifest_sha256") != manifest_sha256:
         errors.append("dataset_manifest_sha256_mismatch")
-    if payload.get("total") != EXPECTED_CAPTURE_COUNT:
-        errors.append("payload_total_not_600")
-    if len(records) != EXPECTED_CAPTURE_COUNT:
-        errors.append("record_count_not_600")
+    if payload.get("total") != expected_count:
+        errors.append(f"payload_total_not_{expected_count}")
+    if len(records) != expected_count:
+        errors.append(f"record_count_not_{expected_count}")
     if actual_keys != expected_keys:
         errors.append("capture_key_order_or_content_mismatch")
 
-    if len(records) == EXPECTED_CAPTURE_COUNT:
+    if len(records) == expected_count:
         for index, row in enumerate(records):
             if row.get("model") != model_key:
                 errors.append(f"record_{index}_model_mismatch")
@@ -223,6 +224,7 @@ def audit_predictions(
     model_keys: Sequence[str],
 ) -> dict[str, Any]:
     manifest_rows = load_cropped_manifest(dataset_root)
+    expected_count = len(manifest_rows)
     manifest_sha256 = sha256_file(dataset_root / "crop_manifest.jsonl")
     predictions_dir = result_root / "predictions"
     model_results = [
@@ -244,7 +246,7 @@ def audit_predictions(
         "incomplete_models": incomplete,
         "complete_model_count": len(complete),
         "expected_model_count": len(model_keys),
-        "expected_records_per_model": EXPECTED_CAPTURE_COUNT,
+        "expected_records_per_model": expected_count,
         "model_results": model_results,
     }
 

@@ -15,6 +15,11 @@ EXPECTED_CAPTURE_COUNT = 600
 EXPECTED_AE_COUNT = 60
 EXPECTED_MANUAL_COUNT = 540
 EXPECTED_CLOSED_CLASSES = 200
+EXPECTED_ZOOM_IDS = ("z001", "z002")
+EXPECTED_LIGHT_IDS = ("b010", "b200", "b500", "b700", "b1000")
+EXPECTED_PARAMETER_KEYS = tuple(f"ae_{index:02d}" for index in range(1, 4)) + tuple(
+    f"p{index:03d}" for index in range(1, 28)
+)
 REPLICATION_MODEL_KEYS = tuple(spec.key for spec in MODEL_SPECS)
 
 
@@ -118,11 +123,32 @@ def parameter_key(row: Mapping[str, Any]) -> str:
     raise ValueError(f"Unknown exposure_mode in {row.get('capture_key')}: {mode}")
 
 
+def deduplicate_capture_rows(
+    rows: Sequence[Mapping[str, Any]],
+) -> tuple[list[dict[str, Any]], int]:
+    """Keep the final successful attempt for each key without changing key order."""
+    output: list[dict[str, Any]] = []
+    positions: dict[str, int] = {}
+    duplicates = 0
+    for source in rows:
+        row = dict(source)
+        key = str(row.get("capture_key", ""))
+        if not key:
+            raise ValueError("Every capture must contain capture_key")
+        if key in positions:
+            output[positions[key]] = row
+            duplicates += 1
+        else:
+            positions[key] = len(output)
+            output.append(row)
+    return output, duplicates
+
+
 def validate_capture_rows(
     rows: Sequence[Mapping[str, Any]],
-    expected_count: int = EXPECTED_CAPTURE_COUNT,
+    expected_count: int | None = None,
 ) -> dict[str, Any]:
-    if len(rows) != expected_count:
+    if expected_count is not None and len(rows) != expected_count:
         raise ValueError(f"Expected {expected_count} captures, found {len(rows)}")
     capture_keys = [str(row.get("capture_key", "")) for row in rows]
     if any(not key for key in capture_keys):
@@ -131,19 +157,53 @@ def validate_capture_rows(
         duplicates = sorted(key for key, count in Counter(capture_keys).items() if count > 1)
         raise ValueError(f"Duplicate capture keys: {duplicates[:5]}")
     statuses = Counter(str(row.get("capture_status")) for row in rows)
-    if statuses != {"captured": expected_count}:
+    if statuses != {"captured": len(rows)}:
         raise ValueError(f"Unexpected capture statuses: {dict(statuses)}")
-    mode_counts = Counter(str(row.get("exposure_mode")) for row in rows)
-    if expected_count == EXPECTED_CAPTURE_COUNT and mode_counts != {
-        "auto": EXPECTED_AE_COUNT,
-        "manual": EXPECTED_MANUAL_COUNT,
-    }:
-        raise ValueError(f"Unexpected exposure-mode counts: {dict(mode_counts)}")
+    sample_ids = sorted({str(row["sample_id"]) for row in rows})
+    zoom_ids = sorted({str(row["zoom_id"]) for row in rows})
+    light_ids = sorted({str(row["light_id"]) for row in rows})
+    if set(zoom_ids) != set(EXPECTED_ZOOM_IDS):
+        raise ValueError(f"Unexpected zoom IDs: {zoom_ids}")
+    if set(light_ids) != set(EXPECTED_LIGHT_IDS):
+        raise ValueError(f"Unexpected light IDs: {light_ids}")
+
+    condition_parameters: dict[tuple[str, str, str], set[str]] = {}
     for row in rows:
-        parameter_key(row)
+        condition = (str(row["sample_id"]), str(row["zoom_id"]), str(row["light_id"]))
+        condition_parameters.setdefault(condition, set()).add(parameter_key(row))
+    expected_conditions = len(sample_ids) * len(zoom_ids) * len(light_ids)
+    if len(condition_parameters) != expected_conditions:
+        raise ValueError(
+            f"Expected {expected_conditions} sample/zoom/light conditions, "
+            f"found {len(condition_parameters)}"
+        )
+    expected_parameters = set(EXPECTED_PARAMETER_KEYS)
+    incomplete = [
+        condition
+        for condition, parameters in condition_parameters.items()
+        if parameters != expected_parameters
+    ]
+    if incomplete:
+        raise ValueError(f"Incomplete parameter grids: {sorted(incomplete)[:5]}")
+
+    inferred_count = expected_conditions * len(EXPECTED_PARAMETER_KEYS)
+    if len(rows) != inferred_count:
+        raise ValueError(f"Expected complete grid of {inferred_count} captures, found {len(rows)}")
+    mode_counts = Counter(str(row.get("exposure_mode")) for row in rows)
+    expected_mode_counts = {
+        "auto": expected_conditions * 3,
+        "manual": expected_conditions * 27,
+    }
+    if mode_counts != expected_mode_counts:
+        raise ValueError(f"Unexpected exposure-mode counts: {dict(mode_counts)}")
     return {
         "captures": len(rows),
         "unique_capture_keys": len(set(capture_keys)),
+        "samples": len(sample_ids),
+        "zooms": len(zoom_ids),
+        "lights": len(light_ids),
+        "conditions": expected_conditions,
+        "parameters_per_condition": len(EXPECTED_PARAMETER_KEYS),
         "exposure_mode_counts": dict(sorted(mode_counts.items())),
         "sample_counts": dict(sorted(Counter(str(row["sample_id"]) for row in rows).items())),
         "zoom_counts": dict(sorted(Counter(str(row["zoom_id"]) for row in rows).items())),
@@ -155,7 +215,8 @@ def load_source_capture_rows(source_root: Path) -> list[dict[str, Any]]:
     manifest = source_root / "captures.jsonl"
     if not manifest.is_file():
         raise FileNotFoundError(f"Source capture manifest missing: {manifest}")
-    rows = load_jsonl(manifest)
+    raw_rows = load_jsonl(manifest)
+    rows, _duplicate_count = deduplicate_capture_rows(raw_rows)
     validate_capture_rows(rows)
     for row in rows:
         path = source_root / str(row["image_path"])
