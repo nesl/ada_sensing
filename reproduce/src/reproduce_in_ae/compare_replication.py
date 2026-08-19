@@ -538,6 +538,70 @@ def load_clean_reference_rows(
     return rows
 
 
+def load_diverse_ae_reference_rows(
+    output_dir: Path,
+    model_keys: Sequence[str],
+    sample_ids: Sequence[str],
+) -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
+    summary_path = output_dir / "diverse_ae_five_samples" / "baselines.json"
+    if not summary_path.is_file():
+        return [], None
+    summary = _read_json(summary_path)
+    if summary.get("status") != "complete":
+        raise ValueError("Five-sample ImageNet-ES-Diverse baselines are not complete")
+    if tuple(summary.get("models", ())) != tuple(model_keys):
+        raise ValueError("Diverse reference model order does not match comparison")
+    reference_sample_ids = tuple(
+        str(value) for value in summary.get("sample_ids", ())
+    )
+    if (
+        len(reference_sample_ids) != len(sample_ids)
+        or set(reference_sample_ids) != set(sample_ids)
+    ):
+        raise ValueError("Diverse reference sample IDs do not match comparison")
+
+    expected_conditions = len(sample_ids) * 6
+    if int(summary.get("condition_count", 0)) != expected_conditions:
+        raise ValueError("Diverse reference does not contain the expected conditions")
+    source_rows = summary.get("results")
+    if not isinstance(source_rows, list) or len(source_rows) != len(model_keys):
+        raise ValueError("Diverse reference summary has an invalid result table")
+
+    rows: list[dict[str, Any]] = []
+    for model_key, source in zip(model_keys, source_rows):
+        if source.get("model") != model_key:
+            raise ValueError("Diverse reference result model order is unstable")
+        row = dict(source)
+        for prefix, expected_total in (("ae", 5 * expected_conditions),) + tuple(
+            (prefix, expected_conditions)
+            for prefix in ("lens", "oracle_s", "oracle_f", "random")
+        ):
+            total = int(row[f"{prefix}_total"])
+            if total != expected_total:
+                raise ValueError(f"{model_key}: invalid {prefix} total")
+            accuracy = float(row[f"{prefix}_top1_accuracy"])
+            correct = float(
+                row[
+                    "random_expected_correct"
+                    if prefix == "random"
+                    else f"{prefix}_correct"
+                ]
+            )
+            if not abs(accuracy - 100.0 * correct / total) < 1e-9:
+                raise ValueError(f"{model_key}: inconsistent {prefix} accuracy")
+        rows.append(row)
+
+    saved_macro = summary.get("macro_mean")
+    if not isinstance(saved_macro, Mapping):
+        raise ValueError("Diverse reference macro mean is missing")
+    macro_row = dict(saved_macro)
+    for field in ACCURACY_FIELDS + GAP_FIELDS:
+        expected = sum(float(row[field]) for row in rows) / len(rows)
+        if not abs(float(macro_row[f"macro_{field}"]) - expected) < 1e-9:
+            raise ValueError(f"Diverse reference macro {field} is inconsistent")
+    return rows, macro_row
+
+
 def _markdown_table(
     rows: Sequence[Mapping[str, Any]], columns: Sequence[tuple[str, str]]
 ) -> str:
@@ -562,6 +626,8 @@ def write_report(
     path: Path,
     protocol_rows: Sequence[Mapping[str, Any]],
     clean_reference_rows: Sequence[Mapping[str, Any]],
+    diverse_ae_reference_rows: Sequence[Mapping[str, Any]],
+    diverse_ae_macro_row: Mapping[str, Any] | None,
     overview_rows: Sequence[Mapping[str, Any]],
     baseline_rows: Sequence[Mapping[str, Any]],
     delta_rows: Sequence[Mapping[str, Any]],
@@ -604,10 +670,41 @@ def write_report(
             if clean_reference_rows
             else []
         ),
+        *(
+            [
+                "## Five-sample ImageNet-ES-Diverse acquisition baselines",
+                "",
+                "These are the same five samples in the original ImageNet-ES-Diverse dataset, evaluated over all six available lighting environments (`l1`, `l2`, `l3`, `l4`, `l6`, `l7`). Each model sees 30 conditions, with five AE captures and 27 manual candidates per condition, using the same closed-200 label space and Resize(256) / CenterCrop(224) preprocessing.",
+                "",
+                _markdown_table(
+                    diverse_ae_reference_rows,
+                    (
+                        ("paper_name", "Model"),
+                        ("ae_top1_accuracy", "AE"),
+                        ("lens_top1_accuracy", "Lens"),
+                        ("oracle_s_top1_accuracy", "Oracle-S"),
+                        ("oracle_f_top1_accuracy", "Oracle-F"),
+                        ("oracle_f_parameter_key", "Oracle-F parameter"),
+                        ("random_top1_accuracy", "Random"),
+                        ("ae_minus_lens_pp", "AE-Lens"),
+                        ("ae_minus_oracle_s_pp", "AE-Oracle-S"),
+                        ("ae_minus_oracle_f_pp", "AE-Oracle-F"),
+                        ("ae_minus_random_pp", "AE-Random"),
+                    ),
+                ),
+                "",
+            ]
+            if diverse_ae_reference_rows and diverse_ae_macro_row is not None
+            else []
+        ),
         "## Four-group overview (12-model macro mean)",
         "",
+        "The first four rows are the replication groups; the fifth row is the matched five-sample reference from the original ImageNet-ES-Diverse dataset.",
+        "",
         _markdown_table(
-            overview_rows,
+            [*overview_rows, diverse_ae_macro_row]
+            if diverse_ae_macro_row is not None
+            else overview_rows,
             (
                 ("group_label", "Group"),
                 ("macro_ae_top1_accuracy", "AE"),
@@ -666,7 +763,7 @@ def write_report(
         [
             "## Baseline definitions",
             "",
-            "- AE: mean Top-1 over the three auto-exposure captures per condition.",
+            "- AE: mean Top-1 over the three auto-exposure captures per replication condition; the original-dataset reference uses its five AE captures per condition.",
             "- Lens: the manual candidate with maximum closed-200 classifier confidence.",
             "- Oracle-S: a condition is correct if any of its 27 manual candidates is correct.",
             "- Oracle-F: the best single fixed manual parameter within that print/zoom group; ties use the smallest parameter key.",
@@ -701,6 +798,9 @@ def run_comparison(
     clean_reference_rows = load_clean_reference_rows(
         output_dir, model_keys, sample_ids
     )
+    diverse_ae_reference_rows, diverse_ae_macro_row = load_diverse_ae_reference_rows(
+        output_dir, model_keys, sample_ids
+    )
 
     output_dir.mkdir(parents=True, exist_ok=True)
     baseline_path = output_dir / "four_group_baselines.csv"
@@ -715,6 +815,8 @@ def run_comparison(
         report_path,
         protocol_rows,
         clean_reference_rows,
+        diverse_ae_reference_rows,
+        diverse_ae_macro_row,
         overview_rows,
         baseline_rows,
         delta_rows,
@@ -733,6 +835,10 @@ def run_comparison(
         "parameters_per_condition": "3 AE + 27 manual",
         "protocol_groups": protocol_rows,
         "clean_reference": clean_reference_rows,
+        "diverse_ae_reference": {
+            "results": diverse_ae_reference_rows,
+            "macro_mean": diverse_ae_macro_row,
+        },
         "overview": overview_rows,
         "macro_deltas": [
             row for row in delta_rows if row["model"] == "macro_mean"
