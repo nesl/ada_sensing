@@ -85,6 +85,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--models", default="all")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--workers", type=int, default=8)
+    parser.add_argument("--expected-sample-count", type=int, default=EXPECTED_SAMPLE_COUNT)
     parser.add_argument("--seed", type=int, default=2481757)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--dinov2-hub-ref", default=DINOV2_HUB_REF)
@@ -95,12 +96,13 @@ def load_subset_rows(
     manual_dataset_root: Path,
     capture_root: Path,
     ae_root: Path,
+    expected_sample_count: int = EXPECTED_SAMPLE_COUNT,
 ) -> tuple[list[dict[str, Any]], str]:
     capture_rows = load_source_capture_rows(capture_root)
     sample_ids = tuple(dict.fromkeys(str(row["sample_id"]) for row in capture_rows))
-    if len(sample_ids) != EXPECTED_SAMPLE_COUNT:
+    if len(sample_ids) != expected_sample_count:
         raise ValueError(
-            f"Expected {EXPECTED_SAMPLE_COUNT} replication samples, found {len(sample_ids)}"
+            f"Expected {expected_sample_count} replication samples, found {len(sample_ids)}"
         )
 
     labels_path = manual_dataset_root / "labels.csv"
@@ -214,7 +216,10 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
     device = torch.device(args.device)
     model_keys = parse_model_keys(args.models)
     source_rows, dataset_sha256 = load_subset_rows(
-        args.manual_dataset_root, args.capture_root, args.ae_root
+        args.manual_dataset_root,
+        args.capture_root,
+        args.ae_root,
+        args.expected_sample_count,
     )
     dataset = DiverseAeSubsetDataset(source_rows)
     closed_wnids, output_indices, index_to_name = closed_class_metadata(
@@ -275,7 +280,7 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
         correct = sum(int(row["correct"]) for row in records)
         payload = {
             "status": "complete",
-            "dataset": "imagenet_es_diverse_ae_five_replication_samples",
+            "dataset": f"imagenet_es_diverse_ae_{args.expected_sample_count}_replication_samples",
             "dataset_sha256": dataset_sha256,
             "model": spec.key,
             "paper_name": spec.paper_name,
@@ -335,9 +340,9 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
     atomic_csv_dump(all_records, args.result_root / "per_image_predictions.csv")
     summary = {
         "status": "complete",
-        "dataset": "imagenet_es_diverse_ae_five_replication_samples",
+        "dataset": f"imagenet_es_diverse_ae_{args.expected_sample_count}_replication_samples",
         "dataset_sha256": dataset_sha256,
-        "sample_count": EXPECTED_SAMPLE_COUNT,
+        "sample_count": args.expected_sample_count,
         "sample_ids": list(dict.fromkeys(str(row["sample_id"]) for row in source_rows)),
         "lighting_ids": list(EXPECTED_LIGHT_IDS),
         "ae_parameters": list(EXPECTED_AE_PARAMETERS),

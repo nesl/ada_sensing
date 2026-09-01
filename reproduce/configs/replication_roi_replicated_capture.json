@@ -1,58 +1,308 @@
 {
-  "schema_version": 1,
-  "dataset": "replicated_capture",
   "coordinate_convention": "PIL half-open box [left, top, right, bottom]",
+  "dataset": "replicated_capture",
   "representative_relative_path": "b500/ae/ae_01.jpg",
   "rois": [
     {
+      "box": [
+        2240,
+        1470,
+        4220,
+        2965
+      ],
       "sample_id": "ILSVRC2012_val_00038504",
-      "zoom_id": "z001",
-      "box": [2240, 1470, 4220, 2965]
+      "zoom_id": "z001"
     },
     {
+      "box": [
+        550,
+        350,
+        5780,
+        4245
+      ],
       "sample_id": "ILSVRC2012_val_00038504",
-      "zoom_id": "z002",
-      "box": [550, 350, 5780, 4245]
+      "zoom_id": "z002"
     },
     {
+      "box": [
+        2250,
+        1460,
+        4235,
+        2965
+      ],
       "sample_id": "ILSVRC2012_val_00034232",
-      "zoom_id": "z001",
-      "box": [2250, 1460, 4235, 2965]
+      "zoom_id": "z001"
     },
     {
+      "box": [
+        590,
+        360,
+        5850,
+        4235
+      ],
       "sample_id": "ILSVRC2012_val_00034232",
-      "zoom_id": "z002",
-      "box": [590, 360, 5850, 4235]
+      "zoom_id": "z002"
     },
     {
+      "box": [
+        2220,
+        1015,
+        4150,
+        3535
+      ],
       "sample_id": "ILSVRC2012_val_00048338",
-      "zoom_id": "z001",
-      "box": [2220, 1015, 4150, 3535]
+      "zoom_id": "z001"
     },
     {
+      "box": [
+        1640,
+        380,
+        4625,
+        4295
+      ],
       "sample_id": "ILSVRC2012_val_00048338",
-      "zoom_id": "z002",
-      "box": [1640, 380, 4625, 4295]
+      "zoom_id": "z002"
     },
     {
+      "box": [
+        2220,
+        1525,
+        4145,
+        2970
+      ],
       "sample_id": "ILSVRC2012_val_00011857",
-      "zoom_id": "z001",
-      "box": [2220, 1525, 4145, 2970]
+      "zoom_id": "z001"
     },
     {
+      "box": [
+        425,
+        430,
+        5600,
+        4295
+      ],
       "sample_id": "ILSVRC2012_val_00011857",
-      "zoom_id": "z002",
-      "box": [425, 430, 5600, 4295]
+      "zoom_id": "z002"
     },
     {
+      "box": [
+        2280,
+        1455,
+        4200,
+        2940
+      ],
       "sample_id": "ILSVRC2012_val_00011526",
-      "zoom_id": "z001",
-      "box": [2280, 1455, 4200, 2940]
+      "zoom_id": "z001"
     },
     {
+      "box": [
+        565,
+        220,
+        5760,
+        4240
+      ],
       "sample_id": "ILSVRC2012_val_00011526",
-      "zoom_id": "z002",
-      "box": [565, 220, 5760, 4240]
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2285,
+        1480,
+        4185,
+        2930
+      ],
+      "sample_id": "ILSVRC2012_val_00023874",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        565,
+        325,
+        5755,
+        4215
+      ],
+      "sample_id": "ILSVRC2012_val_00023874",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2295,
+        1500,
+        4185,
+        2920
+      ],
+      "sample_id": "ILSVRC2012_val_00028145",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        585,
+        365,
+        5800,
+        4235
+      ],
+      "sample_id": "ILSVRC2012_val_00028145",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2285,
+        1490,
+        4190,
+        2925
+      ],
+      "sample_id": "ILSVRC2012_val_00005381",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        585,
+        295,
+        5765,
+        4220
+      ],
+      "sample_id": "ILSVRC2012_val_00005381",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2250,
+        1230,
+        4190,
+        3155
+      ],
+      "sample_id": "ILSVRC2012_val_00031428",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        1060,
+        105,
+        5265,
+        4350
+      ],
+      "sample_id": "ILSVRC2012_val_00031428",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2280,
+        1240,
+        4200,
+        3155
+      ],
+      "sample_id": "ILSVRC2012_val_00030373",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        1130,
+        215,
+        5250,
+        4290
+      ],
+      "sample_id": "ILSVRC2012_val_00030373",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2285,
+        1240,
+        4185,
+        3180
+      ],
+      "sample_id": "ILSVRC2012_val_00048182",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        1110,
+        235,
+        5265,
+        4340
+      ],
+      "sample_id": "ILSVRC2012_val_00048182",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2290,
+        1485,
+        4215,
+        2920
+      ],
+      "sample_id": "ILSVRC2012_val_00002331",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        625,
+        315,
+        5810,
+        4170
+      ],
+      "sample_id": "ILSVRC2012_val_00002331",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2290,
+        1345,
+        4180,
+        3055
+      ],
+      "sample_id": "ILSVRC2012_val_00043088",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        950,
+        195,
+        5390,
+        4250
+      ],
+      "sample_id": "ILSVRC2012_val_00043088",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2300,
+        1240,
+        4190,
+        3155
+      ],
+      "sample_id": "ILSVRC2012_val_00020614",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        1150,
+        170,
+        5300,
+        4300
+      ],
+      "sample_id": "ILSVRC2012_val_00020614",
+      "zoom_id": "z002"
+    },
+    {
+      "box": [
+        2275,
+        1235,
+        4195,
+        3155
+      ],
+      "sample_id": "ILSVRC2012_val_00015548",
+      "zoom_id": "z001"
+    },
+    {
+      "box": [
+        1145,
+        190,
+        5240,
+        4290
+      ],
+      "sample_id": "ILSVRC2012_val_00015548",
+      "zoom_id": "z002"
     }
-  ]
+  ],
+  "schema_version": 1
 }

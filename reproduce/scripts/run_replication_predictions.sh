@@ -11,6 +11,7 @@ NUM_WORKERS="${NUM_WORKERS:-8}"
 GPU0="${GPU0:-0}"
 GPU1="${GPU1:-1}"
 RESET_RESULTS="${RESET_RESULTS:-0}"
+RESUME_RESULTS="${RESUME_RESULTS:-0}"
 
 GPU0_MODELS="resnet50,resnet152,efficientnet_b0,swin_v2_t,swin_v2_b,openclip_h"
 GPU1_MODELS="resnet50_deepaugment_augmix,efficientnet_b3,swin_v2_s,openclip_b,dinov2_b,dinov2_g"
@@ -29,6 +30,14 @@ elif [[ "${RESET_RESULTS}" != "0" ]]; then
   echo "RESET_RESULTS must be 0 or 1" >&2
   exit 2
 fi
+if [[ "${RESUME_RESULTS}" != "0" && "${RESUME_RESULTS}" != "1" ]]; then
+  echo "RESUME_RESULTS must be 0 or 1" >&2
+  exit 2
+fi
+if [[ "${RESET_RESULTS}" == "1" && "${RESUME_RESULTS}" == "1" ]]; then
+  echo "RESET_RESULTS=1 cannot be combined with RESUME_RESULTS=1" >&2
+  exit 2
+fi
 
 mkdir -p "${RESULT_ROOT}"
 
@@ -40,12 +49,21 @@ run_dataset() {
   local cropped_root="${WORKSPACE_DIR}/data/replication/${dataset_name}_roi"
   local roi_review_root="${dataset_result_root}/roi_review"
   local crop_overwrite=()
+  local evaluation_mode=()
 
   if [[ "${RESET_RESULTS}" == "1" ]]; then
     crop_overwrite=(--overwrite)
   fi
+  if [[ "${RESUME_RESULTS}" == "1" ]]; then
+    evaluation_mode=(--resume)
+  fi
 
   mkdir -p "${dataset_result_root}/logs"
+
+  "${PYTHON_BIN}" -m reproduce_in_ae.review_replication_roi \
+    --dataset "${dataset_name}" \
+    --config "${roi_config}" \
+    --check-approval
 
   "${PYTHON_BIN}" -m reproduce_in_ae.preview_replication_roi \
     --source-root "${source_root}" \
@@ -71,6 +89,7 @@ run_dataset() {
     --result-root "${dataset_result_root}" \
     --device "cuda:${GPU0}" \
     --workers "${NUM_WORKERS}" \
+    "${evaluation_mode[@]}" \
     >"${dataset_result_root}/logs/gpu${GPU0}.log" 2>&1 &
   local pid0=$!
 
@@ -80,6 +99,7 @@ run_dataset() {
     --result-root "${dataset_result_root}" \
     --device "cuda:${GPU1}" \
     --workers "${NUM_WORKERS}" \
+    "${evaluation_mode[@]}" \
     >"${dataset_result_root}/logs/gpu${GPU1}.log" 2>&1 &
   local pid1=$!
 
@@ -103,7 +123,9 @@ run_dataset() {
     --required-gpus 2 \
     --require-complete
 
-  echo "${dataset_name} predictions complete: 12 models x 1500 records."
+  local record_count
+  record_count="$(wc -l < "${cropped_root}/crop_manifest.jsonl")"
+  echo "${dataset_name} predictions complete: 12 models x ${record_count} records."
 }
 
 run_dataset \

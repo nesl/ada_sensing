@@ -23,9 +23,9 @@ run_individual_analysis() {
 run_individual_analysis "replicated_capture"
 run_individual_analysis "dpi600"
 
-"${PYTHON_BIN}" -m reproduce_in_ae.compare_replication \
+"${PYTHON_BIN}" -m reproduce_in_ae.compare_fifteen_samples \
   --workspace-root "${WORKSPACE_DIR}" \
   --result-root "${RESULT_ROOT}" \
   --models "${MODELS}"
 
-echo "Four-group analysis complete: ${RESULT_ROOT}/comparison/report.md"
+echo "Five-group analysis complete: ${RESULT_ROOT}/comparison/fifteen_samples_analysis/report.md"

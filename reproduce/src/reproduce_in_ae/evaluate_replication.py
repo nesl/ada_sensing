@@ -24,6 +24,7 @@ from .replication import (
     default_cropped_root,
     default_reference_root,
     default_result_root,
+    load_jsonl,
     load_cropped_manifest,
     sha256_file,
 )
@@ -99,6 +100,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=2481757)
     parser.add_argument("--max-samples", type=int, default=0)
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help=(
+            "Reuse validated records whose capture_key is present in the current "
+            "manifest and infer only missing captures."
+        ),
+    )
     parser.add_argument("--dinov2-hub-ref", default=DINOV2_HUB_REF)
     return parser.parse_args()
 
@@ -148,6 +157,166 @@ def _valid_completed_result(
             payload.get("is_smoke_test") is is_smoke_test,
         )
     )
+
+
+def _load_resume_payload(path: Path, model_key: str) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"Cannot resume from invalid JSON {path}: {error}") from error
+    records = payload.get("records")
+    if payload.get("status") != "complete":
+        raise ValueError(f"Cannot resume from incomplete result: {path}")
+    if payload.get("model") != model_key:
+        raise ValueError(f"Cannot resume {model_key} from mismatched result: {path}")
+    if payload.get("is_smoke_test") is not False:
+        raise ValueError(f"Cannot resume from a smoke-test result: {path}")
+    if not isinstance(records, list):
+        raise ValueError(f"Cannot resume from result without record list: {path}")
+    return payload
+
+
+def reusable_records(
+    payload: Mapping[str, Any] | None,
+    model_key: str,
+    source_rows: Sequence[Mapping[str, Any]],
+    closed_wnids: Sequence[str],
+    output_indices: Sequence[int],
+    resume_source_rows: Sequence[Mapping[str, Any]] | None = None,
+) -> dict[str, dict[str, Any]]:
+    if payload is None:
+        return {}
+    current_by_key = {str(row["capture_key"]): row for row in source_rows}
+    historical_by_key = {
+        str(row["capture_key"]): row
+        for row in (resume_source_rows if resume_source_rows is not None else source_rows)
+    }
+    closed_position = {wnid: index for index, wnid in enumerate(closed_wnids)}
+    output: dict[str, dict[str, Any]] = {}
+    records = payload.get("records")
+    if not isinstance(records, list):
+        raise ValueError("Resume payload records must be a list")
+    direct_fields = (
+        "sample_id",
+        "zoom_id",
+        "light_id",
+        "light_intensity",
+        "light_percent",
+        "exposure_mode",
+        "parameter_key",
+        "ae_shot",
+        "parameter_id",
+        "aperture",
+        "shutter_speed",
+        "iso",
+        "cropped_image_path",
+    )
+    for record_index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            raise ValueError(f"Resume record {record_index} is not an object")
+        key = str(record.get("capture_key", ""))
+        if not key or key in output:
+            raise ValueError(f"Resume result has missing/duplicate capture key: {key!r}")
+        source = current_by_key.get(key)
+        if source is None:
+            raise ValueError(f"Resume capture is absent from current manifest: {key}")
+        historical = historical_by_key.get(key)
+        if historical is None:
+            raise ValueError(f"Resume capture is absent from its source manifest: {key}")
+        crop_identity_fields = (
+            "source_image_path",
+            "source_sha256",
+            "roi_box",
+            "cropped_image_path",
+            "cropped_image_size",
+            "cropped_sha256",
+        )
+        if any(historical.get(field) != source.get(field) for field in crop_identity_fields):
+            # The capture key still exists, but its source pixels or ROI changed. It must
+            # be inferred again rather than treated as a reusable prediction.
+            continue
+        if record.get("model") != model_key:
+            raise ValueError(f"Resume record model mismatch for {key}")
+        for field in direct_fields:
+            if record.get(field) != source.get(field):
+                raise ValueError(f"Resume metadata mismatch for {key}: {field}")
+        target_wnid = str(source["wnid"])
+        target_closed = closed_position.get(target_wnid)
+        if target_closed is None:
+            raise ValueError(f"Resume target is outside closed label space: {key}")
+        expected_target = {
+            "target_imagenet_index": int(source["class_index"]),
+            "target_closed_index": target_closed,
+            "target_wnid": target_wnid,
+            "target_class_name": str(source["class_name"]),
+        }
+        for field, expected in expected_target.items():
+            if record.get(field) != expected:
+                raise ValueError(f"Resume target mismatch for {key}: {field}")
+        predicted_closed = record.get("top1_closed_index")
+        predicted_imagenet = record.get("top1_imagenet_index")
+        confidence = record.get("top1_confidence")
+        if (
+            not isinstance(predicted_closed, int)
+            or not 0 <= predicted_closed < len(closed_wnids)
+            or predicted_imagenet != int(output_indices[predicted_closed])
+        ):
+            raise ValueError(f"Resume prediction index mismatch for {key}")
+        if not isinstance(confidence, (int, float)) or not 0.0 <= float(confidence) <= 1.0:
+            raise ValueError(f"Resume confidence is invalid for {key}")
+        if record.get("correct") is not (predicted_closed == target_closed):
+            raise ValueError(f"Resume correctness mismatch for {key}")
+        output[key] = dict(record)
+    return output
+
+
+def resume_source_rows(
+    payload: Mapping[str, Any] | None,
+    dataset_root: Path,
+    current_rows: Sequence[Mapping[str, Any]],
+    current_manifest_sha256: str,
+) -> Sequence[Mapping[str, Any]] | None:
+    if payload is None:
+        return None
+    prior_hash = str(payload.get("dataset_manifest_sha256", ""))
+    if not prior_hash:
+        raise ValueError("Resume result does not identify its source dataset manifest")
+    if prior_hash == current_manifest_sha256:
+        return current_rows
+    historical = dataset_root / "manifest_history" / f"{prior_hash}.jsonl"
+    if not historical.is_file():
+        raise ValueError(
+            f"Cannot safely resume: historical crop manifest is missing: {historical}"
+        )
+    if sha256_file(historical) != prior_hash:
+        raise ValueError(f"Historical crop manifest hash mismatch: {historical}")
+    return load_jsonl(historical)
+
+
+def merge_records(
+    source_rows: Sequence[Mapping[str, Any]],
+    reused: Mapping[str, Mapping[str, Any]],
+    inferred: Sequence[Mapping[str, Any]],
+) -> list[dict[str, Any]]:
+    inferred_by_key = {str(row["capture_key"]): dict(row) for row in inferred}
+    if len(inferred_by_key) != len(inferred):
+        raise ValueError("New inference contains duplicate capture keys")
+    overlap = set(reused) & set(inferred_by_key)
+    if overlap:
+        raise ValueError(f"Reused and inferred records overlap: {sorted(overlap)[:5]}")
+    merged: list[dict[str, Any]] = []
+    for source_index, source in enumerate(source_rows):
+        key = str(source["capture_key"])
+        record = reused.get(key) or inferred_by_key.get(key)
+        if record is None:
+            raise ValueError(f"No prediction available for current capture: {key}")
+        current = dict(record)
+        current["source_manifest_index"] = source_index
+        merged.append({field: current[field] for field in PREDICTION_FIELDS})
+    return merged
 
 
 def prediction_rows_from_batch(
@@ -263,6 +432,10 @@ def evaluate_model(
 
 def main() -> None:
     args = parse_args()
+    if args.resume and args.overwrite:
+        raise ValueError("--resume and --overwrite are mutually exclusive")
+    if args.resume and args.max_samples:
+        raise ValueError("--resume is supported only for formal full-dataset results")
     seed_everything(args.seed)
     if args.device.startswith("cuda") and not torch.cuda.is_available():
         raise RuntimeError("CUDA requested but unavailable")
@@ -293,32 +466,74 @@ def main() -> None:
             print(f"Skip {spec.key}: complete result exists at {json_path}")
             continue
 
-        print(f"Load {spec.key} on {device}")
-        model, provenance = load_model(
-            spec.key,
-            checkpoint_dir=args.checkpoint_dir,
-            dinov2_hub_ref=args.dinov2_hub_ref,
+        resume_payload = _load_resume_payload(json_path, spec.key) if args.resume else None
+        historical_rows = resume_source_rows(
+            resume_payload,
+            dataset_root=args.dataset_root,
+            current_rows=source_rows,
+            current_manifest_sha256=manifest_sha256,
         )
-        model = model.to(device)
-        provenance.update(
-            {
-                "parameter_count": str(parameter_count(model)),
-                "device": str(device),
-                "platform": platform.platform(),
-            }
-        )
-        batch_size = args.batch_size or spec.recommended_batch_size
-        records, elapsed = evaluate_model(
-            model=model,
+        reused = reusable_records(
+            resume_payload,
             model_key=spec.key,
-            dataset=dataset,
             source_rows=source_rows,
-            device=device,
-            batch_size=batch_size,
-            workers=args.workers,
             closed_wnids=closed_wnids,
             output_indices=output_indices,
-            index_to_name=index_to_name,
+            resume_source_rows=historical_rows,
+        )
+        missing_indices = [
+            index
+            for index, row in enumerate(source_rows)
+            if str(row["capture_key"]) not in reused
+        ]
+        batch_size = args.batch_size or spec.recommended_batch_size
+        inferred: list[dict[str, Any]] = []
+        elapsed = 0.0
+        provenance: dict[str, Any]
+        model: torch.nn.Module | None = None
+        if missing_indices:
+            print(
+                f"Load {spec.key} on {device}: reuse {len(reused)}, "
+                f"infer {len(missing_indices)}"
+            )
+            model, provenance = load_model(
+                spec.key,
+                checkpoint_dir=args.checkpoint_dir,
+                dinov2_hub_ref=args.dinov2_hub_ref,
+            )
+            model = model.to(device)
+            provenance.update(
+                {
+                    "parameter_count": str(parameter_count(model)),
+                    "device": str(device),
+                    "platform": platform.platform(),
+                }
+            )
+            inference_dataset: Dataset = (
+                Subset(full_dataset, missing_indices) if args.resume else dataset
+            )
+            inferred, elapsed = evaluate_model(
+                model=model,
+                model_key=spec.key,
+                dataset=inference_dataset,
+                source_rows=source_rows,
+                device=device,
+                batch_size=batch_size,
+                workers=args.workers,
+                closed_wnids=closed_wnids,
+                output_indices=output_indices,
+                index_to_name=index_to_name,
+            )
+        else:
+            print(f"Reuse all {len(reused)} records for {spec.key}")
+            provenance = dict(
+                resume_payload.get("model_provenance", {}) if resume_payload else {}
+            )
+
+        records = (
+            merge_records(source_rows, reused, inferred)
+            if args.resume
+            else inferred
         )
         correct = sum(int(row["correct"]) for row in records)
         payload = {
@@ -343,6 +558,16 @@ def main() -> None:
             },
             "model_provenance": provenance,
             "elapsed_seconds": elapsed,
+            "resume": {
+                "enabled": bool(args.resume),
+                "reused_records": len(reused),
+                "inferred_records": len(inferred),
+                "source_dataset_manifest_sha256": (
+                    resume_payload.get("dataset_manifest_sha256")
+                    if resume_payload is not None
+                    else None
+                ),
+            },
             "records": records,
         }
         atomic_csv_dump(records, csv_path)

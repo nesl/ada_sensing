@@ -12,7 +12,10 @@ from PIL import Image
 from reproduce_in_ae.audit_replication import audit_model_result
 from reproduce_in_ae.evaluate_replication import (
     _valid_completed_result,
+    merge_records,
     prediction_rows_from_batch,
+    reusable_records,
+    resume_source_rows,
 )
 from reproduce_in_ae.prepare_replication import prepare_dataset
 from reproduce_in_ae.replication import (
@@ -149,6 +152,40 @@ class ReplicationPipelineTests(unittest.TestCase):
             self.assertTrue(all(row["cropped_image_size"] == [56, 40] for row in rows))
             self.assertEqual(len({row["capture_key"] for row in rows}), 600)
 
+    def test_prepare_dataset_recrops_same_size_roi_change_and_archives_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config = make_synthetic_capture_tree(root)
+            source_path = (
+                root
+                / "source"
+                / SAMPLES[0][0]
+                / "z001"
+                / "b500"
+                / "ae"
+                / "ae_01.jpg"
+            )
+            gradient = Image.new("RGB", (64, 48))
+            gradient.putdata([(x * 3, y * 4, (x + y) * 2) for y in range(48) for x in range(64)])
+            gradient.save(source_path, quality=100, subsampling=0)
+            output = root / "cropped"
+            with mock.patch(
+                "reproduce_in_ae.prepare_replication.EXPECTED_IMAGE_SIZE", (64, 48)
+            ):
+                first = prepare_dataset(root / "source", output, config)
+                first_crop = (output / source_path.relative_to(root / "source")).read_bytes()
+                payload = json.loads(config.read_text(encoding="utf-8"))
+                payload["rois"][0]["box"] = [5, 5, 61, 45]
+                config.write_text(json.dumps(payload), encoding="utf-8")
+                prepare_dataset(root / "source", output, config)
+            second_crop = (output / source_path.relative_to(root / "source")).read_bytes()
+            self.assertNotEqual(first_crop, second_crop)
+            history = output / "manifest_history" / f"{first['crop_manifest_sha256']}.jsonl"
+            self.assertTrue(history.is_file())
+            current = load_cropped_manifest(output)
+            changed = next(row for row in current if row["capture_key"].endswith("b500|ae_01") and row["sample_id"] == SAMPLES[0][0] and row["zoom_id"] == "z001")
+            self.assertEqual(changed["roi_box"], [5, 5, 61, 45])
+
     def test_prediction_rows_use_closed_200_way_top1(self) -> None:
         closed_wnids = [f"n{index:08d}" for index in range(200)]
         closed_wnids[7] = "n01910747"
@@ -186,6 +223,184 @@ class ReplicationPipelineTests(unittest.TestCase):
         self.assertEqual(rows[0]["top1_wnid"], "n01910747")
         self.assertEqual(rows[0]["top1_confidence"], 0.75)
         self.assertTrue(rows[0]["correct"])
+
+    def test_resume_reuses_subset_and_merges_in_current_manifest_order(self) -> None:
+        closed_wnids = [f"n{index:08d}" for index in range(200)]
+        closed_wnids[7] = "n01910747"
+        output_indices = list(range(200))
+
+        def source(capture_key: str, source_index: int) -> dict:
+            return {
+                "source_manifest_index": source_index,
+                "capture_key": capture_key,
+                "sample_id": "sample",
+                "zoom_id": "z001",
+                "light_id": "b010",
+                "light_intensity": 10,
+                "light_percent": 1.0,
+                "exposure_mode": "auto",
+                "parameter_key": "ae_01",
+                "ae_shot": 1,
+                "parameter_id": None,
+                "aperture": "auto",
+                "shutter_speed": "auto",
+                "iso": "auto",
+                "cropped_image_path": f"{capture_key}.jpg",
+                "source_image_path": f"source/{capture_key}.jpg",
+                "source_sha256": f"source-{capture_key}",
+                "roi_box": [1, 2, 30, 40],
+                "cropped_image_size": [29, 38],
+                "cropped_sha256": f"crop-{capture_key}",
+                "class_index": 7,
+                "wnid": "n01910747",
+                "class_name": "jellyfish",
+            }
+
+        source_rows = [source("old", 0), source("new", 1)]
+        old_record = prediction_rows_from_batch(
+            model_key="resnet50",
+            source_rows=source_rows,
+            row_indices=[0],
+            predicted_closed=[7],
+            confidences=[0.75],
+            closed_wnids=closed_wnids,
+            output_indices=output_indices,
+            index_to_name={index: f"class_{index}" for index in range(200)},
+        )[0]
+        new_record = prediction_rows_from_batch(
+            model_key="resnet50",
+            source_rows=source_rows,
+            row_indices=[1],
+            predicted_closed=[7],
+            confidences=[0.8],
+            closed_wnids=closed_wnids,
+            output_indices=output_indices,
+            index_to_name={index: f"class_{index}" for index in range(200)},
+        )[0]
+        reused = reusable_records(
+            {"records": [old_record]},
+            model_key="resnet50",
+            source_rows=source_rows,
+            closed_wnids=closed_wnids,
+            output_indices=output_indices,
+        )
+        merged = merge_records(source_rows, reused, [new_record])
+        self.assertEqual([row["capture_key"] for row in merged], ["old", "new"])
+        self.assertEqual([row["source_manifest_index"] for row in merged], [0, 1])
+        self.assertEqual(merged[0]["top1_confidence"], 0.75)
+        self.assertEqual(merged[1]["top1_confidence"], 0.8)
+
+    def test_resume_skips_records_when_roi_crop_identity_changed(self) -> None:
+        closed_wnids = [f"n{index:08d}" for index in range(200)]
+        closed_wnids[7] = "n01910747"
+        output_indices = list(range(200))
+        historical = {
+            "source_manifest_index": 0,
+            "capture_key": "capture",
+            "sample_id": "sample",
+            "zoom_id": "z001",
+            "light_id": "b010",
+            "light_intensity": 10,
+            "light_percent": 1.0,
+            "exposure_mode": "auto",
+            "parameter_key": "ae_01",
+            "ae_shot": 1,
+            "parameter_id": None,
+            "aperture": "auto",
+            "shutter_speed": "auto",
+            "iso": "auto",
+            "source_image_path": "source.jpg",
+            "source_sha256": "source-hash",
+            "roi_box": [1, 2, 30, 40],
+            "cropped_image_path": "crop.jpg",
+            "cropped_image_size": [29, 38],
+            "cropped_sha256": "old-crop",
+            "class_index": 7,
+            "wnid": "n01910747",
+            "class_name": "jellyfish",
+        }
+        record = prediction_rows_from_batch(
+            model_key="resnet50",
+            source_rows=[historical],
+            row_indices=[0],
+            predicted_closed=[7],
+            confidences=[0.75],
+            closed_wnids=closed_wnids,
+            output_indices=output_indices,
+            index_to_name={index: f"class_{index}" for index in range(200)},
+        )[0]
+        current = dict(historical)
+        current["roi_box"] = [2, 2, 31, 40]
+        current["cropped_sha256"] = "new-crop"
+        reused = reusable_records(
+            {"records": [record]},
+            model_key="resnet50",
+            source_rows=[current],
+            closed_wnids=closed_wnids,
+            output_indices=output_indices,
+            resume_source_rows=[historical],
+        )
+        self.assertEqual(reused, {})
+
+    def test_resume_manifest_history_is_hash_checked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            history = root / "manifest_history"
+            history.mkdir()
+            prior = history / "bad-hash.jsonl"
+            prior.write_text('{"capture_key":"old"}\n', encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "hash mismatch"):
+                resume_source_rows(
+                    {"dataset_manifest_sha256": "bad-hash"},
+                    root,
+                    [],
+                    "current-hash",
+                )
+
+    def test_resume_rejects_changed_capture_metadata(self) -> None:
+        closed_wnids = [f"n{index:08d}" for index in range(200)]
+        closed_wnids[7] = "n01910747"
+        output_indices = list(range(200))
+        source_row = {
+            "source_manifest_index": 0,
+            "capture_key": "capture",
+            "sample_id": "sample",
+            "zoom_id": "z001",
+            "light_id": "b010",
+            "light_intensity": 10,
+            "light_percent": 1.0,
+            "exposure_mode": "auto",
+            "parameter_key": "ae_01",
+            "ae_shot": 1,
+            "parameter_id": None,
+            "aperture": "auto",
+            "shutter_speed": "auto",
+            "iso": "auto",
+            "cropped_image_path": "capture.jpg",
+            "class_index": 7,
+            "wnid": "n01910747",
+            "class_name": "jellyfish",
+        }
+        record = prediction_rows_from_batch(
+            model_key="resnet50",
+            source_rows=[source_row],
+            row_indices=[0],
+            predicted_closed=[7],
+            confidences=[0.75],
+            closed_wnids=closed_wnids,
+            output_indices=output_indices,
+            index_to_name={index: f"class_{index}" for index in range(200)},
+        )[0]
+        changed = dict(source_row)
+        changed["light_intensity"] = 200
+        with self.assertRaisesRegex(ValueError, "metadata mismatch"):
+            reusable_records(
+                {"records": [record]},
+                model_key="resnet50",
+                source_rows=[changed],
+                closed_wnids=closed_wnids,
+                output_indices=output_indices,
+            )
 
     def test_completed_result_validation_and_audit(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

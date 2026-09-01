@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from collections import Counter
@@ -28,6 +29,7 @@ from .replication import (
 
 JPEG_QUALITY = 95
 JPEG_SUBSAMPLING = 0
+LEGACY_BASE_RECORDS = 1500
 
 
 def parse_args() -> argparse.Namespace:
@@ -65,6 +67,33 @@ def _atomic_save_jpeg(image: Image.Image, path: Path) -> None:
 def _validate_existing_crop(path: Path, expected_size: tuple[int, int]) -> bool:
     if not path.is_file():
         return False
+
+
+def _archive_manifest_bytes(output_root: Path, content: bytes) -> Path:
+    digest = hashlib.sha256(content).hexdigest()
+    target = output_root / "manifest_history" / f"{digest}.jsonl"
+    if target.is_file():
+        return target
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_suffix(target.suffix + ".tmp")
+    with temporary.open("wb") as handle:
+        handle.write(content)
+    os.replace(temporary, target)
+    return target
+
+
+def _archive_existing_manifest(output_root: Path) -> list[Path]:
+    manifest = output_root / "crop_manifest.jsonl"
+    if not manifest.is_file():
+        return []
+    content = manifest.read_bytes()
+    written = [_archive_manifest_bytes(output_root, content)]
+    lines = content.splitlines(keepends=True)
+    if len(lines) > LEGACY_BASE_RECORDS:
+        written.append(
+            _archive_manifest_bytes(output_root, b"".join(lines[:LEGACY_BASE_RECORDS]))
+        )
+    return written
     try:
         with Image.open(path) as image:
             image.verify()
@@ -81,17 +110,24 @@ def _crop_record(
     output_root: Path,
     spec: RoiSpec,
     overwrite: bool,
+    previous: Mapping[str, Any] | None,
 ) -> dict[str, Any]:
     relative_path = Path(str(source_row["image_path"]))
     source_path = source_root / relative_path
     output_path = output_root / relative_path
     expected_crop_size = (spec.box[2] - spec.box[0], spec.box[3] - spec.box[1])
+    source_hash = sha256_file(source_path)
+    crop_is_valid = _validate_existing_crop(output_path, expected_crop_size)
+    existing_crop_hash = sha256_file(output_path) if crop_is_valid else None
+    can_reuse = bool(
+        not overwrite
+        and previous is not None
+        and previous.get("roi_box") == list(spec.box)
+        and previous.get("source_sha256") == source_hash
+        and previous.get("cropped_sha256") == existing_crop_hash
+    )
 
-    if overwrite or not _validate_existing_crop(output_path, expected_crop_size):
-        if output_path.exists() and not overwrite:
-            raise ValueError(
-                f"Existing crop is invalid: {output_path}. Pass --overwrite to replace it."
-            )
+    if not can_reuse:
         with Image.open(source_path) as opened:
             image = ImageOps.exif_transpose(opened).convert("RGB")
         if image.size != EXPECTED_IMAGE_SIZE:
@@ -101,6 +137,7 @@ def _crop_record(
             )
         validate_box(spec, image.size, source_path)
         _atomic_save_jpeg(image.crop(spec.box), output_path)
+        existing_crop_hash = sha256_file(output_path)
 
     row = dict(source_row)
     row.update(
@@ -114,8 +151,8 @@ def _crop_record(
             "cropped_image_size": list(expected_crop_size),
             "source_size_bytes": source_path.stat().st_size,
             "cropped_size_bytes": output_path.stat().st_size,
-            "source_sha256": sha256_file(source_path),
-            "cropped_sha256": sha256_file(output_path),
+            "source_sha256": source_hash,
+            "cropped_sha256": existing_crop_hash,
             "crop_encoding": {
                 "format": "JPEG",
                 "quality": JPEG_QUALITY,
@@ -134,6 +171,7 @@ def prepare_dataset(
     roi_config: Path,
     overwrite: bool = False,
 ) -> dict[str, Any]:
+    _archive_existing_manifest(output_root)
     source_rows = load_source_capture_rows(source_root)
     raw_source_rows = load_jsonl(source_root / "captures.jsonl")
     _deduplicated_rows, duplicate_attempt_rows = deduplicate_capture_rows(raw_source_rows)
@@ -144,6 +182,13 @@ def prepare_dataset(
         missing = sorted(observed_keys - set(roi_by_key))
         extra = sorted(set(roi_by_key) - observed_keys)
         raise ValueError(f"ROI key mismatch; missing={missing}, extra={extra}")
+
+    previous_by_key: dict[str, dict[str, Any]] = {}
+    previous_manifest = output_root / "crop_manifest.jsonl"
+    if previous_manifest.is_file():
+        previous_by_key = {
+            str(row["capture_key"]): row for row in load_jsonl(previous_manifest)
+        }
 
     crop_rows: list[dict[str, Any]] = []
     for index, source_row in enumerate(tqdm(source_rows, desc="Crop replication ROI")):
@@ -156,6 +201,7 @@ def prepare_dataset(
                 output_root=output_root,
                 spec=roi_by_key[key],
                 overwrite=overwrite,
+                previous=previous_by_key.get(str(source_row["capture_key"])),
             )
         )
 

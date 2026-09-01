@@ -13,10 +13,7 @@ from torch.utils.data import Dataset
 
 from .datasets import paper_transform, rgb_loader
 from .evaluate_clean_reference import _valid_result, evaluate_one_model, seed_everything
-from .evaluate_diverse_ae_subset import (
-    EXPECTED_LIGHT_IDS,
-    EXPECTED_SAMPLE_COUNT,
-)
+from .evaluate_diverse_ae_subset import EXPECTED_LIGHT_IDS, EXPECTED_SAMPLE_COUNT
 from .models import load_model, parameter_count
 from .protocol import DINOV2_HUB_REF, iter_specs, parse_model_keys, project_root, workspace_root
 from .replication import (
@@ -31,14 +28,13 @@ from .replication import (
 
 
 EXPECTED_MANUAL_PARAMETERS = tuple(f"param_{index}" for index in range(1, 28))
-EXPECTED_CONDITIONS = EXPECTED_SAMPLE_COUNT * len(EXPECTED_LIGHT_IDS)
 
 
 def parse_args() -> argparse.Namespace:
     workspace = workspace_root()
     parser = argparse.ArgumentParser(
         description=(
-            "Evaluate all 27 manual candidates for the five replication samples "
+            "Evaluate all 27 manual candidates for a replication sample subset "
             "in the original ImageNet-ES-Diverse dataset and combine them with "
             "the saved AE predictions to compute acquisition baselines."
         )
@@ -73,6 +69,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--models", default="all")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--workers", type=int, default=8)
+    parser.add_argument("--expected-sample-count", type=int, default=EXPECTED_SAMPLE_COUNT)
     parser.add_argument("--seed", type=int, default=2481757)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--dinov2-hub-ref", default=DINOV2_HUB_REF)
@@ -89,12 +86,13 @@ def _parameter_number(value: str) -> int:
 def load_manual_rows(
     manifest_path: Path,
     capture_root: Path,
+    expected_sample_count: int = EXPECTED_SAMPLE_COUNT,
 ) -> tuple[list[dict[str, Any]], str, list[str]]:
     capture_rows = load_source_capture_rows(capture_root)
     sample_ids = list(dict.fromkeys(str(row["sample_id"]) for row in capture_rows))
-    if len(sample_ids) != EXPECTED_SAMPLE_COUNT:
+    if len(sample_ids) != expected_sample_count:
         raise ValueError(
-            f"Expected {EXPECTED_SAMPLE_COUNT} replication samples, found {len(sample_ids)}"
+            f"Expected {expected_sample_count} replication samples, found {len(sample_ids)}"
         )
     requested = set(sample_ids)
 
@@ -206,8 +204,9 @@ def build_model_baseline(
         ae_by_condition[(str(row["sample_id"]), str(row["lighting_id"]))].append(row)
     for row in manual_records:
         manual_by_condition[(str(row["sample_id"]), str(row["lighting_id"]))].append(row)
-    if set(ae_by_condition) != set(manual_by_condition) or len(ae_by_condition) != EXPECTED_CONDITIONS:
+    if set(ae_by_condition) != set(manual_by_condition) or not ae_by_condition:
         raise ValueError(f"{model_key}: AE/manual condition grids do not match")
+    expected_conditions = len(ae_by_condition)
 
     ae_correct = 0
     lens_correct = 0
@@ -253,7 +252,7 @@ def build_model_baseline(
         )
 
     fixed_results = [(key, sum(hits)) for key, hits in fixed_hits.items()]
-    if any(len(hits) != EXPECTED_CONDITIONS for hits in fixed_hits.values()):
+    if any(len(hits) != expected_conditions for hits in fixed_hits.values()):
         raise ValueError(f"{model_key}: incomplete fixed-parameter grid")
     oracle_f_key, oracle_f_correct = min(
         fixed_results, key=lambda item: (-item[1], _parameter_number(item[0]))
@@ -262,23 +261,23 @@ def build_model_baseline(
     result = {
         "model": model_key,
         "paper_name": paper_name,
-        "conditions": EXPECTED_CONDITIONS,
+        "conditions": expected_conditions,
         "ae_correct": ae_correct,
         "ae_total": ae_total,
         "ae_top1_accuracy": _accuracy(ae_correct, ae_total),
         "lens_correct": lens_correct,
-        "lens_total": EXPECTED_CONDITIONS,
-        "lens_top1_accuracy": _accuracy(lens_correct, EXPECTED_CONDITIONS),
+        "lens_total": expected_conditions,
+        "lens_top1_accuracy": _accuracy(lens_correct, expected_conditions),
         "oracle_s_correct": oracle_s_correct,
-        "oracle_s_total": EXPECTED_CONDITIONS,
-        "oracle_s_top1_accuracy": _accuracy(oracle_s_correct, EXPECTED_CONDITIONS),
+        "oracle_s_total": expected_conditions,
+        "oracle_s_top1_accuracy": _accuracy(oracle_s_correct, expected_conditions),
         "oracle_f_parameter_key": oracle_f_key,
         "oracle_f_correct": oracle_f_correct,
-        "oracle_f_total": EXPECTED_CONDITIONS,
-        "oracle_f_top1_accuracy": _accuracy(oracle_f_correct, EXPECTED_CONDITIONS),
+        "oracle_f_total": expected_conditions,
+        "oracle_f_top1_accuracy": _accuracy(oracle_f_correct, expected_conditions),
         "random_expected_correct": random_expected_correct,
-        "random_total": EXPECTED_CONDITIONS,
-        "random_top1_accuracy": _accuracy(random_expected_correct, EXPECTED_CONDITIONS),
+        "random_total": expected_conditions,
+        "random_top1_accuracy": _accuracy(random_expected_correct, expected_conditions),
     }
     result.update(
         {
@@ -291,7 +290,9 @@ def build_model_baseline(
     return result, condition_rows
 
 
-def build_macro_mean(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+def build_macro_mean(
+    rows: Sequence[Mapping[str, Any]], *, sample_count: int = EXPECTED_SAMPLE_COUNT
+) -> dict[str, Any]:
     fields = (
         "ae_top1_accuracy",
         "lens_top1_accuracy",
@@ -306,9 +307,9 @@ def build_macro_mean(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     macro = {
         "model": "macro_mean",
         "paper_name": f"{len(rows)}-model macro mean",
-        "group_id": "imagenet_es_diverse_five_sample_reference",
-        "group_label": "Original ImageNet-ES-Diverse / five-sample subset",
-        "conditions_per_model": EXPECTED_CONDITIONS,
+        "group_id": f"imagenet_es_diverse_{sample_count}_sample_reference",
+        "group_label": f"Original ImageNet-ES-Diverse / {sample_count}-sample subset",
+        "conditions_per_model": sample_count * len(EXPECTED_LIGHT_IDS),
     }
     macro.update(
         {f"macro_{field}": sum(float(row[field]) for row in rows) / len(rows) for field in fields}
@@ -323,7 +324,7 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
     device = torch.device(args.device)
     model_keys = parse_model_keys(args.models)
     source_rows, dataset_sha256, sample_ids = load_manual_rows(
-        args.manifest, args.capture_root
+        args.manifest, args.capture_root, args.expected_sample_count
     )
     dataset = DiverseManualSubsetDataset(source_rows)
     closed_wnids, output_indices, index_to_name = closed_class_metadata(
@@ -388,7 +389,7 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
         correct = sum(int(row["correct"]) for row in records)
         payload = {
             "status": "complete",
-            "dataset": "imagenet_es_diverse_manual_five_replication_samples",
+            "dataset": f"imagenet_es_diverse_manual_{len(sample_ids)}_replication_samples",
             "dataset_sha256": dataset_sha256,
             "model": spec.key,
             "paper_name": spec.paper_name,
@@ -428,7 +429,8 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
         if not _valid_result(manual_path, spec.key, dataset_sha256, len(dataset)):
             raise ValueError(f"Invalid completed result: {manual_path}")
         ae_records = ae_payload.get("records")
-        if not isinstance(ae_records, list) or len(ae_records) != EXPECTED_CONDITIONS * 5:
+        expected_conditions = len(sample_ids) * len(EXPECTED_LIGHT_IDS)
+        if not isinstance(ae_records, list) or len(ae_records) != expected_conditions * 5:
             raise ValueError(f"{spec.key}: incomplete saved AE predictions")
         result, conditions = build_model_baseline(
             spec.key, spec.paper_name, ae_records, manual_payload["records"]
@@ -437,18 +439,18 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
         condition_rows.extend(conditions)
         all_manual_records.extend(manual_payload["records"])
 
-    macro_mean = build_macro_mean(result_rows)
+    macro_mean = build_macro_mean(result_rows, sample_count=len(sample_ids))
     atomic_csv_dump(result_rows, args.result_root / "baselines.csv")
     atomic_csv_dump(condition_rows, args.result_root / "baseline_condition_details.csv")
     atomic_csv_dump(all_manual_records, args.result_root / "manual_per_image_predictions.csv")
     summary = {
         "status": "complete",
-        "dataset": "imagenet_es_diverse_five_sample_acquisition_baselines",
+        "dataset": f"imagenet_es_diverse_{len(sample_ids)}_sample_acquisition_baselines",
         "manual_dataset_sha256": dataset_sha256,
         "sample_count": len(sample_ids),
         "sample_ids": sample_ids,
         "lighting_ids": list(EXPECTED_LIGHT_IDS),
-        "condition_count": EXPECTED_CONDITIONS,
+        "condition_count": len(sample_ids) * len(EXPECTED_LIGHT_IDS),
         "ae_images_per_condition": 5,
         "manual_candidates_per_condition": len(EXPECTED_MANUAL_PARAMETERS),
         "model_count": len(model_keys),

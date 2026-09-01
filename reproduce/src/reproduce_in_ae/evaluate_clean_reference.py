@@ -81,6 +81,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--models", default="all")
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--expected-sample-count", type=int, default=EXPECTED_SAMPLE_COUNT)
     parser.add_argument("--seed", type=int, default=2481757)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--dinov2-hub-ref", default=DINOV2_HUB_REF)
@@ -99,12 +100,13 @@ def seed_everything(seed: int) -> None:
 def load_clean_rows(
     manual_dataset_root: Path,
     capture_root: Path,
+    expected_sample_count: int = EXPECTED_SAMPLE_COUNT,
 ) -> tuple[list[dict[str, Any]], str]:
     capture_rows = load_source_capture_rows(capture_root)
     sample_ids = tuple(dict.fromkeys(str(row["sample_id"]) for row in capture_rows))
-    if len(sample_ids) != EXPECTED_SAMPLE_COUNT:
+    if len(sample_ids) != expected_sample_count:
         raise ValueError(
-            f"Expected {EXPECTED_SAMPLE_COUNT} replication samples, found {len(sample_ids)}"
+            f"Expected {expected_sample_count} replication samples, found {len(sample_ids)}"
         )
 
     labels_path = manual_dataset_root / "labels.csv"
@@ -262,7 +264,7 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
     device = torch.device(args.device)
     model_keys = parse_model_keys(args.models)
     source_rows, dataset_sha256 = load_clean_rows(
-        args.manual_dataset_root, args.capture_root
+        args.manual_dataset_root, args.capture_root, args.expected_sample_count
     )
     dataset = CleanReferenceDataset(source_rows)
     closed_wnids, output_indices, index_to_name = closed_class_metadata(
@@ -311,7 +313,7 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
         correct = sum(int(row["correct"]) for row in records)
         payload = {
             "status": "complete",
-            "dataset": "five_clean_replication_source_images",
+            "dataset": f"{len(source_rows)}_clean_replication_source_images",
             "dataset_sha256": dataset_sha256,
             "model": spec.key,
             "paper_name": spec.paper_name,
@@ -363,7 +365,7 @@ def run_evaluation(args: argparse.Namespace) -> dict[str, Any]:
     atomic_csv_dump(all_records, args.result_root / "per_image_predictions.csv")
     summary = {
         "status": "complete",
-        "dataset": "five_clean_replication_source_images",
+        "dataset": f"{len(source_rows)}_clean_replication_source_images",
         "dataset_sha256": dataset_sha256,
         "sample_count": len(source_rows),
         "sample_ids": [str(row["sample_id"]) for row in source_rows],
