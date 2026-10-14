@@ -1,0 +1,41 @@
+244 scored sweeps, 3098 positive targets
+tags: {'conflict': 1205, 'impossible': 1095, 'no-conflict': 798} -> recoverable 2003 (65%), conflict 39%
+
+per target type (recoverable only): n, AE, best-fixed, oracle
+best single setting over all recoverable targets: ISO 100, 1/60
+  ALL recoverable              n=2003  AE=0.46  fixed=0.67  oracle=1.00
+    bright band                n=606  AE=0.10  fixed=0.95  oracle=1.00
+      bright_img               n=134  AE=0.32  fixed=0.84  oracle=1.00
+      bright_sign0             n=233  AE=0.03  fixed=0.98  oracle=1.00
+      bright_sign1             n=239  AE=0.03  fixed=0.98  oracle=1.00
+    mid band                   n=695  AE=0.85  fixed=0.81  oracle=1.00
+      mid_img                  n=116  AE=0.67  fixed=0.56  oracle=1.00
+      mid_img1                 n= 65  AE=0.72  fixed=0.55  oracle=1.00
+      mid_img2                 n= 28  AE=0.62  fixed=0.52  oracle=1.00
+      mid_img3                 n=  3  AE=0.67  fixed=0.33  oracle=1.00
+      mid_text0                n=242  AE=0.85  fixed=0.85  oracle=1.00
+      mid_text1                n=241  AE=1.00  fixed=0.99  oracle=1.00
+    dim band                   n=501  AE=0.27  fixed=0.10  oracle=1.00
+      dim_img                  n= 47  AE=0.40  fixed=0.26  oracle=1.00
+      dim_img1                 n= 25  AE=0.52  fixed=0.48  oracle=1.00
+      dim_img2                 n= 10  AE=0.57  fixed=0.57  oracle=1.00
+      dim_img3                 n=  2  AE=1.00  fixed=0.50  oracle=1.00
+      dim_text0                n=150  AE=0.18  fixed=0.06  oracle=1.00
+      dim_text1                n=199  AE=0.33  fixed=0.03  oracle=1.00
+      dim_text2                n= 68  AE=0.07  fixed=0.06  oracle=1.00
+    control band               n=201  AE=0.67  fixed=0.80  oracle=1.00
+      control_img              n=201  AE=0.67  fixed=0.80  oracle=1.00
+    conflict targets only      n=1205  AE=0.10  fixed=0.56  oracle=1.00
+  oracle settings, bright conflict targets: [('ISO100 1/1000', 469), ('ISO100 1/250', 71), ('ISO100 1/60', 18)]
+  oracle settings, mid conflict targets: [('ISO100 1/250', 37), ('ISO100 1/15', 33), ('ISO100 1/4', 25)]
+  oracle settings, dim conflict targets: [('ISO100 1/4', 234), ('ISO400 1/4', 123), ('ISO1600 1/4', 26)]
+  oracle settings, control conflict targets: [('ISO100 1/1000', 31), ('ISO100 1/250', 22), ('ISO100 1/60', 13)]
+244 scenes, 2003 recoverable targets; AE alone answers 0.45
+  B=1 fixed bracket  answered 0.65  bright=0.94  control=0.80  dim=0.06  mid=0.78   sets: [('ISO100 1/60',)]
+  B=1 AE + bracket   answered 0.45  bright=0.06  control=0.73  dim=0.24  mid=0.85   sets: [('AE',)]
+  B=2 fixed bracket  answered 0.91  bright=0.94  control=0.86  dim=0.89  mid=0.91   sets: [('ISO100 1/60', 'ISO400 1/4')]
+  B=2 AE + bracket   answered 0.74  bright=0.94  control=0.86  dim=0.25  mid=0.90   sets: [('AE', 'ISO100 1/250'), ('AE', 'ISO100 1/60')]
+  B=3 fixed bracket  answered 0.93  bright=0.95  control=0.89  dim=0.91  mid=0.94   sets: [('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/250'), ('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/4')]
+  B=3 AE + bracket   answered 0.93  bright=0.94  control=0.88  dim=0.90  mid=0.94   sets: [('AE', 'ISO100 1/250', 'ISO400 1/4'), ('AE', 'ISO100 1/60', 'ISO400 1/4')]
+  B=4 fixed bracket  answered 0.95  bright=0.96  control=0.90  dim=0.93  mid=0.96   sets: [('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/250', 'ISO1600 1/4'), ('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/4', 'ISO100 1/250')]
+  B=4 AE + bracket   answered 0.95  bright=0.94  control=0.89  dim=0.97  mid=0.95   sets: [('AE', 'ISO100 1/250', 'ISO400 1/4', 'ISO1600 1/4'), ('AE', 'ISO100 1/60', 'ISO400 1/4', 'ISO1600 1/4')]

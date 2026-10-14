@@ -1,0 +1,18 @@
+=== held-out text, MiniLM only (no paraphrases)
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.354 ± 0.000
+  fixed      0.087 ± 0.000
+  direct     0.336 ± 0.076
+  text       0.318 ± 0.055
+  region     0.682 ± 0.070
+  text_real  0.260 ± 0.054
+=== held-out vqa_image, MiniLM only (no paraphrases)
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.281 ± 0.000
+  fixed      0.395 ± 0.022
+  direct     0.496 ± 0.067
+  text       0.435 ± 0.043
+  region     0.735 ± 0.006
+  text_real  0.508 ± 0.067
+
+[exited with code 0]

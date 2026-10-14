@@ -1,0 +1,27 @@
+0
+qae_0058: 205 targets so far; mean IoU ae 0.17 oracle 0.35
+GROUND_DONE
+1
+scored v3_0180 17 shots
+scored v3_0181 17 shots
+205 targets
+
+ae frame: fraction with IoU>=0.5, mean IoU, no-box rate
+  all          n=205  IoU>=0.5: 0.19  mean IoU 0.17  no box 0.40
+  recoverable  n=151  IoU>=0.5: 0.25  mean IoU 0.22  no box 0.29
+  bright       n= 82  IoU>=0.5: 0.04  mean IoU 0.04  no box 0.46
+  dim          n= 99  IoU>=0.5: 0.30  mean IoU 0.26  no box 0.34
+  control      n= 24  IoU>=0.5: 0.21  mean IoU 0.20  no box 0.42
+  text kind    n= 99  IoU>=0.5: 0.30  mean IoU 0.25  no box 0.23
+  image kind   n=106  IoU>=0.5: 0.08  mean IoU 0.09  no box 0.56
+
+oracle frame: fraction with IoU>=0.5, mean IoU, no-box rate
+  all          n=205  IoU>=0.5: 0.39  mean IoU 0.35  no box 0.22
+  recoverable  n=151  IoU>=0.5: 0.50  mean IoU 0.46  no box 0.07
+  bright       n= 82  IoU>=0.5: 0.35  mean IoU 0.38  no box 0.12
+  dim          n= 99  IoU>=0.5: 0.43  mean IoU 0.35  no box 0.28
+  control      n= 24  IoU>=0.5: 0.29  mean IoU 0.27  no box 0.29
+  text kind    n= 99  IoU>=0.5: 0.68  mean IoU 0.59  no box 0.03
+  image kind   n=106  IoU>=0.5: 0.11  mean IoU 0.14  no box 0.40
+
+[exited with code 0]

@@ -1,0 +1,1259 @@
+{
+ "sweep": "qae_scene01",
+ "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+ "crop": [
+  602,
+  854,
+  2687,
+  2027
+ ],
+ "targets": [
+  {
+   "id": "q_plate_bright",
+   "band": "bright",
+   "kind": "vqa_image",
+   "level": 1.0,
+   "question": "What word does the license plate say?",
+   "answers": [
+    "french"
+   ],
+   "canvas_box": [
+    120,
+    300,
+    880,
+    870
+   ],
+   "camera_box": [
+    966,
+    1109,
+    1448,
+    1472
+   ]
+  },
+  {
+   "id": "q_sign_bright",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.588,
+   "question": "What does the gray sign text on the white area say?",
+   "answers": [
+    "gate b4"
+   ],
+   "canvas_box": [
+    130,
+    932,
+    670,
+    1040
+   ],
+   "camera_box": [
+    977,
+    1498,
+    1314,
+    1571
+   ]
+  },
+  {
+   "id": "q_donut_dim",
+   "band": "dim",
+   "kind": "vqa_image",
+   "level": 0.18,
+   "question": "What is the child eating?",
+   "answers": [
+    "donut",
+    "doughnut"
+   ],
+   "canvas_box": [
+    1460,
+    330,
+    1840,
+    836
+   ],
+   "camera_box": [
+    1806,
+    1151,
+    2051,
+    1466
+   ]
+  },
+  {
+   "id": "q_truck_control",
+   "band": "control",
+   "kind": "vqa_image",
+   "level": 0.38,
+   "question": "What does the truck sell?",
+   "answers": [
+    "ice cream"
+   ],
+   "canvas_box": [
+    1880,
+    330,
+    2260,
+    615
+   ],
+   "camera_box": [
+    2070,
+    1158,
+    2313,
+    1339
+   ]
+  },
+  {
+   "id": "q_plate_dim",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.071,
+   "question": "What is written on the dark plate at the bottom right?",
+   "answers": [
+    "7rxf 195",
+    "7rxf195"
+   ],
+   "canvas_box": [
+    1460,
+    1091,
+    1974,
+    1191
+   ],
+   "camera_box": [
+    1800,
+    1614,
+    2117,
+    1680
+   ]
+  },
+  {
+   "id": "q_negative",
+   "band": "none",
+   "kind": "negative",
+   "level": null,
+   "question": "Is there a dog anywhere in the image? Answer yes or no.",
+   "answers": [
+    "no"
+   ],
+   "canvas_box": null
+  }
+ ],
+ "rows": [
+  {
+   "label": "ae_start",
+   "mode": "ae",
+   "iso": 320,
+   "exposure_s": 0.030303030303030304,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Cookie",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.00025",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "GATE B4",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Pizza",
+    "q_truck_control": "JUICE",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.001",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "FRENCH",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso50_s0.004",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.016667",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not visible.",
+    "q_truck_control": "Food",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.066667",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Ice cream",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.25",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.857,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B",
+    "q_donut_dim": "Candy",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s1",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 1.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "Donut",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.00025",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not visible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "FRENCH",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.001",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "FRENCH",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.004",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.016667",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "sandwich",
+    "q_truck_control": "Food",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.066667",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Candy",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.25",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "Ice cream",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s1",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "7RXF",
+    "q_sign_bright": "7RXF 195",
+    "q_donut_dim": "cake",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.00025",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "nothing",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "FRENCH",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.001",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.004",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not shown.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.016667",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Cookie",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 105",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.066667",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "ice cream",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso200_s0.25",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "cake",
+    "q_truck_control": "Ice cream.",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s1",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "7RXF",
+    "q_sign_bright": "7RXF 195",
+    "q_donut_dim": "cake",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.00025",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not visible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.001",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.004",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "nothing",
+    "q_truck_control": "Food",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.016667",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Cookie",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.066667",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "ice cream",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso400_s0.25",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "7RXF",
+    "q_sign_bright": "7RXF 195",
+    "q_donut_dim": "cake",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s1",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "RXF 195",
+    "q_sign_bright": "RXF 195",
+    "q_donut_dim": "Ice cream",
+    "q_truck_control": "Not visible.",
+    "q_plate_dim": "RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.00025",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.001",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not shown.",
+    "q_truck_control": "French",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.004",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Hot dog",
+    "q_truck_control": "Food",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.016667",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "Ice cream",
+    "q_truck_control": "Food",
+    "q_plate_dim": "RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso800_s0.066667",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "Candy",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.25",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "7RXF",
+    "q_sign_bright": "7RXF 195",
+    "q_donut_dim": "cake",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s1",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "STOP",
+    "q_sign_bright": "No text visible.",
+    "q_donut_dim": "nothing",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "No text visible.",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.00025",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "Not visible.",
+    "q_truck_control": "French",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.001",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "sandwich",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.004",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Hot dog",
+    "q_truck_control": "Food",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso1600_s0.016667",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "sandwich",
+    "q_truck_control": "Food",
+    "q_plate_dim": "196",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso1600_s0.066667",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "TRXF",
+    "q_sign_bright": "TRXF 195",
+    "q_donut_dim": "Cookie",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "TRXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.25",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "RXF 195",
+    "q_sign_bright": "RXF 195",
+    "q_donut_dim": "nothing",
+    "q_truck_control": "Food",
+    "q_plate_dim": "RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s1",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "MISSISSIPPI",
+    "q_sign_bright": "No text visible.",
+    "q_donut_dim": "nothing",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "Made in China",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso3200_s0.00025",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not possible.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso3200_s0.001",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Not shown.",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "GATE B4",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.004",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "hot dog",
+    "q_truck_control": "Food",
+    "q_plate_dim": "FRENCH",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.016667",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "FRENCH",
+    "q_donut_dim": "sandwich",
+    "q_truck_control": "French fries.",
+    "q_plate_dim": "RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.066667",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "RXF",
+    "q_sign_bright": "7RXF 195",
+    "q_donut_dim": "Candy",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.25",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "STOP",
+    "q_sign_bright": "No text visible.",
+    "q_donut_dim": "nothing",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "No text visible.",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso3200_s1",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_plate_bright": 0.0,
+    "q_sign_bright": 0.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 1.0,
+    "q_plate_dim": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "HAPPY",
+    "q_sign_bright": "WELCOME",
+    "q_donut_dim": "hot dog",
+    "q_truck_control": "Ice cream",
+    "q_plate_dim": "Made in Japan",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "ae_end",
+   "mode": "ae",
+   "iso": 320,
+   "exposure_s": 0.030303030303030304,
+   "scores": {
+    "q_plate_bright": 1.0,
+    "q_sign_bright": 1.0,
+    "q_donut_dim": 0.0,
+    "q_truck_control": 0.0,
+    "q_plate_dim": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_plate_bright": "FRENCH",
+    "q_sign_bright": "GATE B4",
+    "q_donut_dim": "Candy",
+    "q_truck_control": "Food",
+    "q_plate_dim": "7RXF 195",
+    "q_negative": "No."
+   }
+  }
+ ]
+}

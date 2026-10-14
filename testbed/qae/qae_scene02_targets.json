@@ -1,0 +1,128 @@
+{
+ "scene": "qae_scene02",
+ "ipad_image": "qae_scene02.png",
+ "targets": [
+  {
+   "id": "q_ruler_bright",
+   "band": "bright",
+   "kind": "vqa_image",
+   "level": 1.0,
+   "question": "What is the largest number printed on the ruler?",
+   "answers": [
+    "50"
+   ],
+   "canvas_box": [
+    120,
+    300,
+    840,
+    840
+   ],
+   "camera_box": [
+    966,
+    1109,
+    1423,
+    1453
+   ]
+  },
+  {
+   "id": "q_sign_bright",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.851,
+   "question": "What does the light-gray text on the white area say?",
+   "answers": [
+    "exit 12"
+   ],
+   "canvas_box": [
+    130,
+    908,
+    497,
+    997
+   ],
+   "camera_box": [
+    977,
+    1484,
+    1206,
+    1543
+   ]
+  },
+  {
+   "id": "q_plate_dim",
+   "band": "dim",
+   "kind": "vqa_image",
+   "level": 0.08,
+   "question": "What word does the license plate say?",
+   "answers": [
+    "french"
+   ],
+   "canvas_box": [
+    1450,
+    330,
+    1850,
+    630
+   ],
+   "camera_box": [
+    1802,
+    1151,
+    2057,
+    1342
+   ]
+  },
+  {
+   "id": "q_room_control",
+   "band": "control",
+   "kind": "vqa_image",
+   "level": 0.45,
+   "question": "Which room is shown in the dark photo on the right?",
+   "answers": [
+    "bedroom"
+   ],
+   "canvas_box": [
+    1880,
+    330,
+    2260,
+    615
+   ],
+   "camera_box": [
+    2070,
+    1158,
+    2313,
+    1339
+   ]
+  },
+  {
+   "id": "q_text_dim",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.035,
+   "question": "What is written in very dark text at the bottom of the dark area?",
+   "answers": [
+    "4kxp 271",
+    "4kxp271"
+   ],
+   "canvas_box": [
+    1460,
+    1097,
+    1882,
+    1180
+   ],
+   "camera_box": [
+    1801,
+    1617,
+    2061,
+    1672
+   ]
+  },
+  {
+   "id": "q_negative",
+   "band": "none",
+   "kind": "negative",
+   "level": null,
+   "question": "Is there a dog anywhere in the image? Answer yes or no.",
+   "answers": [
+    "no"
+   ],
+   "canvas_box": null
+  }
+ ]
+}

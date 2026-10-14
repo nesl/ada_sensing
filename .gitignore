@@ -9,3 +9,16 @@ policy_network/static_pred/debug/l1_l7_correct_16_25/outputs
 outputs/
 .codex
 .agents
+
+# testbed / exposure_sim: environments, captures, checkpoints, large per-seed results
+.venv/
+*.mp4
+*.mov
+*.pt
+testbed/results/
+testbed/qae/results_v3/*_seed*.json
+testbed/qae/results_batch1/**/*_seed*.json
+ManualCam/**/build/
+ManualCam/.gradle/
+ManualCam/local.properties
+exposure_sim/results*/**/*.jpg

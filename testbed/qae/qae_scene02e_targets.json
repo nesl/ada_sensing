@@ -1,0 +1,179 @@
+{
+ "scene": "qae_scene02e",
+ "ipad_image": "qae_scene02e.png",
+ "targets": [
+  {
+   "id": "q_ruler_bright",
+   "band": "bright",
+   "kind": "vqa_image",
+   "level": 1.0,
+   "question": "What is the largest number printed on the ruler?",
+   "answers": [
+    "50"
+   ],
+   "canvas_box": [
+    100,
+    290,
+    740,
+    770
+   ],
+   "camera_box": [
+    953,
+    1102,
+    1360,
+    1409
+   ]
+  },
+  {
+   "id": "q_sign_bright75",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.749,
+   "question": "Read all the text printed inside the white window.",
+   "group_question": "Read all the text printed inside the white window.",
+   "answers": [
+    "exit 12",
+    "exit12"
+   ],
+   "canvas_box": [
+    100,
+    702,
+    358,
+    770
+   ],
+   "camera_box": [
+    956,
+    1357,
+    1119,
+    1403
+   ]
+  },
+  {
+   "id": "q_sign_bright82",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.82,
+   "question": "Read all the text printed inside the white window.",
+   "group_question": "Read all the text printed inside the white window.",
+   "answers": [
+    "gate b4",
+    "gateb4"
+   ],
+   "canvas_box": [
+    100,
+    801,
+    406,
+    871
+   ],
+   "camera_box": [
+    957,
+    1418,
+    1149,
+    1465
+   ]
+  },
+  {
+   "id": "q_plate_dim6",
+   "band": "dim",
+   "kind": "vqa_image",
+   "level": 0.06,
+   "question": "What word does the license plate say?",
+   "answers": [
+    "french"
+   ],
+   "canvas_box": [
+    900,
+    300,
+    1320,
+    615
+   ],
+   "camera_box": [
+    1459,
+    1122,
+    1725,
+    1324
+   ]
+  },
+  {
+   "id": "q_room_control",
+   "band": "control",
+   "kind": "vqa_image",
+   "level": 0.6,
+   "question": "Is the large photo on the right a bedroom, a kitchen, or a bathroom?",
+   "answers": [
+    "bedroom"
+   ],
+   "canvas_box": [
+    1500,
+    290,
+    2300,
+    890
+   ],
+   "camera_box": [
+    1829,
+    1127,
+    2339,
+    1506
+   ]
+  },
+  {
+   "id": "q_text_dim5",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.051,
+   "question": "Read all the dark text in the lower half of the image.",
+   "group_question": "Read all the dark text in the lower half of the image.",
+   "answers": [
+    "4kxp 271",
+    "4kxp271"
+   ],
+   "canvas_box": [
+    890,
+    1007,
+    1294,
+    1087
+   ],
+   "camera_box": [
+    1450,
+    1555,
+    1701,
+    1609
+   ]
+  },
+  {
+   "id": "q_text_dim43",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.043,
+   "question": "Read all the dark text in the lower half of the image.",
+   "group_question": "Read all the dark text in the lower half of the image.",
+   "answers": [
+    "7rxf 195",
+    "7rxf195"
+   ],
+   "canvas_box": [
+    890,
+    1167,
+    1289,
+    1248
+   ],
+   "camera_box": [
+    1449,
+    1651,
+    1696,
+    1704
+   ]
+  },
+  {
+   "id": "q_negative",
+   "band": "none",
+   "kind": "negative",
+   "level": null,
+   "question": "Is there a dog anywhere in the image? Answer yes or no.",
+   "answers": [
+    "no"
+   ],
+   "canvas_box": null
+  }
+ ]
+}

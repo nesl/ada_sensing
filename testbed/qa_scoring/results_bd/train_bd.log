@@ -1,0 +1,13 @@
+24 scenes: 18 train / 6 test
+/home/cc/qa/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+step 0 pred 0.4896 head 0.5295
+step 250 pred 0.1284 head 0.0035
+step 500 pred 0.1054 head 0.0054
+step 750 pred 0.0934 head 0.0029
+step 1000 pred 0.0962 head 0.0018
+step 1250 pred 0.0952 head 0.0021
+step 1500 pred 0.0964 head 0.0012
+step 1750 pred 0.0883 head 0.0011
+step 1999 pred 0.0868 head 0.0009
+TRAIN_DONE

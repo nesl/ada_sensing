@@ -1,0 +1,8 @@
+{
+ "q_plate_bright": "no-conflict",
+ "q_sign_bright": "no-conflict",
+ "q_donut_dim": "conflict",
+ "q_truck_control": "conflict",
+ "q_plate_dim": "no-conflict",
+ "q_negative": "negative"
+}

@@ -1,0 +1,10 @@
+5 seeds, 2003 held-out targets
+  B=1: fixed bracket 0.649
+        top-B        direct 0.767  text 0.843  region 0.846  text_real 0.824
+        diversified  direct 0.767  text 0.843  region 0.846  text_real 0.824
+  B=2: fixed bracket 0.909
+        top-B        direct 0.866  text 0.902  region 0.918  text_real 0.893
+        diversified  direct 0.866  text 0.902  region 0.918  text_real 0.893
+  B=3: fixed bracket 0.936
+        top-B        direct 0.906  text 0.925  region 0.942  text_real 0.922
+        diversified  direct 0.906  text 0.925  region 0.942  text_real 0.922

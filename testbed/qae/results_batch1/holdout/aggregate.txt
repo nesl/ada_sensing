@@ -1,0 +1,32 @@
+=== held-out kind: text
+3 seeds, 92 held-out targets per seed
+
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.354 ± 0.000
+  fixed      0.087 ± 0.000
+  direct     0.355 ± 0.076
+  text       0.385 ± 0.104
+  region     0.665 ± 0.049
+  text_real  0.358 ± 0.071
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.04  direct=0.31  text=0.37  region=0.62
+  regret vs oracle:       fixed=0.91  direct=0.64  text=0.62  region=0.33
+  JEPA-text minus direct: +0.030  95% bootstrap CI [-0.041, +0.102]  (n=276 target-evals)
+
+=== held-out kind: vqa_image
+3 seeds, 59 held-out targets per seed
+
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.281 ± 0.000
+  fixed      0.395 ± 0.022
+  direct     0.540 ± 0.029
+  text       0.409 ± 0.097
+  region     0.731 ± 0.001
+  text_real  0.502 ± 0.075
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.38  direct=0.50  text=0.39  region=0.69
+  regret vs oracle:       fixed=0.60  direct=0.46  text=0.59  region=0.27
+  JEPA-text minus direct: -0.131  95% bootstrap CI [-0.215, -0.047]  (n=177 target-evals)
+
+
+[exited with code 0]

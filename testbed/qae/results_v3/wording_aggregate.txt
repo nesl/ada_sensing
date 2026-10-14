@@ -1,0 +1,12 @@
+3 seeds, 2003 held-out targets per seed
+
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.459 ± 0.000
+  fixed      0.674 ± 0.000
+  direct     0.621 ± 0.045
+  text       0.732 ± 0.005
+  region     0.882 ± 0.002
+  text_real  0.744 ± 0.006
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.65  direct=0.19  text=0.44  region=0.85
+  regret vs oracle:       fixed=0.33  direct=0.38  text=0.27  region=0.12

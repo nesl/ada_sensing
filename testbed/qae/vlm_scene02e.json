@@ -1,0 +1,1513 @@
+{
+ "sweep": "qae_scene02e",
+ "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+ "crop": [
+  602,
+  854,
+  2687,
+  2027
+ ],
+ "targets": [
+  {
+   "id": "q_ruler_bright",
+   "band": "bright",
+   "kind": "vqa_image",
+   "level": 1.0,
+   "question": "What is the largest number printed on the ruler?",
+   "answers": [
+    "50"
+   ],
+   "canvas_box": [
+    100,
+    290,
+    740,
+    770
+   ],
+   "camera_box": [
+    953,
+    1102,
+    1360,
+    1409
+   ]
+  },
+  {
+   "id": "q_sign_bright75",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.749,
+   "question": "Read all the text printed inside the white window.",
+   "group_question": "Read all the text printed inside the white window.",
+   "answers": [
+    "exit 12",
+    "exit12"
+   ],
+   "canvas_box": [
+    100,
+    702,
+    358,
+    770
+   ],
+   "camera_box": [
+    956,
+    1357,
+    1119,
+    1403
+   ]
+  },
+  {
+   "id": "q_sign_bright82",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.82,
+   "question": "Read all the text printed inside the white window.",
+   "group_question": "Read all the text printed inside the white window.",
+   "answers": [
+    "gate b4",
+    "gateb4"
+   ],
+   "canvas_box": [
+    100,
+    801,
+    406,
+    871
+   ],
+   "camera_box": [
+    957,
+    1418,
+    1149,
+    1465
+   ]
+  },
+  {
+   "id": "q_plate_dim6",
+   "band": "dim",
+   "kind": "vqa_image",
+   "level": 0.06,
+   "question": "What word does the license plate say?",
+   "answers": [
+    "french"
+   ],
+   "canvas_box": [
+    900,
+    300,
+    1320,
+    615
+   ],
+   "camera_box": [
+    1459,
+    1122,
+    1725,
+    1324
+   ]
+  },
+  {
+   "id": "q_room_control",
+   "band": "control",
+   "kind": "vqa_image",
+   "level": 0.6,
+   "question": "Is the large photo on the right a bedroom, a kitchen, or a bathroom?",
+   "answers": [
+    "bedroom"
+   ],
+   "canvas_box": [
+    1500,
+    290,
+    2300,
+    890
+   ],
+   "camera_box": [
+    1829,
+    1127,
+    2339,
+    1506
+   ]
+  },
+  {
+   "id": "q_text_dim5",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.051,
+   "question": "Read all the dark text in the lower half of the image.",
+   "group_question": "Read all the dark text in the lower half of the image.",
+   "answers": [
+    "4kxp 271",
+    "4kxp271"
+   ],
+   "canvas_box": [
+    890,
+    1007,
+    1294,
+    1087
+   ],
+   "camera_box": [
+    1450,
+    1555,
+    1701,
+    1609
+   ]
+  },
+  {
+   "id": "q_text_dim43",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.043,
+   "question": "Read all the dark text in the lower half of the image.",
+   "group_question": "Read all the dark text in the lower half of the image.",
+   "answers": [
+    "7rxf 195",
+    "7rxf195"
+   ],
+   "canvas_box": [
+    890,
+    1167,
+    1289,
+    1248
+   ],
+   "camera_box": [
+    1449,
+    1651,
+    1696,
+    1704
+   ]
+  },
+  {
+   "id": "q_negative",
+   "band": "none",
+   "kind": "negative",
+   "level": null,
+   "question": "Is there a dog anywhere in the image? Answer yes or no.",
+   "answers": [
+    "no"
+   ],
+   "canvas_box": null
+  }
+ ],
+ "rows": [
+  {
+   "label": "ae_start",
+   "mode": "ae",
+   "iso": 1250,
+   "exposure_s": 0.04,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 0.625,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "40",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"4K XP 271\"\n- \"4K XP 195\" (partially visible)",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"4K XP 271\"\n- \"4K XP 195\" (partially visible)",
+    "q_plate_dim6": "FR-101",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 4KXP 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 4KXP 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.00025",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "54",
+    "q_sign_bright75": "The text inside the white window reads: \"GATE 54\"",
+    "q_sign_bright82": "The text inside the white window reads: \"GATE 54\"",
+    "q_plate_dim6": "GATE 54",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The text in the lower half of the image reads: \"GATE 54\"",
+    "q_text_dim43": "The text in the lower half of the image reads: \"GATE 54\"",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.001",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 30 40 50\" (appears to be measurements or values)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 30 40 50\" (appears to be measurements or values)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.004",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"2442\" (possibly a code or identifier)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"2442\" (possibly a code or identifier)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso50_s0.016667",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"12081202\" (possibly a date or code)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"12081202\" (possibly a date or code)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.066667",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"12031202\" (possibly a date or code)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"12031202\" (possibly a date or code)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s0.25",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- FRENCH",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- FRENCH",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso50_s1",
+   "mode": "manual",
+   "iso": 50,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "30",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"FRENCH\"",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"FRENCH\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.00025",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.857,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"GATE 84\"\n- \"10 30 40 50\" (appears to be measurements or values, possibly in degrees Celsius)",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"GATE 84\"\n- \"10 30 40 50\" (appears to be measurements or values, possibly in degrees Celsius)",
+    "q_plate_dim6": "GATE 84",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The text in the lower half of the image reads:\n\n- GATE 84",
+    "q_text_dim43": "The text in the lower half of the image reads:\n\n- GATE 84",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.001",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1200.72\" (This appears to be a measurement, possibly in millimeters or another unit of length)\n- \"20 30 40 50\" (These numbers seem to be part of a scale or ruler)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1200.72\" (This appears to be a measurement, possibly in millimeters or another unit of length)\n- \"20 30 40 50\" (These numbers seem to be part of a scale or ruler)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.004",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"12031202\" (This appears to be a date or code, but it's not clear what it specifically refers to.)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"12031202\" (This appears to be a date or code, but it's not clear what it specifically refers to.)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.016667",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"12031202\" (This appears to be a date or code, but it is not clear what it specifically refers to.)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"12031202\" (This appears to be a date or code, but it is not clear what it specifically refers to.)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.066667",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n1202 1202",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n1202 1202",
+    "q_plate_dim6": "1202",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 1202\n- 1202",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 1202\n- 1202",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso100_s0.25",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "40",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH\n\nBelow the white window, there is some text that appears to be part of a larger sequence or code, but it is not fully clear due to the image quality and angle. The visible parts include:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH\n\nBelow the white window, there is some text that appears to be part of a larger sequence or code, but it is not fully clear due to the image quality and angle. The visible parts include:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso100_s1",
+   "mode": "manual",
+   "iso": 100,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH\n\nBelow the windows, there is additional text that appears to be a code or identifier:\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH\n\nBelow the windows, there is additional text that appears to be a code or identifier:\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.00025",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.714,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE 91\"",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE 91\"",
+    "q_plate_dim6": "GATE",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE 91",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE 91",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.001",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1234 1232\" (appears to be a code or number)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1234 1232\" (appears to be a code or number)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso200_s0.004",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1202 1202\" (appears to be a date or code)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1202 1202\" (appears to be a date or code)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso200_s0.016667",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"12031202\" (possibly a date or code)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"12031202\" (possibly a date or code)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.066667",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"4KXP 271\"\n- \"7KXF 195\"",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"4KXP 271\"\n- \"7KXF 195\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7KXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7KXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s0.25",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "30",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"FRENCH\" (on a sign)\n- \"4KXP 271\"\n- \"7RXF 195\"",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"FRENCH\" (on a sign)\n- \"4KXP 271\"\n- \"7RXF 195\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso200_s1",
+   "mode": "manual",
+   "iso": 200,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH\n\nBelow the windows, there is additional text that appears to be part of a license plate or registration number:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH\n\nBelow the windows, there is additional text that appears to be part of a license plate or registration number:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.00025",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.857,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "84",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- GATE 84",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- GATE 84",
+    "q_plate_dim6": "GATE 84",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads: \"GATE 84\"",
+    "q_text_dim43": "The dark text in the lower half of the image reads: \"GATE 84\"",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.001",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in centimeters)\n- \"2022\" (year)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in centimeters)\n- \"2022\" (year)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso400_s0.004",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"2022\" (year)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"2022\" (year)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso400_s0.016667",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n1202 1202",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n1202 1202",
+    "q_plate_dim6": "1202",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n1202 1202",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n1202 1202",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.066667",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "40",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"FRENCH\"\n- \"4KXP 271\"\n- \"PRXF 195\"",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"FRENCH\"\n- \"4KXP 271\"\n- \"PRXF 195\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- PRXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- PRXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s0.25",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso400_s1",
+   "mode": "manual",
+   "iso": 400,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.00025",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- 10\n- 20\n- 30\n- 40\n- 50",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- 10\n- 20\n- 30\n- 40\n- 50",
+    "q_plate_dim6": "UNO 23",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 10\n- 20\n- 30\n- 40\n- 50",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 10\n- 20\n- 30\n- 40\n- 50",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.001",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"2008 1262\" (possibly a date or code)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters)\n- \"2008 1262\" (possibly a date or code)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No"
+   }
+  },
+  {
+   "label": "iso800_s0.004",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1202 1202\" (appears to be a serial number or code)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"1202 1202\" (appears to be a serial number or code)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.016667",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text inside the white window reads:\n\n10 20 30 40 50",
+    "q_sign_bright82": "The text inside the white window reads:\n\n10 20 30 40 50",
+    "q_plate_dim6": "License plate not visible.",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image is not legible due to the darkness and lack of contrast.",
+    "q_text_dim43": "The dark text in the lower half of the image is not legible due to the darkness and lack of contrast.",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.066667",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 0.875,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "30",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"FRENCH\"",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"FRENCH\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- TRXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- TRXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s0.25",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso800_s1",
+   "mode": "manual",
+   "iso": 801,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.00025",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.857,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE 84\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters or centimeters)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE 84\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters or centimeters)",
+    "q_plate_dim6": "GATE 84",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE 84",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE 84",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.001",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements)\n- \"20092022\" (date)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"10 20 30 40 50\" (appears to be measurements)\n- \"20092022\" (date)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.004",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n1202 1202",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n1202 1202",
+    "q_plate_dim6": "1202",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n1202 1202",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n1202 1202",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.016667",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "45",
+    "q_sign_bright75": "The text inside the white window reads:\n\n10 20 30 40 50",
+    "q_sign_bright82": "The text inside the white window reads:\n\n10 20 30 40 50",
+    "q_plate_dim6": "CROWN",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image is not legible due to the darkness and the angle at which the photo was taken. It appears to be a very faint, possibly out-of-focus text that is not readable.",
+    "q_text_dim43": "The dark text in the lower half of the image is not legible due to the darkness and the angle at which the photo was taken. It appears to be a very faint, possibly out-of-focus text that is not readable.",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso1600_s0.066667",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 0.75,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- 4KXP 271\n- TRXP 195\n\nThere is also a word that appears to be \"FRENCH\" on a separate sign above the windows, but it is not inside the white window itself.",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- 4KXP 271\n- TRXP 195\n\nThere is also a word that appears to be \"FRENCH\" on a separate sign above the windows, but it is not inside the white window itself.",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- TRXP 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- TRXP 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s0.25",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 0.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "195",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Kitchen",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso1600_s1",
+   "mode": "manual",
+   "iso": 1598,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.00025",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.000249003984063745,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.857,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"GATE B\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters or centimeters)",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"GATE B\"\n- \"10 20 30 40 50\" (appears to be measurements, possibly in millimeters or centimeters)",
+    "q_plate_dim6": "GATE",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The text in the lower half of the image reads:\n\n- GATE B",
+    "q_text_dim43": "The text in the lower half of the image reads:\n\n- GATE B",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso3200_s0.001",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.000999000999000999,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 1.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"12:04:22\" (time)",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- \"GATE B4\"\n- \"12:04:22\" (time)",
+    "q_plate_dim6": "GATE B4",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- GATE B4",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso3200_s0.004",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.004,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text inside the white window reads:\n\n10 20 30 40 50",
+    "q_sign_bright82": "The text inside the white window reads:\n\n10 20 30 40 50",
+    "q_plate_dim6": "12",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image is not legible due to the darkness and the angle at which the photo was taken. It appears to be a very faint, possibly out-of-focus text that is not readable.",
+    "q_text_dim43": "The dark text in the lower half of the image is not legible due to the darkness and the angle at which the photo was taken. It appears to be a very faint, possibly out-of-focus text that is not readable.",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.016667",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.016666666666666666,
+   "scores": {
+    "q_ruler_bright": 0.5,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "30",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- 100%\n- 30",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- 100%\n- 30",
+    "q_plate_dim6": "30",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image is not legible due to the darkness and the angle at which the photo was taken. It appears to be some kind of logo or text, but it cannot be deciphered with certainty.",
+    "q_text_dim43": "The dark text in the lower half of the image is not legible due to the darkness and the angle at which the photo was taken. It appears to be some kind of logo or text, but it cannot be deciphered with certainty.",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.066667",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.06666666666666667,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"FRENCH\"\n- \"4KXP 271\"\n- \"7RXF 195\"",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"FRENCH\"\n- \"4KXP 271\"\n- \"7RXF 195\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "no"
+   }
+  },
+  {
+   "label": "iso3200_s0.25",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 0.25,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "271",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- FRENCH\n- 4KXP 271\n- 7RXF 195",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271\n- 7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "iso3200_s1",
+   "mode": "manual",
+   "iso": 3200,
+   "exposure_s": 1.0,
+   "scores": {
+    "q_ruler_bright": 0.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 0.0,
+    "q_room_control": 0.625,
+    "q_text_dim5": 0.0,
+    "q_text_dim43": 1.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "195",
+    "q_sign_bright75": "The text printed inside the white window reads:\n\n- 7RXF 195",
+    "q_sign_bright82": "The text printed inside the white window reads:\n\n- 7RXF 195",
+    "q_plate_dim6": "7RXF 195",
+    "q_room_control": "Bathroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n7RXF 195",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n7RXF 195",
+    "q_negative": "No."
+   }
+  },
+  {
+   "label": "ae_end",
+   "mode": "ae",
+   "iso": 1250,
+   "exposure_s": 0.04,
+   "scores": {
+    "q_ruler_bright": 1.0,
+    "q_sign_bright75": 0.0,
+    "q_sign_bright82": 0.0,
+    "q_plate_dim6": 1.0,
+    "q_room_control": 1.0,
+    "q_text_dim5": 1.0,
+    "q_text_dim43": 0.0,
+    "q_negative": 1.0
+   },
+   "replies": {
+    "q_ruler_bright": "50",
+    "q_sign_bright75": "The text inside the white window reads:\n\n- \"FRENCH\"",
+    "q_sign_bright82": "The text inside the white window reads:\n\n- \"FRENCH\"",
+    "q_plate_dim6": "FRENCH",
+    "q_room_control": "Bedroom",
+    "q_text_dim5": "The dark text in the lower half of the image reads:\n\n- 4KXP 271",
+    "q_text_dim43": "The dark text in the lower half of the image reads:\n\n- 4KXP 271",
+    "q_negative": "No."
+   }
+  }
+ ]
+}

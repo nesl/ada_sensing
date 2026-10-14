@@ -1,0 +1,4747 @@
+{
+ "rows": [
+  {
+   "scene": "qae_0000",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     1600,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0000",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0000",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0000",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0010",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0010",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.5355,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 0.875,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0010",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.857,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.875,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0013",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0013",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0013",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0020",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.25,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0020",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0020",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0020",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0020",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.8125,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0020",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.75,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0026",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0026",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0026",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.5,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0026",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0026",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0027",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0027",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0027",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0027",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0027",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0038",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0038",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     400,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0038",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.857,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0038",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": false,
+   "ae": 0.9375,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0047",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0047",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     1600,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0047",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.25,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.5,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     1600,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0047",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.06666666666666667
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0056",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0056",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0056",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.857,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0005",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 0.5,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.5,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0005",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0005",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 0.9375,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 0.875,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0005",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.6875,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0006",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0006",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0006",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0006",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0012",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.25,
+   "oracle": 1.0,
+   "text": 0.777999997138977,
+   "region": 1.0,
+   "direct": 0.777999997138977,
+   "text_real": 0.5,
+   "fixed": 0.777999997138977,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0012",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0012",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.875,
+   "region": 0.0,
+   "direct": 0.875,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0035",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.875,
+   "direct": 0.875,
+   "text_real": 0.875,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0035",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.25,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0041",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0041",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0043",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 1.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0043",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0043",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.75,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0043",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0043",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 0.9375,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0043",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.875,
+   "oracle": 1.0,
+   "text": 0.875,
+   "region": 0.875,
+   "direct": 0.875,
+   "text_real": 0.875,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0048",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0048",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0048",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0048",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0015",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.75,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.8889999985694885,
+   "direct": 0.5,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0015",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0015",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0015",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0015",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.625,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0016",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0016",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.833,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0016",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.762,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0017",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0017",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0021",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0021",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0021",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0021",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.8335,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0045",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     1600,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     400,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0045",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0045",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.8125,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0050",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0050",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.001
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0052",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0052",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.001
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0052",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.875,
+   "text_real": 1.0,
+   "fixed": 0.875,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0055",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0055",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0055",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0055",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0055",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0055",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0001",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0001",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     1600,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0001",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0001",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.4375,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0002",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0002",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.75,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0004",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0004",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0004",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0004",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.3125,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0007",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 1.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0007",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0007",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0018",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     400,
+     0.004
+    ],
+    "text_real": [
+     1600,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0018",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0018",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.3335,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0029",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0029",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0029",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0029",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0029",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0031",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0031",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0031",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.3,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 0.5,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0031",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.06666666666666667
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0058",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0058",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0058",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0058",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     1600,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0019",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     400,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0019",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0019",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0032",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0032",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0032",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0032",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.556,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.06666666666666667
+    ],
+    "text_real": [
+     400,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0032",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0032",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     400,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0039",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0039",
+   "id": "dim_img",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     1600,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0039",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0039",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.875,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0040",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.6669999957084656,
+   "direct": 0.8889999985694885,
+   "text_real": 1.0,
+   "fixed": 0.8889999985694885,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.06666666666666667
+    ]
+   }
+  },
+  {
+   "scene": "qae_0040",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0040",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.4375,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.875,
+   "text_real": 0.875,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0042",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0042",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0042",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0053",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.5,
+   "text_real": 0.5,
+   "fixed": 0.5,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0053",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.004
+    ],
+    "text_real": [
+     100,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0053",
+   "id": "control_img",
+   "band": "control",
+   "conflict": false,
+   "ae": 1.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0053",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0053",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.3125,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0054",
+   "id": "bright_img",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0054",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.016666666666666666
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     400,
+     0.001
+    ]
+   }
+  },
+  {
+   "scene": "qae_0054",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 0.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     100,
+     0.06666666666666667
+    ],
+    "region": [
+     100,
+     0.06666666666666667
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.004
+    ]
+   }
+  },
+  {
+   "scene": "qae_0054",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": false,
+   "ae": 0.9375,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 1.0,
+   "text_real": 1.0,
+   "fixed": 1.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     1600,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0057",
+   "id": "bright_sign",
+   "band": "bright",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.875,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.004
+    ],
+    "region": [
+     100,
+     0.004
+    ],
+    "direct": [
+     100,
+     0.001
+    ],
+    "text_real": [
+     100,
+     0.016666666666666666
+    ]
+   }
+  },
+  {
+   "scene": "qae_0057",
+   "id": "control_img",
+   "band": "control",
+   "conflict": true,
+   "ae": 0.5,
+   "oracle": 1.0,
+   "text": 0.0,
+   "region": 0.0,
+   "direct": 0.0,
+   "text_real": 0.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     100,
+     0.25
+    ],
+    "region": [
+     100,
+     0.016666666666666666
+    ],
+    "direct": [
+     100,
+     0.016666666666666666
+    ],
+    "text_real": [
+     100,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0057",
+   "id": "dim_text0",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  },
+  {
+   "scene": "qae_0057",
+   "id": "dim_text1",
+   "band": "dim",
+   "conflict": true,
+   "ae": 0.0,
+   "oracle": 1.0,
+   "text": 1.0,
+   "region": 1.0,
+   "direct": 0.0,
+   "text_real": 1.0,
+   "fixed": 0.0,
+   "choices": {
+    "text": [
+     400,
+     0.25
+    ],
+    "region": [
+     400,
+     0.25
+    ],
+    "direct": [
+     1600,
+     0.25
+    ],
+    "text_real": [
+     400,
+     0.25
+    ]
+   }
+  }
+ ],
+ "cand": [
+  [
+   100,
+   0.001
+  ],
+  [
+   100,
+   0.004
+  ],
+  [
+   100,
+   0.016666666666666666
+  ],
+  [
+   100,
+   0.06666666666666667
+  ],
+  [
+   100,
+   0.25
+  ],
+  [
+   400,
+   0.001
+  ],
+  [
+   400,
+   0.004
+  ],
+  [
+   400,
+   0.016666666666666666
+  ],
+  [
+   400,
+   0.06666666666666667
+  ],
+  [
+   400,
+   0.25
+  ],
+  [
+   1600,
+   0.001
+  ],
+  [
+   1600,
+   0.004
+  ],
+  [
+   1600,
+   0.016666666666666666
+  ],
+  [
+   1600,
+   0.06666666666666667
+  ],
+  [
+   1600,
+   0.25
+  ]
+ ]
+}

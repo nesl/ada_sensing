@@ -1,0 +1,9 @@
+41 scenes, 151 recoverable targets; AE alone answers 0.30
+  B=1 fixed bracket  answered 0.52  bright=0.92  control=0.85  dim=0.03   sets: [('ISO100 1/60',)]
+  B=1 AE + bracket   answered 0.30  bright=0.15  control=0.21  dim=0.46   sets: [('AE',)]
+  B=2 fixed bracket  answered 0.92  bright=0.95  control=0.89  dim=0.91   sets: [('ISO100 1/60', 'ISO400 1/4')]
+  B=2 AE + bracket   answered 0.74  bright=0.95  control=0.89  dim=0.47   sets: [('AE', 'ISO100 1/60')]
+  B=3 fixed bracket  answered 0.94  bright=0.95  control=0.89  dim=0.95   sets: [('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/4'), ('ISO100 1/60', 'ISO400 1/4', 'ISO1600 1/60')]
+  B=3 AE + bracket   answered 0.93  bright=0.95  control=0.89  dim=0.93   sets: [('AE', 'ISO100 1/60', 'ISO400 1/4')]
+  B=4 fixed bracket  answered 0.96  bright=0.96  control=0.89  dim=0.98   sets: [('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/4', 'ISO100 1/15'), ('ISO100 1/60', 'ISO400 1/4', 'ISO100 1/4', 'ISO1600 1/60')]
+  B=4 AE + bracket   answered 0.94  bright=0.96  control=0.89  dim=0.93   sets: [('AE', 'ISO100 1/60', 'ISO400 1/4', 'ISO100 1/4'), ('AE', 'ISO100 1/60', 'ISO400 1/4', 'ISO1600 1/60')]

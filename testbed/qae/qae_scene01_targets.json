@@ -1,0 +1,129 @@
+{
+ "scene": "qae_scene01",
+ "ipad_image": "qae_scene01_v2.png",
+ "targets": [
+  {
+   "id": "q_plate_bright",
+   "band": "bright",
+   "kind": "vqa_image",
+   "level": 1.0,
+   "question": "What word does the license plate say?",
+   "answers": [
+    "french"
+   ],
+   "canvas_box": [
+    120,
+    300,
+    880,
+    870
+   ],
+   "camera_box": [
+    966,
+    1109,
+    1448,
+    1472
+   ]
+  },
+  {
+   "id": "q_sign_bright",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.588,
+   "question": "What does the gray sign text on the white area say?",
+   "answers": [
+    "gate b4"
+   ],
+   "canvas_box": [
+    130,
+    932,
+    670,
+    1040
+   ],
+   "camera_box": [
+    977,
+    1498,
+    1314,
+    1571
+   ]
+  },
+  {
+   "id": "q_donut_dim",
+   "band": "dim",
+   "kind": "vqa_image",
+   "level": 0.18,
+   "question": "What is the child eating?",
+   "answers": [
+    "donut",
+    "doughnut"
+   ],
+   "canvas_box": [
+    1460,
+    330,
+    1840,
+    836
+   ],
+   "camera_box": [
+    1806,
+    1151,
+    2051,
+    1466
+   ]
+  },
+  {
+   "id": "q_truck_control",
+   "band": "control",
+   "kind": "vqa_image",
+   "level": 0.38,
+   "question": "What does the truck sell?",
+   "answers": [
+    "ice cream"
+   ],
+   "canvas_box": [
+    1880,
+    330,
+    2260,
+    615
+   ],
+   "camera_box": [
+    2070,
+    1158,
+    2313,
+    1339
+   ]
+  },
+  {
+   "id": "q_plate_dim",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.071,
+   "question": "What is written on the dark plate at the bottom right?",
+   "answers": [
+    "7rxf 195",
+    "7rxf195"
+   ],
+   "canvas_box": [
+    1460,
+    1091,
+    1974,
+    1191
+   ],
+   "camera_box": [
+    1800,
+    1614,
+    2117,
+    1680
+   ]
+  },
+  {
+   "id": "q_negative",
+   "band": "none",
+   "kind": "negative",
+   "level": null,
+   "question": "Is there a dog anywhere in the image? Answer yes or no.",
+   "answers": [
+    "no"
+   ],
+   "canvas_box": null
+  }
+ ]
+}

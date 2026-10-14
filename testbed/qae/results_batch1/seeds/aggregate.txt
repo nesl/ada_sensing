@@ -1,0 +1,61 @@
+5 seeds, 151 held-out targets per seed
+
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.326 ± 0.000
+  fixed      0.537 ± 0.009
+  direct     0.782 ± 0.020
+  text       0.834 ± 0.020
+  region     0.871 ± 0.005
+  text_real  0.848 ± 0.009
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.50  direct=0.73  text=0.81  region=0.84
+  regret vs oracle:       fixed=0.46  direct=0.22  text=0.17  region=0.13
+  JEPA-text minus direct: +0.052  95% bootstrap CI [+0.031, +0.076]  (n=755 target-evals)
+
+conflict targets  (mean score, ± 95% CI over seeds)
+  ae         0.181 ± 0.000
+  fixed      0.476 ± 0.013
+  direct     0.753 ± 0.017
+  text       0.805 ± 0.026
+  region     0.853 ± 0.008
+  text_real  0.820 ± 0.013
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.44  direct=0.70  text=0.77  region=0.82
+  regret vs oracle:       fixed=0.52  direct=0.25  text=0.19  region=0.15
+  JEPA-text minus direct: +0.052  95% bootstrap CI [+0.027, +0.077]  (n=620 target-evals)
+
+bright band  (mean score, ± 95% CI over seeds)
+  ae         0.117 ± 0.000
+  fixed      0.318 ± 0.060
+  direct     0.818 ± 0.023
+  text       0.834 ± 0.016
+  region     0.927 ± 0.011
+  text_real  0.851 ± 0.021
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.28  direct=0.77  text=0.81  region=0.89
+  regret vs oracle:       fixed=0.68  direct=0.18  text=0.17  region=0.07
+  JEPA-text minus direct: +0.016  95% bootstrap CI [-0.018, +0.049]  (n=330 target-evals)
+
+dim band  (mean score, ± 95% CI over seeds)
+  ae         0.569 ± 0.000
+  fixed      0.696 ± 0.079
+  direct     0.781 ± 0.012
+  text       0.878 ± 0.023
+  region     0.828 ± 0.005
+  text_real  0.891 ± 0.007
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.65  direct=0.72  text=0.84  region=0.80
+  regret vs oracle:       fixed=0.30  direct=0.22  text=0.12  region=0.17
+  JEPA-text minus direct: +0.098  95% bootstrap CI [+0.062, +0.134]  (n=330 target-evals)
+
+control  (mean score, ± 95% CI over seeds)
+  ae         0.203 ± 0.000
+  fixed      0.747 ± 0.021
+  direct     0.663 ± 0.050
+  text       0.684 ± 0.046
+  region     0.821 ± 0.025
+  text_real  0.689 ± 0.060
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.75  direct=0.65  text=0.68  region=0.82
+  regret vs oracle:       fixed=0.25  direct=0.34  text=0.32  region=0.18
+  JEPA-text minus direct: +0.021  95% bootstrap CI [-0.032, +0.079]  (n=95 target-evals)

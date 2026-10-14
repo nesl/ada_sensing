@@ -1,0 +1,6 @@
+3 seeds, 151 held-out targets
+  B=1: fixed bracket 0.523  direct top-1 0.722  text top-1 0.799  region top-1 0.843  text_real top-1 0.804
+  B=2: fixed bracket 0.927  direct top-2 0.823  text top-2 0.874  region top-2 0.914  text_real top-2 0.868
+  B=3: fixed bracket 0.940  direct top-3 0.865  text top-3 0.894  region top-3 0.927  text_real top-3 0.896
+
+[exited with code 0]

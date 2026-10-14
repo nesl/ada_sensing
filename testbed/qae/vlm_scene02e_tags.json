@@ -1,0 +1,10 @@
+{
+ "q_ruler_bright": "conflict",
+ "q_sign_bright75": "impossible",
+ "q_sign_bright82": "conflict",
+ "q_plate_dim6": "conflict",
+ "q_room_control": "no-conflict",
+ "q_text_dim5": "no-conflict",
+ "q_text_dim43": "conflict",
+ "q_negative": "negative"
+}

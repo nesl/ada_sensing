@@ -1,0 +1,81 @@
+{
+ "scene": "scene05_ipad-bright-dim",
+ "image_size": [
+  4000,
+  2252
+ ],
+ "targets": [
+  {
+   "id": "bright_pic",
+   "kind": "ipad_image",
+   "query": "a school bus",
+   "level": 1.0,
+   "canvas_box": [
+    235,
+    300,
+    995,
+    870
+   ],
+   "box": [
+    1039,
+    1111,
+    1521,
+    1474
+   ]
+  },
+  {
+   "id": "bright_text",
+   "kind": "ipad_text",
+   "text": "EXIT 12",
+   "level": 1.0,
+   "canvas_box": [
+    290,
+    1073,
+    743,
+    1179
+   ],
+   "box": [
+    1078,
+    1586,
+    1359,
+    1656
+   ]
+  },
+  {
+   "id": "dim_pic",
+   "kind": "ipad_image",
+   "query": "a Chihuahua",
+   "level": 0.05,
+   "canvas_box": [
+    1420,
+    300,
+    2180,
+    1250
+   ],
+   "box": [
+    1775,
+    1131,
+    2264,
+    1718
+   ]
+  },
+  {
+   "id": "dim_text",
+   "kind": "ipad_text",
+   "text": "GATE B4",
+   "level": 0.05,
+   "canvas_box": [
+    1470,
+    1072,
+    2010,
+    1180
+   ],
+   "box": [
+    1807,
+    1602,
+    2140,
+    1674
+   ]
+  }
+ ]
+}

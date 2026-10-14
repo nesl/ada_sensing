@@ -1,0 +1,12 @@
+3 seeds, 151 held-out targets
+  B=1: fixed bracket 0.523
+        top-B        direct 0.722  text 0.799  region 0.843  text_real 0.804
+        diversified  direct 0.722  text 0.799  region 0.843  text_real 0.804
+  B=2: fixed bracket 0.927
+        top-B        direct 0.823  text 0.874  region 0.914  text_real 0.868
+        diversified  direct 0.823  text 0.874  region 0.914  text_real 0.868
+  B=3: fixed bracket 0.940
+        top-B        direct 0.865  text 0.894  region 0.927  text_real 0.896
+        diversified  direct 0.865  text 0.894  region 0.927  text_real 0.896
+
+[exited with code 0]

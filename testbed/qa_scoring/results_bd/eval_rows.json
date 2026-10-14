@@ -1,0 +1,522 @@
+[
+ {
+  "scene": "layoutB_s0000",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a centipede",
+  "ae": 0.9010098576545715,
+  "fixed": 0.9137628674507141,
+  "oracle": 0.9137628674507141,
+  "jepa": 0.8649098873138428,
+  "direct": 0.07509061694145203,
+  "probe_on_real": 0.8677560091018677,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutB_s0000",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "9VCP 599",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0000",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a police van",
+  "ae": 0.4296020567417145,
+  "fixed": 0.4200989305973053,
+  "oracle": 0.5324684977531433,
+  "jepa": 0.003302218159660697,
+  "direct": 0.5269030928611755,
+  "probe_on_real": 0.5324684977531433,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   1600,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0000",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "1WZR 183",
+  "ae": 0.0,
+  "fixed": 0.0,
+  "oracle": 0.1429000049829483,
+  "jepa": 0.0,
+  "direct": 0.0,
+  "probe_on_real": 0.1429000049829483,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0006",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "an obelisk",
+  "ae": 0.40886715054512024,
+  "fixed": 0.35565298795700073,
+  "oracle": 0.5532762408256531,
+  "jepa": 0.304901123046875,
+  "direct": 0.5013359785079956,
+  "probe_on_real": 0.5532762408256531,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   400,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0006",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "WARNING 41",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0006",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a projectile",
+  "ae": 0.040678538382053375,
+  "fixed": 0.033358629792928696,
+  "oracle": 0.22250062227249146,
+  "jepa": 0.0861261710524559,
+  "direct": 0.0861261710524559,
+  "probe_on_real": 0.06645157188177109,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   1600,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutB_s0006",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "9UFP 361",
+  "ae": 0.7143,
+  "fixed": 0.8571000099182129,
+  "oracle": 1.0,
+  "jepa": 0.8571000099182129,
+  "direct": 0.8571000099182129,
+  "probe_on_real": 0.8571000099182129,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0007",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a flagpole",
+  "ae": 0.050284821540117264,
+  "fixed": 0.05290858447551727,
+  "oracle": 0.05927039310336113,
+  "jepa": 0.050495125353336334,
+  "direct": 0.05927039310336113,
+  "probe_on_real": 0.050495125353336334,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0007",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "9FCK 346",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0007",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a African elephant",
+  "ae": 0.0001409826654708013,
+  "fixed": 4.442182762431912e-05,
+  "oracle": 0.016116909682750702,
+  "jepa": 0.012876887805759907,
+  "direct": 0.009207982569932938,
+  "probe_on_real": 0.002883278764784336,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   1600,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutB_s0007",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "9WHD 220",
+  "ae": 0.7143,
+  "fixed": 0.571399986743927,
+  "oracle": 0.8571000099182129,
+  "jepa": 0.8571000099182129,
+  "direct": 0.8571000099182129,
+  "probe_on_real": 0.8571000099182129,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0011",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a lifeboat",
+  "ae": 0.1964878886938095,
+  "fixed": 0.1665603071451187,
+  "oracle": 0.2742791175842285,
+  "jepa": 0.1665603071451187,
+  "direct": 0.24992682039737701,
+  "probe_on_real": 0.1665603071451187,
+  "jepa_choice": [
+   100,
+   0.06666666666666667
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0011",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "DANGER 17",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.004
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0011",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a dam",
+  "ae": 0.09659311920404434,
+  "fixed": 0.09934665262699127,
+  "oracle": 0.14557184278964996,
+  "jepa": 0.11043450981378555,
+  "direct": 0.14557184278964996,
+  "probe_on_real": 0.09934665262699127,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0011",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "ONE WAY",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutB_s0014",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a bathtub",
+  "ae": 0.7743558287620544,
+  "fixed": 0.7704033851623535,
+  "oracle": 0.936201810836792,
+  "jepa": 0.8935459852218628,
+  "direct": 0.8570815920829773,
+  "probe_on_real": 0.7141335606575012,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   1600,
+   0.004
+  ]
+ },
+ {
+  "scene": "layoutB_s0014",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "DANGER 51",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0014",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a cliff dwelling",
+  "ae": 0.004630500450730324,
+  "fixed": 0.000661543570458889,
+  "oracle": 0.08181501924991608,
+  "jepa": 0.005695187486708164,
+  "direct": 0.0014185395557433367,
+  "probe_on_real": 0.08181501924991608,
+  "jepa_choice": [
+   400,
+   0.06666666666666667
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0014",
+  "target": "t3",
+  "kind": "ipad_image",
+  "label": "a viaduct",
+  "ae": 3.3157924917759374e-05,
+  "fixed": 3.0814950150670484e-05,
+  "oracle": 0.0004975200281478465,
+  "jepa": 0.0003400517744012177,
+  "direct": 0.0003400517744012177,
+  "probe_on_real": 0.0004975200281478465,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0014",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "STOP 11",
+  "ae": 1.0,
+  "fixed": 0.833299994468689,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0017",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a confectionery",
+  "ae": 0.012913833372294903,
+  "fixed": 0.07994256168603897,
+  "oracle": 0.3654753863811493,
+  "jepa": 0.36379292607307434,
+  "direct": 0.3654753863811493,
+  "probe_on_real": 0.2958522140979767,
+  "jepa_choice": [
+   100,
+   0.004
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0017",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "YIELD",
+  "ae": 0.0,
+  "fixed": 0.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.016666666666666666
+  ],
+  "oracle_choice": [
+   100,
+   0.001
+  ]
+ },
+ {
+  "scene": "layoutB_s0017",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a bow tie",
+  "ae": 0.4198874831199646,
+  "fixed": 0.07528373599052429,
+  "oracle": 0.7523959279060364,
+  "jepa": 7.847788765502628e-06,
+  "direct": 2.797388560793479e-06,
+  "probe_on_real": 6.786511949030682e-05,
+  "jepa_choice": [
+   100,
+   0.001
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutB_s0017",
+  "target": "t3",
+  "kind": "ipad_image",
+  "label": "a goldfish",
+  "ae": 0.20292194187641144,
+  "fixed": 0.8855968713760376,
+  "oracle": 0.8855968713760376,
+  "jepa": 0.8855968713760376,
+  "direct": 0.8723033666610718,
+  "probe_on_real": 0.8855968713760376,
+  "jepa_choice": [
+   100,
+   0.06666666666666667
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutB_s0017",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "GATE",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.06666666666666667
+  ],
+  "oracle_choice": [
+   100,
+   0.016666666666666666
+  ]
+ }
+]

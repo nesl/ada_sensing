@@ -1,0 +1,17 @@
+{
+ "scene": "scene04_panel-papertowel_ipad-ladder",
+ "image_size": [4000, 2252],
+ "targets": [
+  {"id": "car30",    "kind": "ipad_car",  "query": "a car", "box": [370, 1010, 700, 1260]},
+  {"id": "car50",    "kind": "ipad_car",  "query": "a car", "box": [720, 1010, 1050, 1260]},
+  {"id": "car75",    "kind": "ipad_car",  "query": "a car", "box": [1080, 1020, 1405, 1280]},
+  {"id": "car100",   "kind": "ipad_car",  "query": "a car", "box": [1440, 1030, 1770, 1290]},
+  {"id": "txt_STOP",    "kind": "ipad_text", "text": "STOP",    "box": [370, 1380, 710, 1540]},
+  {"id": "txt_7KX241",  "kind": "ipad_text", "text": "7KX 241", "box": [720, 1380, 1010, 1540]},
+  {"id": "txt_EXIT12",  "kind": "ipad_text", "text": "EXIT 12", "box": [1080, 1390, 1350, 1540]},
+  {"id": "txt_GATEB4",  "kind": "ipad_text", "text": "GATE B4", "box": [1440, 1400, 1740, 1545]},
+  {"id": "toy_car",  "kind": "physical",  "query": "a toy car", "box": [200, 1700, 900, 2080]},
+  {"id": "figurine", "kind": "physical",  "query": "a green figurine", "box": [1330, 1545, 1600, 2060]},
+  {"id": "panel",    "kind": "distractor","query": "a light panel", "box": [2190, 1550, 3150, 2000]}
+ ]
+}

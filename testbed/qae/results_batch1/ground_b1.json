@@ -1,0 +1,4902 @@
+[
+ {
+  "scene": "qae_0000",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1398.7210424710424,
+    295.2448979591837,
+    1604.0009652509652,
+    628.3928571428571
+   ],
+   "iou": 0.3148877787291576,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1390, 296, 1594, 630], \"label\": \"what brand liquor is on"
+  },
+  "oracle": {
+   "box": [
+    1398.7210424710424,
+    286.26785714285717,
+    1606.0135135135135,
+    632.3826530612245
+   ],
+   "iou": 0.3303511829153112,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1390, 287, 1596, 634], \"label\": \"what brand liquor is on"
+  }
+ },
+ {
+  "scene": "qae_0000",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1447.0222007722007,
+    558.5714285714286,
+    1546.6433397683397,
+    627.3954081632653
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1438, 560, 1537, 629], \"label\": \"the text \\\"bay m5\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    1073.694498069498,
+    632.3826530612245,
+    1237.7171814671815,
+    670.2857142857143
+   ],
+   "iou": 0.7002568589715055,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1067, 634, 1230, 672]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0000",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    440.74806949806947,
+    403.9668367346939,
+    683.2601351351351,
+    498.7244897959184
+   ],
+   "iou": 0.1725993253627607,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [438, 405, 679, 500], \"label\": \"word\"}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    432.6978764478764,
+    413.94132653061223,
+    710.4295366795367,
+    516.6785714285714
+   ],
+   "iou": 0.21431114310603036,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [430, 415, 706, 518], \"label\": \"word\"}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0000",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    332.0704633204633,
+    0.0,
+    478.98648648648646,
+    14.96173469387755
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [330, 0, 476, 15]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    555.5790816326531,
+    567.53861003861,
+    595.4770408163265
+   ],
+   "iou": 0.3739870394864557,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 557, 564, 597]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0001",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible player's jersey with a number in the provided image. The ima"
+  },
+  "oracle": {
+   "box": [
+    563.5135135135135,
+    446.8571428571429,
+    586.6578185328185,
+    477.7780612244898
+   ],
+   "iou": 0.0064408529040672,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [560, 448, 583, 479]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0001",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1312.181467181467,
+    625.4005102040817,
+    1495.323359073359,
+    662.3061224489796
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1304, 627, 1486, 664]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    622.4081632653061,
+    571.5637065637065,
+    664.3010204081633
+   ],
+   "iou": 0.45509612786110715,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 624, 568, 666], \"label\": \"the text \\\"8mjf 599\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0001",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    992.1862934362933,
+    306.2168367346939,
+    1063.6317567567567,
+    435.88520408163265
+   ],
+   "iou": 0.0,
+   "reply": "There is no visible number on the runner in the middle of the image. The boundin"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no runner in the middle of the image; instead, there are two images dis"
+  }
+ },
+ {
+  "scene": "qae_0001",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    992.1862934362933,
+    306.2168367346939,
+    1063.6317567567567,
+    435.88520408163265
+   ],
+   "iou": 0.07993284368516028,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [986, 307, 1057, 437], \"label\": \"Where is he looking?\"}\n]"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  }
+ },
+ {
+  "scene": "qae_0001",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1277.9681467181467,
+    556.5765306122449,
+    1458.0912162162163,
+    601.4617346938776
+   ],
+   "iou": 0.8206791483407826,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1270, 558, 1449, 603], \"label\": \"the text \\\"row d6\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    1277.9681467181467,
+    556.5765306122449,
+    1458.0912162162163,
+    601.4617346938776
+   ],
+   "iou": 0.8206791483407826,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1270, 558, 1449, 603], \"label\": \"the text \\\"row d6\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0001",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1267.9054054054054,
+    622.4081632653061,
+    1496.3296332046332,
+    663.3035714285714
+   ],
+   "iou": 0.8498870947355645,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1260, 624, 1487, 665], \"label\": \"the text \\\"9awr 532\\\"\"}"
+  },
+  "oracle": {
+   "box": [
+    1274.9493243243244,
+    616.4234693877551,
+    1493.3108108108108,
+    668.2908163265306
+   ],
+   "iou": 0.8470241312794464,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1267, 618, 1484, 670], \"label\": \"the text \\\"9awr 532\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0002",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    734.5801158301158,
+    239.3877551020408,
+    1111.9329150579151,
+    528.6479591836735
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [730, 240, 1105, 530]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    225.42346938775512,
+    708.4169884169884,
+    550.5918367346939
+   ],
+   "iou": 0.5906054603130033,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 226, 704, 552]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0002",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    463.8137755102041,
+    543.3880308880308,
+    506.7040816326531
+   ],
+   "iou": 0.5390937376299547,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 465, 540, 508], \"label\": \"the text \\\"stop i4\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0002",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    1469.1602316602316,
+    314.19642857142856,
+    1607.0197876447876,
+    526.6530612244898
+   ],
+   "iou": 0.2309143570129686,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1460, 315, 1597, 528], \"label\": \"what number is the play"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible player on the right side of the image. The image appears to "
+  }
+ },
+ {
+  "scene": "qae_0002",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no seats visible in the image. The image shows three screens displayin"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no seats visible in the image. The image shows a dark room with a Pola"
+  }
+ },
+ {
+  "scene": "qae_0002",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    1227.6544401544402,
+    572.5357142857143,
+    1380.6081081081081,
+    616.4234693877551
+   ],
+   "iou": 0.6803228395880961,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1220, 574, 1372, 618], \"label\": \"the text \\\"pier i1\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    1225.6418918918919,
+    574.530612244898,
+    1378.5955598455598,
+    617.420918367347
+   ],
+   "iou": 0.7247383871609109,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1218, 576, 1370, 619], \"label\": \"the text \\\"pier i1\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0002",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1224.6356177606176,
+    633.3801020408164,
+    1437.9657335907336,
+    678.265306122449
+   ],
+   "iou": 0.6643914908911955,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1217, 635, 1429, 680], \"label\": \"the text \\\"6xlw 268\\\"\"}"
+  },
+  "oracle": {
+   "box": [
+    1224.6356177606176,
+    637.3698979591837,
+    1433.940637065637,
+    678.265306122449
+   ],
+   "iou": 0.7026988429334369,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1217, 639, 1425, 680], \"label\": \"the text \\\"6xlw 268\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0004",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    352.19594594594594,
+    434.88775510204084,
+    812.0632239382239,
+    861.795918367347
+   ],
+   "iou": 0.5687468277603954,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [350, 436, 807, 864], \"label\": \"are these switches on or "
+  },
+  "oracle": {
+   "box": [
+    411.5661196911197,
+    521.6658163265306,
+    730.5550193050193,
+    656.3214285714286
+   ],
+   "iou": 0.3846928143944037,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [409, 523, 726, 658], \"label\": \"are these switches on or "
+  }
+ },
+ {
+  "scene": "qae_0004",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1405.7649613899614,
+    594.4795918367347,
+    1487.273166023166,
+    635.375
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1397, 596, 1478, 637]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    732.1275510204082,
+    579.6138996138995,
+    778.0102040816327
+   ],
+   "iou": 0.48786871518786035,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 734, 576, 780]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0004",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible calendar in the image, so it's not possible to determine the"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no calendar visible in the image, so there is no year to determine. The"
+  }
+ },
+ {
+  "scene": "qae_0004",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    0.0,
+    0.0,
+    2083.993725868726,
+    1173.0
+   ],
+   "iou": 0.04461399087398468,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [0, 0, 2071, 1176]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    835.2075289575289,
+    244.375,
+    1213.5666023166023,
+    525.655612244898
+   ],
+   "iou": 0.9132698264959744,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [830, 245, 1206, 527], \"label\": \"What kind of room is thi"
+  }
+ },
+ {
+  "scene": "qae_0004",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1274.9493243243244,
+    582.5102040816327,
+    1482.2417953667953,
+    638.3673469387755
+   ],
+   "iou": 0.7629370248641113,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1267, 584, 1473, 640], \"label\": \"the text \\\"1vuu 298\\\"\"}"
+  },
+  "oracle": {
+   "box": [
+    1274.9493243243244,
+    582.5102040816327,
+    1482.2417953667953,
+    638.3673469387755
+   ],
+   "iou": 0.7629370248641113,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1267, 584, 1473, 640], \"label\": \"the text \\\"1vuu 298\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0005",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1316.2065637065637,
+    622.4081632653061,
+    1588.9068532818533,
+    658.3163265306123
+   ],
+   "iou": 0.05719890487786304,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1308, 624, 1579, 660]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1298.0936293436293,
+    636.3724489795918,
+    1353.4387065637065,
+    665.2984693877551
+   ],
+   "iou": 0.009351399475214371,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1290, 638, 1345, 667], \"label\": \"the lowest number yard "
+  }
+ },
+ {
+  "scene": "qae_0005",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    565.5535714285714,
+    563.5135135135135,
+    607.4464285714286
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 567, 560, 609]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1191.4285714285713,
+    673.2780612244898,
+    1402.746138996139,
+    720.1581632653061
+   ],
+   "iou": 0.8162231229000251,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1184, 675, 1394, 722], \"label\": \"the text \\\"8ugb 260\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0005",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image shows a dark background wi"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image shows a dark screen with a"
+  }
+ },
+ {
+  "scene": "qae_0005",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    358.23359073359075,
+    555.5790816326531,
+    563.5135135135135,
+    598.469387755102
+   ],
+   "iou": 0.4164447038400311,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 557, 560, 600], \"label\": \"the text \\\"4afh 988\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    555.5790816326531,
+    559.4884169884169,
+    597.4719387755102
+   ],
+   "iou": 0.40727449038625924,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 557, 556, 599]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0005",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    616.4234693877551,
+    600.7456563706563,
+    660.3112244897959
+   ],
+   "iou": 0.36045196437552884,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 618, 597, 662]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    616.4234693877551,
+    567.53861003861,
+    658.3163265306123
+   ],
+   "iou": 0.36592721053318067,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 618, 564, 660]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0006",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no runner visible in the image, so there is no name to identify. The im"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no clear indication of the name of the runner on the left in the provid"
+  }
+ },
+ {
+  "scene": "qae_0006",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    554.5816326530612,
+    542.3817567567568,
+    595.4770408163265
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 556, 539, 597]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1387.6520270270269,
+    817.9081632653061,
+    1563.75,
+    863.7908163265306
+   ],
+   "iou": 0.877963192096864,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1379, 820, 1554, 866], \"label\": \"the text \\\"8zti 122\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0006",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    440.74806949806947,
+    423.9158163265306,
+    683.2601351351351,
+    499.72193877551024
+   ],
+   "iou": 0.1380794602902087,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [438, 425, 679, 501]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    405.5284749034749,
+    364.0688775510204,
+    722.5048262548262,
+    517.6760204081633
+   ],
+   "iou": 0.36570400844496714,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [403, 365, 718, 519], \"label\": \"what state is this car fr"
+  }
+ },
+ {
+  "scene": "qae_0006",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no seats visible in the image. The image shows a dark room with two sc"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no seats visible in the image. The bounding box for the question canno"
+  }
+ },
+ {
+  "scene": "qae_0006",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    554.5816326530612,
+    540.3692084942085,
+    596.4744897959184
+   ],
+   "iou": 0.40692543235889506,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 556, 537, 598]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    360.246138996139,
+    558.5714285714286,
+    544.394305019305,
+    595.4770408163265
+   ],
+   "iou": 0.4041312713742808,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [358, 560, 541, 597], \"label\": \"the text \\\"stop v2\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0007",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible number on the runner in the middle of the image. The boundin"
+  },
+  "oracle": {
+   "box": [
+    1438.9720077220077,
+    483.76275510204084,
+    1485.2606177606176,
+    502.7142857142857
+   ],
+   "iou": 0.005129218666797143,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1430, 485, 1476, 504], \"label\": \"the number on the runne"
+  }
+ },
+ {
+  "scene": "qae_0007",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1194.4473938223937,
+    607.4464285714286,
+    1396.7084942084941,
+    652.3316326530612
+   ],
+   "iou": 0.7144840435316706,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1187, 609, 1388, 654], \"label\": \"the text \\\"9cpx 319\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0007",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible brand of liquor in the image provided. The image shows a pro"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no brand of liquor visible in the image. The image shows a dark backgro"
+  }
+ },
+ {
+  "scene": "qae_0007",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    478.7755102040816,
+    572.5699806949807,
+    530.6428571428571
+   ],
+   "iou": 0.5212554884085498,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 480, 569, 532]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0010",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no copper-colored coin visible in the provided image. The image shows t"
+  },
+  "oracle": {
+   "box": [
+    1515.4488416988415,
+    645.3494897959184,
+    1633.182915057915,
+    756.0663265306123
+   ],
+   "iou": 0.18383178454063007,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1506, 647, 1623, 758], \"label\": \"how much is the copper "
+  }
+ },
+ {
+  "scene": "qae_0010",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    844.263996138996,
+    723.1505102040817,
+    1046.5250965250964,
+    773.0229591836735
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [839, 725, 1040, 775], \"label\": \"the text \\\"8vvq 264\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    1387.6520270270269,
+    822.8954081632653,
+    1589.9131274131273,
+    863.7908163265306
+   ],
+   "iou": 0.7888184489644056,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1379, 825, 1580, 866], \"label\": \"the text \\\"8vvq 264\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0010",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    845.2702702702702,
+    728.1377551020408,
+    910.6780888030887,
+    774.0204081632653
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [840, 730, 905, 776], \"label\": \"word in blue buble bottom"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no blue bubble or text visible in the bottom left of the image. The ima"
+  }
+ },
+ {
+  "scene": "qae_0010",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or information in the image that indicates a website co"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible website copyright information in the provided image. Therefo"
+  }
+ },
+ {
+  "scene": "qae_0010",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    845.2702702702702,
+    724.1479591836735,
+    1041.4937258687257,
+    772.0255102040817
+   ],
+   "iou": 0.6487580464738043,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [840, 726, 1035, 774]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    850.3016409266409,
+    728.1377551020408,
+    1042.5,
+    770.030612244898
+   ],
+   "iou": 0.6475184513664669,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [845, 730, 1036, 772]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0010",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    844.263996138996,
+    783.9948979591837,
+    1050.550193050193,
+    832.8698979591837
+   ],
+   "iou": 0.6498009355393409,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [839, 786, 1044, 835]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    851.307915057915,
+    787.9846938775511,
+    1049.543918918919,
+    831.8724489795918
+   ],
+   "iou": 0.6559860677445942,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [846, 790, 1043, 834]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0012",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible monetary value on the bill in the image. The image appears t"
+  },
+  "oracle": {
+   "box": [
+    533.3252895752895,
+    263.3265306122449,
+    832.1887065637065,
+    547.5994897959184
+   ],
+   "iou": 0.32880724847475395,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [530, 264, 827, 549], \"label\": \"what monetary value is th"
+  }
+ },
+ {
+  "scene": "qae_0012",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1469.1602316602316,
+    687.2423469387755,
+    1552.6809845559844,
+    708.1887755102041
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1460, 689, 1543, 710]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    371.3151544401544,
+    782.0,
+    578.6076254826255,
+    827.8826530612245
+   ],
+   "iou": 0.48841904830508903,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [369, 784, 575, 830]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0012",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no football league mentioned in the image, and there is no man pointing"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no football league mentioned in the image, nor is there any indication "
+  }
+ },
+ {
+  "scene": "qae_0012",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    552.4444980694981,
+    446.8571428571429,
+    828.16361003861,
+    477.7780612244898
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [549, 448, 823, 479]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1054.5752895752896,
+    571.5382653061224,
+    1257.842664092664,
+    618.4183673469388
+   ],
+   "iou": 0.8165248417545108,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1048, 573, 1250, 620]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0013",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or branding in the image provided. The image shows a br"
+  },
+  "oracle": {
+   "box": [
+    694.3291505791506,
+    595.4770408163265,
+    784.8938223938223,
+    615.4260204081633
+   ],
+   "iou": 0.009552645773086375,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [690, 597, 780, 617], \"label\": \"one of the brands being a"
+  }
+ },
+ {
+  "scene": "qae_0013",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text \"lane u3\" present in the image. The image shows a bright light "
+  },
+  "oracle": {
+   "box": [
+    371.3151544401544,
+    743.0994897959184,
+    561.5009652509652,
+    785.9897959183673
+   ],
+   "iou": 0.4920425589480883,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [369, 745, 558, 788], \"label\": \"the text \\\"lane u3\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0013",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text or readable information on the farthest right window in the ima"
+  },
+  "oracle": {
+   "box": [
+    678.2287644787644,
+    591.4872448979592,
+    784.8938223938223,
+    616.4234693877551
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [674, 593, 780, 618], \"label\": \"the light sign read on th"
+  }
+ },
+ {
+  "scene": "qae_0013",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    955.9604247104247,
+    544.6071428571429,
+    1164.2591698841698,
+    585.5025510204082
+   ],
+   "iou": 0.5374922657825245,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [950, 546, 1157, 587], \"label\": \"the text \\\"1zvc 913\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0013",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text \"zone e5\" present in the image. The image shows a bright square"
+  },
+  "oracle": {
+   "box": [
+    925.7722007722008,
+    605.4515306122449,
+    1145.1399613899614,
+    662.3061224489796
+   ],
+   "iou": 0.7365359266830671,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [920, 607, 1138, 664], \"label\": \"the text \\\"zone e5\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0015",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no blue and purple bill present in the image. The image shows two scree"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no blue and purple bill visible in the image. The image shows two scree"
+  }
+ },
+ {
+  "scene": "qae_0015",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1011.3055019305019,
+    581.5127551020408,
+    1052.5627413127413,
+    616.4234693877551
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1005, 583, 1046, 618]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    370.3088803088803,
+    568.545918367347,
+    591.6891891891892,
+    620.4132653061224
+   ],
+   "iou": 0.5261394830441486,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [368, 570, 588, 622], \"label\": \"the text \\\"4awr 977\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0015",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no calendar visible in the image, so it's not possible to determine the"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no calendar visible in the image, so it's not possible to determine the"
+  }
+ },
+ {
+  "scene": "qae_0015",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    350.1833976833977,
+    214.4515306122449,
+    812.0632239382239,
+    648.3418367346939
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [348, 215, 807, 650], \"label\": \"How many frames are on th"
+  },
+  "oracle": {
+   "box": [
+    351.1896718146718,
+    207.46938775510205,
+    811.0569498069498,
+    655.3239795918367
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [349, 208, 806, 657], \"label\": \"How many frames are on th"
+  }
+ },
+ {
+  "scene": "qae_0015",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    958.9792471042471,
+    576.5255102040817,
+    1022.3745173745174,
+    615.4260204081633
+   ],
+   "iou": 0.212286069769028,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [953, 578, 1016, 617]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    858.351833976834,
+    574.530612244898,
+    1025.3933397683397,
+    616.4234693877551
+   ],
+   "iou": 0.5283752501836044,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [853, 576, 1019, 618]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0015",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1356.457528957529,
+    576.5255102040817,
+    1024.3870656370657,
+    620.4132653061224
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1348, 578, 1018, 622]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    839.2326254826254,
+    635.375,
+    1031.4309845559844,
+    683.2525510204082
+   ],
+   "iou": 0.6439452111855954,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [834, 637, 1025, 685]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0016",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no objects, texts, or regions in the image that can be used to determi"
+  },
+  "oracle": {
+   "box": [
+    1393.6896718146718,
+    495.7321428571429,
+    1579.850386100386,
+    671.2831632653061
+   ],
+   "iou": 0.17384092595839007,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1385, 497, 1570, 673], \"label\": \"how much is the copper "
+  }
+ },
+ {
+  "scene": "qae_0016",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    362.25868725868725,
+    555.5790816326531,
+    523.2625482625482,
+    607.4464285714286
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [360, 557, 520, 609], \"label\": \"the text \\\"8aws 343\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    1186.3972007722007,
+    763.0484693877552,
+    1408.7837837837837,
+    819.9030612244898
+   ],
+   "iou": 0.7874606260310247,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1179, 765, 1400, 822], \"label\": \"the text \\\"8aws 343\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0016",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or object in the image that indicates the year of the c"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible year on the coin in the image. The coin appears to be an old"
+  }
+ },
+ {
+  "scene": "qae_0016",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    362.25868725868725,
+    547.5994897959184,
+    523.2625482625482,
+    595.4770408163265
+   ],
+   "iou": 0.34716974428846453,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [360, 549, 520, 597]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    556.5765306122449,
+    527.2876447876448,
+    605.4515306122449
+   ],
+   "iou": 0.5428042252136861,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 558, 524, 607], \"label\": \"the text \\\"row j1\\\"\"}\n]\n`"
+  }
+ },
+ {
+  "scene": "qae_0016",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    360.246138996139,
+    547.5994897959184,
+    523.2625482625482,
+    668.2908163265306
+   ],
+   "iou": 0.25390913458606645,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [358, 549, 520, 670], \"label\": \"the text \\\"stop a3\\\"\"}\n]\n"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    618.4183673469388,
+    545.4005791505791,
+    665.2984693877551
+   ],
+   "iou": 0.5019912620918555,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 620, 542, 667]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0017",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    740.6177606177606,
+    329.15816326530614,
+    889.546332046332,
+    403.9668367346939
+   ],
+   "iou": 0.04295614556645909,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [736, 330, 884, 405], \"label\": \"word is handwritten\"}\n]\n`"
+  },
+  "oracle": {
+   "box": [
+    738.6052123552123,
+    329.15816326530614,
+    884.5149613899614,
+    403.9668367346939
+   ],
+   "iou": 0.0420854128860579,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [734, 330, 879, 405], \"label\": \"word is handwritten\"}\n]\n`"
+  }
+ },
+ {
+  "scene": "qae_0017",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    372.32142857142856,
+    673.2780612244898,
+    581.6264478764479,
+    710.1836734693878
+   ],
+   "iou": 0.45911304279022824,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 675, 578, 712]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    370.3088803088803,
+    668.2908163265306,
+    578.6076254826255,
+    712.1785714285714
+   ],
+   "iou": 0.46098725010072517,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [368, 670, 575, 714]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0017",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or object in the image that corresponds to the name of "
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no vodka mentioned in the image. The image shows a Polaroid-style photo"
+  }
+ },
+ {
+  "scene": "qae_0018",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or branding on the cigarette pack in the image provided"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or brand name for cigarettes in the provided image. The"
+  }
+ },
+ {
+  "scene": "qae_0018",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    371.3151544401544,
+    562.5612244897959,
+    579.6138996138995,
+    595.4770408163265
+   ],
+   "iou": 0.5266593466757505,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [369, 564, 576, 597], \"label\": \"the text \\\"8qeh 370\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    371.3151544401544,
+    552.5867346938776,
+    581.6264478764479,
+    596.4744897959184
+   ],
+   "iou": 0.45892706190333626,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [369, 554, 578, 598], \"label\": \"the text \\\"8qeh 370\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0018",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no runner visible in the image, so there is no name to provide. The ima"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    225.42346938775512,
+    808.0381274131274,
+    645.3494897959184
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 226, 803, 647], \"label\": \"the name of the runner on"
+  }
+ },
+ {
+  "scene": "qae_0018",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1079.732142857143,
+    293.25,
+    1207.5289575289576,
+    504.7091836734694
+   ],
+   "iou": 0.27525260464603296,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1073, 294, 1200, 506]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0018",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1272.936776061776,
+    616.4234693877551,
+    1475.1978764478763,
+    648.3418367346939
+   ],
+   "iou": 0.650987607352991,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1265, 618, 1466, 650], \"label\": \"the text \\\"4tof 793\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0019",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image shows a dark area with som"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image appears to be very dark wi"
+  }
+ },
+ {
+  "scene": "qae_0019",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    632.3826530612245,
+    573.5762548262549,
+    678.265306122449
+   ],
+   "iou": 0.5112770115386219,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 634, 570, 680], \"label\": \"the text \\\"6zhd 367\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0019",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    351.1896718146718,
+    369.0561224489796,
+    712.4420849420849,
+    704.1989795918367
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [349, 370, 708, 706], \"label\": \"what event is this from?\""
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no specific event mentioned in the image. The image appears to be a scr"
+  }
+ },
+ {
+  "scene": "qae_0019",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    310.93870656370655,
+    0.0,
+    488.04295366795367,
+    25.933673469387756
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [309, 0, 485, 26], \"label\": \"How many sources of light ar"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    377.0357142857143,
+    706.4044401544402,
+    700.2091836734694
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 378, 702, 702], \"label\": \"How many sources of light"
+  }
+ },
+ {
+  "scene": "qae_0019",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1225.6418918918919,
+    605.4515306122449,
+    1441.99083011583,
+    648.3418367346939
+   ],
+   "iou": 0.6860797070445627,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1218, 607, 1433, 650], \"label\": \"the text \\\"4wxc 566\\\"\"}"
+  },
+  "oracle": {
+   "box": [
+    1226.648166023166,
+    606.4489795918367,
+    1446.0159266409266,
+    648.3418367346939
+   ],
+   "iou": 0.7077982706131872,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1219, 608, 1437, 650], \"label\": \"the text \\\"4wxc 566\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0019",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1223.6293436293436,
+    668.2908163265306,
+    1413.8151544401544,
+    716.1683673469388
+   ],
+   "iou": 0.8207040066351605,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1216, 670, 1405, 718]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1223.6293436293436,
+    668.2908163265306,
+    1411.802606177606,
+    713.1760204081633
+   ],
+   "iou": 0.7564483766229089,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1216, 670, 1403, 715]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0020",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no clear indication of the value of the coin in the image provided. The"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    437.8801020408163,
+    806.0255791505791,
+    854.8137755102041
+   ],
+   "iou": 0.659176329841606,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 439, 801, 857]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0020",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    850.3016409266409,
+    574.530612244898,
+    976.0859073359073,
+    597.4719387755102
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [845, 576, 970, 599], \"label\": \"the text \\\"row f1\\\"\"}\n]\n`"
+  },
+  "oracle": {
+   "box": [
+    371.3151544401544,
+    766.0408163265306,
+    543.3880308880308,
+    802.9464285714286
+   ],
+   "iou": 0.4174838391993615,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [369, 768, 540, 805], \"label\": \"the text \\\"row f1\\\"\"}\n]\n`"
+  }
+ },
+ {
+  "scene": "qae_0020",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    879.4835907335907,
+    467.80357142857144,
+    1242.7485521235521,
+    528.6479591836735
+   ],
+   "iou": 0.16786385789210134,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [874, 469, 1235, 530], \"label\": \"the largest measurement "
+  },
+  "oracle": {
+   "box": [
+    835.2075289575289,
+    454.8367346938776,
+    1244.7611003861002,
+    518.6734693877551
+   ],
+   "iou": 0.198561271984626,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [830, 456, 1237, 520], \"label\": \"the largest measurement "
+  }
+ },
+ {
+  "scene": "qae_0020",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1277.9681467181467,
+    252.3545918367347,
+    1664.377413127413,
+    526.6530612244898
+   ],
+   "iou": 0.9226402812648743,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1270, 253, 1654, 528], \"label\": \"What is to the right of"
+  },
+  "oracle": {
+   "box": [
+    1573.8127413127413,
+    336.140306122449,
+    1658.3397683397682,
+    407.95663265306126
+   ],
+   "iou": 0.06207481771141659,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1564, 337, 1648, 409]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0020",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    855.3330115830115,
+    577.5229591836735,
+    1036.462355212355,
+    615.4260204081633
+   ],
+   "iou": 0.5431772046316256,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [850, 579, 1030, 617]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    810.0506756756756,
+    577.5229591836735,
+    1035.456081081081,
+    614.4285714285714
+   ],
+   "iou": 0.597425114846152,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [805, 579, 1029, 616], \"label\": \"the text \\\"4fqr 436\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0020",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    845.2702702702702,
+    635.375,
+    1041.4937258687257,
+    684.25
+   ],
+   "iou": 0.5846865093872858,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [840, 637, 1035, 686], \"label\": \"the text \\\"9umc 686\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    825.1447876447876,
+    633.3801020408164,
+    1043.506274131274,
+    682.2551020408164
+   ],
+   "iou": 0.58608927968959,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [820, 635, 1037, 684]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0021",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1312.181467181467,
+    713.1760204081633,
+    1688.527992277992,
+    757.0637755102041
+   ],
+   "iou": 0.13263154446564654,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1304, 715, 1678, 759]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1640.2268339768339,
+    702.2040816326531,
+    1690.5405405405404,
+    757.0637755102041
+   ],
+   "iou": 0.022164362377280464,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1630, 704, 1680, 759]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0021",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1655.3209459459458,
+    29.9234693877551,
+    1780.0989382239381,
+    59.8469387755102
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1645, 30, 1769, 60]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1276.9618725868725,
+    792.9719387755102,
+    1492.3045366795366,
+    844.8392857142858
+   ],
+   "iou": 0.8215502900835673,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1269, 795, 1483, 847], \"label\": \"the text \\\"4zmz 287\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0021",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    803.0067567567568,
+    534.6326530612245,
+    976.0859073359073,
+    582.5102040816327
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 536, 970, 584], \"label\": \"what does the small white"
+  },
+  "oracle": {
+   "box": [
+    1308.1563706563707,
+    744.0969387755102,
+    1433.940637065637,
+    770.030612244898
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1300, 746, 1425, 772], \"label\": \"what does the small whi"
+  }
+ },
+ {
+  "scene": "qae_0021",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    225.42346938775512,
+    728.542471042471,
+    726.1428571428571
+   ],
+   "iou": 0.8971810600272518,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 226, 724, 728], \"label\": \"What is the child eating?"
+  },
+  "oracle": {
+   "box": [
+    543.3880308880308,
+    571.5382653061224,
+    642.0028957528957,
+    677.2678571428571
+   ],
+   "iou": 0.05448009432024389,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [540, 573, 638, 679], \"label\": \"What is the child eating?"
+  }
+ },
+ {
+  "scene": "qae_0021",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    803.0067567567568,
+    534.6326530612245,
+    976.0859073359073,
+    582.5102040816327
+   ],
+   "iou": 0.5576467042626825,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 536, 970, 584]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    803.0067567567568,
+    541.6147959183673,
+    966.023166023166,
+    578.5204081632653
+   ],
+   "iou": 0.5442933557320752,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 543, 960, 580], \"label\": \"the text \\\"exit n7\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0026",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1312.181467181467,
+    558.5714285714286,
+    1438.9720077220077,
+    576.5255102040817
+   ],
+   "iou": 0.01801268982823816,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1304, 560, 1430, 578], \"label\": \"what kind of comupter i"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no objects, texts, or regions in the image that can be used to determi"
+  }
+ },
+ {
+  "scene": "qae_0026",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1292.0559845559844,
+    693.2270408163265,
+    1456.078667953668,
+    733.125
+   ],
+   "iou": 0.7616018656301065,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1284, 695, 1447, 735]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0026",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no coin visible in the image, so it's not possible to determine its val"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no coin present in the image, so it's not possible to determine its val"
+  }
+ },
+ {
+  "scene": "qae_0026",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text at the top of the image. The bounding box for the text "
+  },
+  "oracle": {
+   "box": [
+    455.84218146718143,
+    249.3622448979592,
+    570.5574324324324,
+    277.2908163265306
+   ],
+   "iou": 0.016509837781514138,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [453, 250, 567, 278], \"text_content\": \"This is camping.\"}"
+  }
+ },
+ {
+  "scene": "qae_0026",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    800.9942084942085,
+    571.5382653061224,
+    1008.2866795366795,
+    618.4183673469388
+   ],
+   "iou": 0.6387740304169796,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [796, 573, 1002, 620], \"label\": \"the text \\\"4uza 974\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    803.0067567567568,
+    574.530612244898,
+    1005.2678571428571,
+    618.4183673469388
+   ],
+   "iou": 0.6658405403006995,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 576, 999, 620]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0027",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1049.543918918919,
+    255.3469387755102,
+    1744.8793436293436,
+    887.7295918367347
+   ],
+   "iou": 0.6908972525572333,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1043, 256, 1734, 890], \"label\": \"what event is this from"
+  },
+  "oracle": {
+   "box": [
+    1064.638030888031,
+    517.6760204081633,
+    1312.181467181467,
+    565.5535714285714
+   ],
+   "iou": 0.03878879665988513,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1058, 519, 1304, 567], \"label\": \"what event is this from"
+  }
+ },
+ {
+  "scene": "qae_0027",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1324.2567567567567,
+    528.6479591836735,
+    1559.7249034749034,
+    585.5025510204082
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1316, 530, 1550, 587], \"label\": \"the text \\\"2gog 954\\\"\"}"
+  },
+  "oracle": {
+   "box": [
+    1069.6694015444016,
+    768.0357142857143,
+    1280.986969111969,
+    804.9413265306123
+   ],
+   "iou": 0.7407678770121267,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1063, 770, 1273, 807], \"label\": \"the text \\\"2gog 954\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0027",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no ruler present in the image, so it's not possible to determine the la"
+  },
+  "oracle": {
+   "box": [
+    362.25868725868725,
+    455.8341836734694,
+    772.8185328185327,
+    537.625
+   ],
+   "iou": 0.24091937767889918,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [360, 457, 768, 539], \"label\": \"the largest measurement w"
+  }
+ },
+ {
+  "scene": "qae_0027",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1447.0222007722007,
+    433.890306122449,
+    1479.222972972973,
+    494.734693877551
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1438, 435, 1470, 496], \"label\": \"the text \\\"row u2\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    558.5714285714286,
+    540.3692084942085,
+    596.4744897959184
+   ],
+   "iou": 0.4234712762919074,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 560, 537, 598]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0027",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    358.23359073359075,
+    618.4183673469388,
+    550.4319498069498,
+    666.295918367347
+   ],
+   "iou": 0.5024625081694235,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 620, 547, 668], \"label\": \"the text \\\"zone x1\\\"\"}\n]\n"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    618.4183673469388,
+    544.394305019305,
+    665.2984693877551
+   ],
+   "iou": 0.5039307859288925,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 620, 541, 667], \"label\": \"the text \\\"zone x1\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0029",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1362.4951737451736,
+    655.3239795918367,
+    1416.8339768339767,
+    690.2346938775511
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1354, 657, 1408, 692], \"label\": \"what number is the play"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible number on the player on the right in the provided image. The"
+  }
+ },
+ {
+  "scene": "qae_0029",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    782.0,
+    574.5825289575289,
+    818.905612244898
+   ],
+   "iou": 0.4449587304187585,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 784, 571, 821], \"label\": \"the text \\\"9yka 133\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0029",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or object in the image that indicates the brand of ciga"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or object in the image that indicates the brand of ciga"
+  }
+ },
+ {
+  "scene": "qae_0029",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    0.0,
+    0.0,
+    2083.993725868726,
+    1173.0
+   ],
+   "iou": 0.04476944031953864,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [0, 0, 2071, 1176]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    734.5801158301158,
+    239.3877551020408,
+    1107.9078185328185,
+    524.6581632653061
+   ],
+   "iou": 0.9157345962547055,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [730, 240, 1101, 526], \"label\": \"What kind of room is thi"
+  }
+ },
+ {
+  "scene": "qae_0029",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1225.6418918918919,
+    588.4948979591837,
+    1404.7586872586871,
+    635.375
+   ],
+   "iou": 0.872176210581498,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1218, 590, 1396, 637], \"label\": \"the text \\\"pier n4\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    1226.648166023166,
+    585.5025510204082,
+    1404.7586872586871,
+    628.3928571428571
+   ],
+   "iou": 0.6868463929976335,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1219, 587, 1396, 630], \"label\": \"the text \\\"pier n4\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0029",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1223.6293436293436,
+    646.3469387755102,
+    1417.840250965251,
+    691.2321428571429
+   ],
+   "iou": 0.7076849473813764,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1216, 648, 1409, 693], \"label\": \"the text \\\"lane n7\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    1225.6418918918919,
+    648.3418367346939,
+    1411.802606177606,
+    690.2346938775511
+   ],
+   "iou": 0.6885390108213131,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1218, 650, 1403, 692], \"label\": \"the text \\\"lane n7\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0031",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image shows a dark room with som"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image shows two Polaroid-style p"
+  }
+ },
+ {
+  "scene": "qae_0031",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1499.3484555984555,
+    661.3086734693878,
+    1648.2770270270269,
+    735.1198979591837
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1490, 663, 1638, 737]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1387.6520270270269,
+    817.9081632653061,
+    1595.9507722007722,
+    861.795918367347
+   ],
+   "iou": 0.8653495323722793,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1379, 820, 1586, 864], \"label\": \"the text \\\"1dcg 875\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0031",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    854.3267374517375,
+    236.3954081632653,
+    1271.9305019305018,
+    606.4489795918367
+   ],
+   "iou": 0.8170866167391322,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [849, 237, 1264, 608], \"label\": \"how many items can you g"
+  },
+  "oracle": {
+   "box": [
+    854.3267374517375,
+    236.3954081632653,
+    1270.9242277992278,
+    648.3418367346939
+   ],
+   "iou": 0.9141109465083166,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [849, 237, 1263, 650], \"label\": \"how many items can you g"
+  }
+ },
+ {
+  "scene": "qae_0031",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no people visible in the background of this image. The image shows a d"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no people in the background of the image. The image shows two Polaroid"
+  }
+ },
+ {
+  "scene": "qae_0031",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    851.307915057915,
+    671.2831632653061,
+    981.117277992278,
+    715.170918367347
+   ],
+   "iou": 0.4487156502139146,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [846, 673, 975, 717]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    851.307915057915,
+    673.2780612244898,
+    1015.3305984555984,
+    711.1811224489796
+   ],
+   "iou": 0.500515858128585,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [846, 675, 1009, 713]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0032",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    852.3141891891892,
+    537.625,
+    1052.5627413127413,
+    580.515306122449
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [847, 539, 1046, 582], \"label\": \"what color are the lette"
+  },
+  "oracle": {
+   "box": [
+    1518.467664092664,
+    363.07142857142856,
+    1640.2268339768339,
+    435.88520408163265
+   ],
+   "iou": 0.11976690121249227,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1509, 364, 1630, 437], \"label\": \"what color are the lett"
+  }
+ },
+ {
+  "scene": "qae_0032",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    913.6969111969112,
+    323.1734693877551,
+    1213.5666023166023,
+    443.86479591836735
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [908, 324, 1206, 445], \"label\": \"the text \\\"lane p1\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    1397.7147683397682,
+    515.6811224489796,
+    1569.7876447876447,
+    552.5867346938776
+   ],
+   "iou": 0.5665556805362021,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1389, 517, 1560, 554], \"label\": \"the text \\\"lane p1\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0032",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    899.6090733590734,
+    305.21938775510205,
+    1222.6230694980695,
+    445.859693877551
+   ],
+   "iou": 0.3840328951495762,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [894, 306, 1215, 447], \"label\": \"are these switches on or"
+  },
+  "oracle": {
+   "box": [
+    452.82335907335903,
+    247.3673469387755,
+    540.3692084942085,
+    335.14285714285717
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [450, 248, 537, 336], \"label\": \"are these switches on or "
+  }
+ },
+ {
+  "scene": "qae_0032",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no rooms visible in the image; it appears to be an exterior view of a "
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    223.42857142857144,
+    732.5675675675675,
+    507.70153061224494
+   ],
+   "iou": 0.8349436970009976,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 224, 728, 509]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0032",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    852.3141891891892,
+    537.625,
+    1022.3745173745174,
+    580.515306122449
+   ],
+   "iou": 0.5200151808855177,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [847, 539, 1016, 582], \"label\": \"the text \\\"pier y3\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    854.3267374517375,
+    544.6071428571429,
+    1023.3807915057914,
+    580.515306122449
+   ],
+   "iou": 0.5845316907218647,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [849, 546, 1017, 582], \"label\": \"the text \\\"pier y3\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0032",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    850.3016409266409,
+    605.4515306122449,
+    1048.5376447876447,
+    647.344387755102
+   ],
+   "iou": 0.6567755393081836,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [845, 607, 1042, 649], \"label\": \"the text \\\"4vyf 183\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    850.3016409266409,
+    605.4515306122449,
+    1048.5376447876447,
+    647.344387755102
+   ],
+   "iou": 0.6567755393081836,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [845, 607, 1042, 649], \"label\": \"the text \\\"4vyf 183\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0033",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no yellow sticker visible in the provided image. The image shows a wall"
+  },
+  "oracle": {
+   "box": [
+    1366.5202702702702,
+    477.7780612244898,
+    1414.8214285714284,
+    502.7142857142857
+   ],
+   "iou": 0.00953052371864447,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1358, 479, 1406, 504], \"label\": \"what is written at the "
+  }
+ },
+ {
+  "scene": "qae_0033",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    410.55984555984554,
+    295.2448979591837,
+    729.5487451737451,
+    430.8979591836735
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [408, 296, 725, 432], \"label\": \"the text \\\"9xeq 731\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  }
+ },
+ {
+  "scene": "qae_0033",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    524.6581632653061,
+    560.4946911196911,
+    568.545918367347
+   ],
+   "iou": 0.045512802648452776,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 526, 557, 570], \"label\": \"the word in blue buble bo"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no blue bubble or text visible in the bottom left of the image. The ima"
+  }
+ },
+ {
+  "scene": "qae_0033",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no chairs visible in the image. The image shows two screens on a wall "
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no objects, texts, or regions in the image related to a chair. The ima"
+  }
+ },
+ {
+  "scene": "qae_0033",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    408.5472972972973,
+    296.24234693877554,
+    729.5487451737451,
+    430.8979591836735
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [406, 297, 725, 432], \"label\": \"the text \\\"9mbp 853\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  }
+ },
+ {
+  "scene": "qae_0035",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text or discernible information in the image that provides any indic"
+  },
+  "oracle": {
+   "box": [
+    1194.4473938223937,
+    607.4464285714286,
+    1393.6896718146718,
+    652.3316326530612
+   ],
+   "iou": 0.0017277567375989203,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1187, 609, 1385, 654], \"label\": \"what does the picture s"
+  }
+ },
+ {
+  "scene": "qae_0035",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    362.25868725868725,
+    582.5102040816327,
+    560.4946911196911,
+    622.4081632653061
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [360, 584, 557, 624], \"label\": \"the text \\\"5ott 919\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    1194.4473938223937,
+    602.4591836734694,
+    1394.6959459459458,
+    654.3265306122449
+   ],
+   "iou": 0.7166181895395501,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1187, 604, 1386, 656], \"label\": \"the text \\\"5ott 919\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0035",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no specific event mentioned in the image. The image shows a person stan"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no clear indication of an event in the provided image. The image appear"
+  }
+ },
+ {
+  "scene": "qae_0035",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    362.25868725868725,
+    582.5102040816327,
+    560.4946911196911,
+    623.405612244898
+   ],
+   "iou": 0.5539230124600255,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [360, 584, 557, 625], \"label\": \"the text \\\"9asj 125\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    574.530612244898,
+    556.4695945945946,
+    618.4183673469388
+   ],
+   "iou": 0.4351041639942504,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 576, 553, 620], \"label\": \"the text \\\"9asj 125\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0038",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    225.42346938775512,
+    772.8185328185327,
+    508.69897959183675
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 226, 768, 510], \"label\": \"are these switches on or "
+  },
+  "oracle": {
+   "box": [
+    1051.556467181467,
+    262.3290816326531,
+    1771.0424710424709,
+    889.7244897959184
+   ],
+   "iou": 0.5640557168424233,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1045, 263, 1760, 892], \"label\": \"are these switches on o"
+  }
+ },
+ {
+  "scene": "qae_0038",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    358.23359073359075,
+    588.4948979591837,
+    563.5135135135135,
+    635.375
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 590, 560, 637]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1069.6694015444016,
+    690.2346938775511,
+    1264.886583011583,
+    737.1147959183673
+   ],
+   "iou": 0.7900556154633801,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1063, 692, 1257, 739], \"label\": \"the text \\\"8jpe 452\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0038",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    1069.6694015444016,
+    274.2984693877551,
+    1758.9671814671815,
+    897.7040816326531
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1063, 275, 1748, 900], \"label\": \"what does the picture s"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text or information in the image that indicates what \"the other ride"
+  }
+ },
+ {
+  "scene": "qae_0038",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    358.23359073359075,
+    525.655612244898,
+    533.3252895752895,
+    566.5510204081633
+   ],
+   "iou": 0.5228881295329924,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 527, 530, 568], \"label\": \"the text \\\"row m4\\\"\"}\n]\n`"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    525.655612244898,
+    541.3754826254826,
+    567.5484693877551
+   ],
+   "iou": 0.5226928227175559,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 527, 538, 569], \"label\": \"the text \\\"row m4\\\"\"}\n]\n`"
+  }
+ },
+ {
+  "scene": "qae_0038",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    358.23359073359075,
+    585.5025510204082,
+    563.5135135135135,
+    637.3698979591837
+   ],
+   "iou": 0.6019839717125244,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 587, 560, 639]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    585.5025510204082,
+    563.5135135135135,
+    627.3954081632653
+   ],
+   "iou": 0.4510158212813513,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 587, 560, 629]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0039",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    372.32142857142856,
+    732.1275510204082,
+    579.6138996138995,
+    780.0051020408164
+   ],
+   "iou": 0.013604857986762631,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 734, 576, 782], \"label\": \"the number of the runner "
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    733.125,
+    577.6013513513514,
+    778.0102040816327
+   ],
+   "iou": 0.011814018400462986,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 735, 574, 780], \"label\": \"the number of the runner "
+  }
+ },
+ {
+  "scene": "qae_0039",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    370.3088803088803,
+    732.1275510204082,
+    577.6013513513514,
+    778.0102040816327
+   ],
+   "iou": 0.48711302277964974,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [368, 734, 574, 780], \"label\": \"the text \\\"7sau 792\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    370.3088803088803,
+    732.1275510204082,
+    577.6013513513514,
+    778.0102040816327
+   ],
+   "iou": 0.48711302277964974,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [368, 734, 574, 780], \"label\": \"the text \\\"7sau 792\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0039",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no brands being advertised in the image provided. The image appears to"
+  },
+  "oracle": {
+   "box": [
+    1040.4874517374517,
+    488.75,
+    1101.8701737451736,
+    514.6836734693877
+   ],
+   "iou": 0.012089917742921385,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1034, 490, 1095, 516], \"label\": \"one of the brands being"
+  }
+ },
+ {
+  "scene": "qae_0039",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no objects, texts, or regions in the image that can be used to determi"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  }
+ },
+ {
+  "scene": "qae_0039",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    828.16361003861,
+    574.530612244898,
+    1030.4247104247104,
+    627.3954081632653
+   ],
+   "iou": 0.8170997279128586,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [823, 576, 1024, 629], \"label\": \"the text \\\"7juc 501\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0040",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no blue and purple bill visible in the image provided. The image shows "
+  },
+  "oracle": {
+   "box": [
+    533.3252895752895,
+    253.35204081632654,
+    831.1824324324324,
+    477.7780612244898
+   ],
+   "iou": 0.2577945767928878,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [530, 254, 826, 479], \"label\": \"what monetary value is th"
+  }
+ },
+ {
+  "scene": "qae_0040",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    778.0102040816327,
+    579.6138996138995,
+    816.9107142857143
+   ],
+   "iou": 0.454724099644937,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 780, 576, 819], \"label\": \"the text \\\"4djw 551\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0040",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no beer visible in the image. The image shows a computer screen with so"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no beer present in the image. The image shows a calculator and some cur"
+  }
+ },
+ {
+  "scene": "qae_0040",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1071.6819498069497,
+    677.2678571428571,
+    1270.9242277992278,
+    730.1326530612245
+   ],
+   "iou": 0.6816157226716795,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1065, 679, 1263, 732]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1049.543918918919,
+    683.2525510204082,
+    1267.9054054054054,
+    727.140306122449
+   ],
+   "iou": 0.7630250828988715,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1043, 685, 1260, 729]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0041",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible yellow sticker on the fridge in the provided image. Therefor"
+  },
+  "oracle": {
+   "box": [
+    661.1221042471042,
+    299.234693877551,
+    684.2664092664093,
+    313.19897959183675
+   ],
+   "iou": 0.001125263522742999,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [657, 300, 680, 314], \"label\": \"what is written at the to"
+  }
+ },
+ {
+  "scene": "qae_0041",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    371.3151544401544,
+    712.1785714285714,
+    563.5135135135135,
+    756.0663265306123
+   ],
+   "iou": 0.43067233946674144,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [369, 714, 560, 758], \"label\": \"the text \\\"zone s5\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0041",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or identifiable sponsor information in the provided ima"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or information in the image that indicates any sponsors"
+  }
+ },
+ {
+  "scene": "qae_0041",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1090.8011583011582,
+    554.5816326530612,
+    1204.510135135135,
+    578.5204081632653
+   ],
+   "iou": 0.3182199754411465,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1084, 556, 1197, 580]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0042",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no specific event mentioned in the image. The image shows a dark backgr"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    244.375,
+    656.0907335907335,
+    478.7755102040816
+   ],
+   "iou": 0.8588898239068357,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 245, 652, 480], \"label\": \"what event is this from?\""
+  }
+ },
+ {
+  "scene": "qae_0042",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    484.76020408163265,
+    577.6013513513514,
+    527.6505102040817
+   ],
+   "iou": 0.5687996373308392,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 486, 574, 529], \"label\": \"the text \\\"2rxc 532\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0042",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no beer visible in the image. The image shows a wall with some posters "
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no beer visible in the image. The image shows a dark screen with a smal"
+  }
+ },
+ {
+  "scene": "qae_0042",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    351.1896718146718,
+    217.44387755102042,
+    710.4295366795367,
+    548.5969387755102
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [349, 218, 706, 550], \"label\": \"How many pictures are the"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    223.42857142857144,
+    707.4107142857142,
+    551.5892857142858
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 224, 703, 553]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0042",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1223.6293436293436,
+    685.2474489795918,
+    1431.9280888030887,
+    733.125
+   ],
+   "iou": 0.7860946763844058,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1216, 687, 1423, 735]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1223.6293436293436,
+    685.2474489795918,
+    1426.896718146718,
+    733.125
+   ],
+   "iou": 0.769101127339648,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1216, 687, 1418, 735], \"label\": \"the text \\\"9klh 990\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0043",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    734.5801158301158,
+    582.5102040816327,
+    931.8098455598455,
+    678.265306122449
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [730, 584, 926, 680], \"label\": \"what color are the letter"
+  },
+  "oracle": {
+   "box": [
+    492.06805019305017,
+    633.3801020408164,
+    610.8083976833976,
+    698.2142857142858
+   ],
+   "iou": 0.107852918906692,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [489, 635, 607, 700], \"label\": \"what color are the letter"
+  }
+ },
+ {
+  "scene": "qae_0043",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    734.5801158301158,
+    606.4489795918367,
+    937.8474903474903,
+    678.265306122449
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [730, 608, 932, 680]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    783.9948979591837,
+    578.6076254826255,
+    826.8852040816327
+   ],
+   "iou": 0.49074173044686203,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 786, 575, 829], \"label\": \"the text \\\"2lma 542\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0043",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no clear indication of the value of the coin in the image provided. The"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no clear indication of the value of the coin in the image. The coin app"
+  }
+ },
+ {
+  "scene": "qae_0043",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    350.1833976833977,
+    524.6581632653061,
+    713.448359073359,
+    857.8061224489796
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [348, 526, 709, 860], \"label\": \"How many pictures on the "
+  },
+  "oracle": {
+   "box": [
+    1267.9054054054054,
+    256.34438775510205,
+    1447.0222007722007,
+    378.03316326530614
+   ],
+   "iou": 0.19186122406226494,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1260, 257, 1438, 379], \"label\": \"How many pictures on th"
+  }
+ },
+ {
+  "scene": "qae_0043",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    734.5801158301158,
+    578.5204081632653,
+    931.8098455598455,
+    616.4234693877551
+   ],
+   "iou": 0.7259355949704989,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [730, 580, 926, 618], \"label\": \"the text \\\"2vjc 624\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    729.5487451737451,
+    571.5382653061224,
+    933.8223938223938,
+    616.4234693877551
+   ],
+   "iou": 0.6474972227212756,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [725, 573, 928, 618]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0043",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    800.9942084942085,
+    628.3928571428571,
+    940.8663127413128,
+    680.2602040816327
+   ],
+   "iou": 0.4387630555746441,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [796, 630, 935, 682]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    730.5550193050193,
+    628.3928571428571,
+    939.8600386100386,
+    680.2602040816327
+   ],
+   "iou": 0.6206978092237385,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [726, 630, 934, 682]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0045",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no license plate visible in the image provided. The image shows two pho"
+  },
+  "oracle": {
+   "box": [
+    1292.0559845559844,
+    633.3801020408164,
+    1579.850386100386,
+    727.140306122449
+   ],
+   "iou": 0.1435362240007789,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1284, 635, 1570, 729], \"label\": \"what word does the lice"
+  }
+ },
+ {
+  "scene": "qae_0045",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    360.246138996139,
+    558.5714285714286,
+    557.4758687258687,
+    600.4642857142858
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [358, 560, 554, 602], \"label\": \"the text \\\"6amc 927\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    1190.4222972972973,
+    773.0229591836735,
+    1398.7210424710424,
+    815.9132653061225
+   ],
+   "iou": 0.8207254645527053,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1183, 775, 1390, 818], \"label\": \"the text \\\"6amc 927\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0045",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar visible in the image. The image shows two framed photograp"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no candy bar present in the image. The image shows a license plate with"
+  }
+ },
+ {
+  "scene": "qae_0045",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    359.23986486486484,
+    558.5714285714286,
+    557.4758687258687,
+    600.4642857142858
+   ],
+   "iou": 0.4646745346866821,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [357, 560, 554, 602], \"label\": \"the text \\\"5utf 968\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    359.23986486486484,
+    558.5714285714286,
+    557.4758687258687,
+    600.4642857142858
+   ],
+   "iou": 0.4646745346866821,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [357, 560, 554, 602]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0047",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or object in the image that provides the name of the vo"
+  },
+  "oracle": {
+   "box": [
+    410.55984555984554,
+    393.99234693877554,
+    469.9300193050193,
+    518.6734693877551
+   ],
+   "iou": 0.0894002403688309,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [408, 395, 467, 520], \"label\": \"name of the vodka\"}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0047",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1316.2065637065637,
+    455.8341836734694,
+    1344.3822393822393,
+    490.7448979591837
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1308, 457, 1336, 492], \"label\": \"the text \\\"6gkq 914\\\"\"}"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    663.3035714285714,
+    583.6389961389962,
+    708.1887755102041
+   ],
+   "iou": 0.5402333971258917,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 665, 580, 710], \"label\": \"the text \\\"6gkq 914\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0047",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    410.55984555984554,
+    272.30357142857144,
+    522.2562741312742,
+    534.6326530612245
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [408, 273, 519, 536], \"label\": \"largest measurement we ca"
+  },
+  "oracle": {
+   "box": [
+    1316.2065637065637,
+    454.8367346938776,
+    1345.3885135135135,
+    527.6505102040817
+   ],
+   "iou": 0.016099162345670288,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1308, 456, 1337, 529], \"label\": \"the largest measurement"
+  }
+ },
+ {
+  "scene": "qae_0047",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1683.4966216216214,
+    39.89795918367347,
+    1769.0299227799228,
+    59.8469387755102
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1673, 40, 1758, 60]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    859.3581081081081,
+    574.530612244898,
+    1119.9831081081081,
+    618.4183673469388
+   ],
+   "iou": 0.44079171116531957,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [854, 576, 1113, 620]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0048",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1312.181467181467,
+    284.2729591836735,
+    1415.8277027027027,
+    574.530612244898
+   ],
+   "iou": 0.17747692213453356,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1304, 285, 1407, 576], \"label\": \"what number is the play"
+  },
+  "oracle": {
+   "box": [
+    1312.181467181467,
+    284.2729591836735,
+    1424.8841698841698,
+    568.545918367347
+   ],
+   "iou": 0.18900555014627513,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1304, 285, 1416, 570], \"label\": \"what number is the play"
+  }
+ },
+ {
+  "scene": "qae_0048",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    409.5535714285714,
+    299.234693877551,
+    729.5487451737451,
+    436.8826530612245
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [407, 300, 725, 438]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1194.4473938223937,
+    603.4566326530612,
+    1388.6583011583011,
+    652.3316326530612
+   ],
+   "iou": 0.7506089592181676,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1187, 605, 1380, 654], \"label\": \"the text \\\"9fte 926\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0048",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    407.54102316602314,
+    295.2448979591837,
+    727.5361969111968,
+    436.8826530612245
+   ],
+   "iou": 0.37997483276956673,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [405, 296, 723, 438], \"label\": \"are these switches on or "
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no switches visible in the image provided. The image shows a dark scre"
+  }
+ },
+ {
+  "scene": "qae_0048",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    518.6734693877551,
+    529.300193050193,
+    568.545918367347
+   ],
+   "iou": 0.45001956260704373,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 520, 526, 570], \"label\": \"the text \\\"pier e8\\\"\"}\n]\n"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    518.6734693877551,
+    530.3064671814672,
+    567.5484693877551
+   ],
+   "iou": 0.4347354769890886,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 520, 527, 569], \"label\": \"the text \\\"pier e8\\\"\"}\n]\n"
+  }
+ },
+ {
+  "scene": "qae_0050",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    773.8248069498069,
+    333.1479591836735,
+    875.4584942084941,
+    384.01785714285717
+   ],
+   "iou": 0.019933973496651408,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [769, 334, 870, 385], \"label\": \"what word is handwritten?"
+  },
+  "oracle": {
+   "box": [
+    740.6177606177606,
+    328.1607142857143,
+    880.4898648648648,
+    398.9795918367347
+   ],
+   "iou": 0.038192270323908505,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [736, 329, 875, 400], \"label\": \"word is handwritten\"}\n]\n`"
+  }
+ },
+ {
+  "scene": "qae_0050",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    777.8499034749035,
+    334.1454081632653,
+    874.4522200772201,
+    383.0204081632653
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [773, 335, 869, 384], \"label\": \"the text \\\"bay y6\\\"\"}\n]\n`"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    668.2908163265306,
+    533.3252895752895,
+    712.1785714285714
+   ],
+   "iou": 0.4507458825210242,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 670, 530, 714]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0050",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    352.19594594594594,
+    233.4030612244898,
+    1033.4435328185327,
+    866.7831632653061
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [350, 234, 1027, 869], \"label\": \"who is at the center of "
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    237.39285714285714,
+    1032.4372586872587,
+    864.7882653061225
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 238, 1026, 867]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0050",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": false,
+  "ae": {
+   "box": [
+    777.8499034749035,
+    335.14285714285717,
+    873.4459459459459,
+    383.0204081632653
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [773, 336, 868, 384], \"label\": \"the text \\\"2zie 985\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  }
+ },
+ {
+  "scene": "qae_0052",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no car visible in the image. The image appears to be of a dark room wit"
+  },
+  "oracle": {
+   "box": [
+    470.9362934362934,
+    428.9030612244898,
+    763.7620656370656,
+    568.545918367347
+   ],
+   "iou": 0.21210579334173263,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [468, 430, 759, 570], \"label\": \"what state is this car fr"
+  }
+ },
+ {
+  "scene": "qae_0052",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text \"dock n1\" visible in the provided image. The image appears to s"
+  },
+  "oracle": {
+   "box": [
+    372.32142857142856,
+    622.4081632653061,
+    571.5637065637065,
+    658.3163265306123
+   ],
+   "iou": 0.4376785552440651,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [370, 624, 568, 660]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0052",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or readable content on the farthest right window in the"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    223.42857142857144,
+    908.6655405405405,
+    738.1122448979592
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 224, 903, 740], \"label\": \"the light sign read on th"
+  }
+ },
+ {
+  "scene": "qae_0052",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    991.1800193050193,
+    541.6147959183673,
+    1137.0897683397684,
+    594.4795918367347
+   ],
+   "iou": 0.5721352135686696,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [985, 543, 1130, 596], \"label\": \"the text \\\"1aka 171\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0053",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no car visible in the image, so it's not possible to determine the stat"
+  },
+  "oracle": {
+   "box": [
+    1372.557915057915,
+    683.2525510204082,
+    1610.03861003861,
+    750.0816326530612
+   ],
+   "iou": 0.1274410537852942,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1364, 685, 1600, 752], \"label\": \"what state is this car "
+  }
+ },
+ {
+  "scene": "qae_0053",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1287.0246138996138,
+    800.9515306122449,
+    1459.0974903474903,
+    843.8418367346939
+   ],
+   "iou": 0.9213805675680096,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1279, 803, 1450, 846], \"label\": \"the text \\\"pier l8\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0053",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no clear indication of a specific brand of liquor on the right side of "
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible liquor brand on the right side of the image. The image appea"
+  }
+ },
+ {
+  "scene": "qae_0053",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    352.19594594594594,
+    223.42857142857144,
+    734.5801158301158,
+    518.6734693877551
+   ],
+   "iou": 0.8770794550022321,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [350, 224, 730, 520], \"label\": \"What kind of room is this"
+  },
+  "oracle": {
+   "box": [
+    359.23986486486484,
+    227.4183673469388,
+    730.5550193050193,
+    507.70153061224494
+   ],
+   "iou": 0.8474332994588155,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [357, 228, 726, 509], \"label\": \"What kind of room is this"
+  }
+ },
+ {
+  "scene": "qae_0053",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    799.9879343629343,
+    496.7295918367347,
+    992.1862934362933,
+    541.6147959183673
+   ],
+   "iou": 0.6045440338439022,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [795, 498, 986, 543], \"label\": \"the text \\\"1jlf 241\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    773.8248069498069,
+    501.7168367346939,
+    992.1862934362933,
+    543.6096938775511
+   ],
+   "iou": 0.669021502771337,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [769, 503, 986, 545], \"label\": \"the text \\\"1jlf 241\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0053",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    800.9942084942085,
+    558.5714285714286,
+    1004.261583011583,
+    602.4591836734694
+   ],
+   "iou": 0.5551790240488835,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [796, 560, 998, 604], \"label\": \"the text \\\"dock q7\\\"\"}\n]\n"
+  },
+  "oracle": {
+   "box": [
+    803.0067567567568,
+    562.5612244897959,
+    1005.2678571428571,
+    605.4515306122449
+   ],
+   "iou": 0.6419452499811772,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 564, 999, 607]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0054",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    800.9942084942085,
+    568.545918367347,
+    889.546332046332,
+    611.4362244897959
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [796, 570, 884, 613], \"label\": \"what number is the player"
+  },
+  "oracle": {
+   "box": [
+    1384.6332046332045,
+    507.70153061224494,
+    1477.2104247104246,
+    730.1326530612245
+   ],
+   "iou": 0.18670826888187747,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1376, 509, 1468, 732], \"label\": \"what number is the play"
+  }
+ },
+ {
+  "scene": "qae_0054",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1284.0057915057914,
+    757.0637755102041,
+    1482.2417953667953,
+    807.9336734693878
+   ],
+   "iou": 0.7585932657204773,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1276, 759, 1473, 810], \"label\": \"the text \\\"8jlp 491\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0054",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no discernible date or year information provided in the image. The imag"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no discernible text or information in the image that indicates the year"
+  }
+ },
+ {
+  "scene": "qae_0054",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    352.19594594594594,
+    223.42857142857144,
+    734.5801158301158,
+    514.6836734693877
+   ],
+   "iou": 0.8651666261298403,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [350, 224, 730, 516], \"label\": \"pictures on the wall\"},\n\t"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    223.42857142857144,
+    732.5675675675675,
+    507.70153061224494
+   ],
+   "iou": 0.8349436970009976,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 224, 728, 509], \"label\": \"How many pictures on the "
+  }
+ },
+ {
+  "scene": "qae_0054",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    803.0067567567568,
+    571.5382653061224,
+    1006.2741312741313,
+    612.4336734693878
+   ],
+   "iou": 0.527083170911493,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 573, 1000, 614], \"label\": \"the text \\\"5yhd 761\\\"\"}\n"
+  },
+  "oracle": {
+   "box": [
+    803.0067567567568,
+    572.5357142857143,
+    1009.2929536679536,
+    616.4234693877551
+   ],
+   "iou": 0.6117482485044187,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [798, 574, 1003, 618], \"label\": \"the text \\\"5yhd 761\\\"\"}\n"
+  }
+ },
+ {
+  "scene": "qae_0055",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    440.74806949806947,
+    418.92857142857144,
+    679.2350386100386,
+    493.7372448979592
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [438, 420, 675, 495], \"label\": \"what color are the letter"
+  },
+  "oracle": {
+   "box": [
+    1518.467664092664,
+    359.0816326530612,
+    1644.2519305019305,
+    435.88520408163265
+   ],
+   "iou": 0.13050565200614048,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1509, 360, 1634, 437], \"label\": \"what color are the lett"
+  }
+ },
+ {
+  "scene": "qae_0055",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1393.6896718146718,
+    514.6836734693877,
+    1589.9131274131273,
+    562.5612244897959
+   ],
+   "iou": 0.7821093403567069,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1385, 516, 1580, 564], \"label\": \"the text \\\"yield j2\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0055",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    440.74806949806947,
+    418.92857142857144,
+    679.2350386100386,
+    493.7372448979592
+   ],
+   "iou": 0.13400100494968656,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [438, 420, 675, 495], \"label\": \"the license plate says\"}\n"
+  },
+  "oracle": {
+   "box": [
+    440.74806949806947,
+    423.9158163265306,
+    683.2601351351351,
+    488.75
+   ],
+   "iou": 0.11809427524820473,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [438, 425, 679, 490], \"label\": \"word\"}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0055",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    971.0545366795367,
+    359.0816326530612,
+    1010.2992277992278,
+    476.78061224489795
+   ],
+   "iou": 0.04220632400570594,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [965, 360, 1004, 478], \"label\": \"chairs\"}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    974.073359073359,
+    356.0892857142857,
+    1046.5250965250964,
+    399.97704081632656
+   ],
+   "iou": 0.02905467936768284,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [968, 357, 1040, 401], \"label\": \"chairs\"}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0055",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    359.23986486486484,
+    552.5867346938776,
+    529.300193050193,
+    606.4489795918367
+   ],
+   "iou": 0.5047143496455846,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [357, 554, 526, 608], \"label\": \"the text \\\"pier y1\\\"\"}\n]\n"
+  },
+  "oracle": {
+   "box": [
+    360.246138996139,
+    558.5714285714286,
+    527.2876447876448,
+    595.4770408163265
+   ],
+   "iou": 0.390525447913358,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [358, 560, 524, 597]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0055",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    352.19594594594594,
+    616.4234693877551,
+    573.5762548262549,
+    660.3112244897959
+   ],
+   "iou": 0.4181188799357344,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [350, 618, 570, 662], \"label\": \"the text \\\"4nam 329\\\"\"}\n]"
+  },
+  "oracle": {
+   "box": [
+    358.23359073359075,
+    618.4183673469388,
+    570.5574324324324,
+    660.3112244897959
+   ],
+   "iou": 0.4254874482237864,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [356, 620, 567, 662]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0056",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no coin present in the image, so it's not possible to determine a year "
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no coin visible in the image provided. The image contains a photograph "
+  }
+ },
+ {
+  "scene": "qae_0056",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    1384.6332046332045,
+    812.920918367347,
+    1589.9131274131273,
+    867.780612244898
+   ],
+   "iou": 0.8096634965238969,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1376, 815, 1580, 870], \"label\": \"the text \\\"9zkg 483\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0056",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text in the image that says \"the other ride.\" The image contains a p"
+  },
+  "oracle": {
+   "box": [
+    1386.6457528957528,
+    817.9081632653061,
+    1593.938223938224,
+    866.7831632653061
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1378, 820, 1584, 869], \"label\": \"what does the picture s"
+  }
+ },
+ {
+  "scene": "qae_0056",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    356.22104247104244,
+    225.42346938775512,
+    732.5675675675675,
+    727.140306122449
+   ],
+   "iou": 0.889940389118711,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 226, 728, 729], \"label\": \"What is the child eating?"
+  },
+  "oracle": {
+   "box": [
+    356.22104247104244,
+    225.42346938775512,
+    724.5173745173745,
+    726.1428571428571
+   ],
+   "iou": 0.9063538869492899,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [354, 226, 720, 728], \"label\": \"What is the child eating?"
+  }
+ },
+ {
+  "scene": "qae_0056",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    851.307915057915,
+    537.625,
+    1026.3996138996138,
+    578.5204081632653
+   ],
+   "iou": 0.5226735134171074,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [846, 539, 1020, 580]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    851.307915057915,
+    537.625,
+    1026.3996138996138,
+    582.5102040816327
+   ],
+   "iou": 0.590907916209699,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [846, 539, 1020, 584]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0057",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text visible on the man's shirt in the provided image. Therefore, th"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no man or shirt visible in the image. The image appears to be very dark"
+  }
+ },
+ {
+  "scene": "qae_0057",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    851.307915057915,
+    671.2831632653061,
+    935.8349420849421,
+    718.1632653061224
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [846, 673, 930, 720]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    370.3088803088803,
+    783.9948979591837,
+    559.4884169884169,
+    827.8826530612245
+   ],
+   "iou": 0.4917488022056253,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [368, 786, 556, 830]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0057",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no beer visible in the image. The image shows a wall with three illumin"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no visible text or identifiable object in the image that indicates the "
+  }
+ },
+ {
+  "scene": "qae_0057",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are no objects, texts, or regions in the image that can be used to answer "
+  },
+  "oracle": {
+   "box": [
+    1257.842664092664,
+    323.1734693877551,
+    1525.5115830115828,
+    510.6938775510204
+   ],
+   "iou": 0.5132667797805096,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1250, 324, 1516, 512], \"label\": \"How many are playing ba"
+  }
+ },
+ {
+  "scene": "qae_0057",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    852.3141891891892,
+    671.2831632653061,
+    935.8349420849421,
+    718.1632653061224
+   ],
+   "iou": 0.30559056256392064,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [847, 673, 930, 720]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    727.5361969111968,
+    672.280612244898,
+    933.8223938223938,
+    716.1683673469388
+   ],
+   "iou": 0.6790032998040317,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [723, 674, 928, 718], \"label\": \"the text \\\"2rsr 659\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0057",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There are none."
+  },
+  "oracle": {
+   "box": [
+    728.542471042471,
+    733.125,
+    901.6216216216216,
+    773.0229591836735
+   ],
+   "iou": 0.5754764646097716,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [724, 735, 896, 775]}\n]\n```"
+  }
+ },
+ {
+  "scene": "qae_0058",
+  "id": "bright_img",
+  "band": "bright",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no coin visible in the image, so it's not possible to determine the yea"
+  },
+  "oracle": {
+   "box": [
+    1313.1877413127413,
+    584.5051020408164,
+    1501.3610038610038,
+    635.375
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1305, 586, 1492, 637], \"label\": \"what year is the coin?\""
+  }
+ },
+ {
+  "scene": "qae_0058",
+  "id": "bright_sign",
+  "band": "bright",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1664.377413127413,
+    36.90561224489796,
+    1777.0801158301158,
+    58.849489795918366
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1654, 37, 1766, 59]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    1295.074806949807,
+    587.4974489795918,
+    1499.3484555984555,
+    628.3928571428571
+   ],
+   "iou": 0.7693828569693041,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1287, 589, 1490, 630], \"label\": \"the text \\\"8kyu 366\\\"\"}"
+  }
+ },
+ {
+  "scene": "qae_0058",
+  "id": "dim_img",
+  "band": "dim",
+  "kind": "vqa_image",
+  "recoverable": false,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no football league mentioned in the image, and there is no man pointing"
+  },
+  "oracle": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no football league or jacket visible in the provided image. The image s"
+  }
+ },
+ {
+  "scene": "qae_0058",
+  "id": "control_img",
+  "band": "control",
+  "kind": "vqa_image",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    984.1361003861003,
+    584.5051020408164,
+    1049.543918918919,
+    643.3545918367347
+   ],
+   "iou": 0.020233902885470608,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [978, 586, 1043, 645], \"label\": \"What is the child eating"
+  },
+  "oracle": {
+   "box": [
+    875.4584942084941,
+    582.5102040816327,
+    1075.7070463320463,
+    681.2576530612245
+   ],
+   "iou": 0.10394475117253094,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [870, 584, 1069, 683], \"label\": \"What is the child eating"
+  }
+ },
+ {
+  "scene": "qae_0058",
+  "id": "dim_text0",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": [
+    1664.377413127413,
+    36.90561224489796,
+    1779.092664092664,
+    58.849489795918366
+   ],
+   "iou": 0.0,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [1654, 37, 1768, 59]}\n]\n```"
+  },
+  "oracle": {
+   "box": [
+    359.23986486486484,
+    546.6020408163265,
+    562.5072393822394,
+    586.5
+   ],
+   "iou": 0.45730970907584906,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [357, 548, 559, 588], \"label\": \"the text \\\"2lrr 163\\\"\"}\n]"
+  }
+ },
+ {
+  "scene": "qae_0058",
+  "id": "dim_text1",
+  "band": "dim",
+  "kind": "text",
+  "recoverable": true,
+  "ae": {
+   "box": null,
+   "iou": 0.0,
+   "reply": "There is no text \"yield j1\" in the provided image. The image contains two photog"
+  },
+  "oracle": {
+   "box": [
+    359.23986486486484,
+    602.4591836734694,
+    551.4382239382239,
+    657.3188775510205
+   ],
+   "iou": 0.5253403576412903,
+   "reply": "```json\n[\n\t{\"bbox_2d\": [357, 604, 548, 659]}\n]\n```"
+  }
+ }
+]

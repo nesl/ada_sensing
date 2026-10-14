@@ -1,0 +1,40 @@
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 25371.34it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+40 scenes, 199 targets, 120 recoverable
+fold 0: 32 train / 8 test
+/home/cc/qa_scoring/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+    step 0 pred 0.5235 heads 2.1256
+    step 500 pred 0.1297 heads 0.3369
+    step 1000 pred 0.1389 heads 0.6118
+    step 1499 pred 0.1215 heads 0.2354
+fold 1: 32 train / 8 test
+    step 0 pred 0.5456 heads 1.9505
+    step 500 pred 0.1445 heads 0.7264
+    step 1000 pred 0.1409 heads 0.4594
+    step 1499 pred 0.1151 heads 0.3629
+fold 2: 32 train / 8 test
+    step 0 pred 0.5382 heads 2.0946
+    step 500 pred 0.1631 heads 0.6633
+    step 1000 pred 0.1245 heads 0.6070
+    step 1499 pred 0.1162 heads 0.3451
+fold 3: 32 train / 8 test
+    step 0 pred 0.5477 heads 2.6322
+    step 500 pred 0.1296 heads 0.9417
+    step 1000 pred 0.1116 heads 0.3627
+    step 1499 pred 0.1134 heads 0.4195
+fold 4: 32 train / 8 test
+    step 0 pred 0.4739 heads 2.3059
+    step 500 pred 0.1746 heads 0.7775
+    step 1000 pred 0.1228 heads 0.5206
+    step 1499 pred 0.1478 heads 0.4320
+
+mean REAL score at the chosen setting (held-out, recoverable targets):
+  all                        n=120 ae=0.27  fixed=0.49  direct=0.65  region=0.80  text=0.68  text_real=0.55  oracle=1.00
+    bright band              n= 56 ae=0.12  fixed=0.75  direct=0.72  region=0.89  text=0.78  text_real=0.58  oracle=1.00
+    dim band                 n= 49 ae=0.46  fixed=0.17  direct=0.63  region=0.72  text=0.66  text_real=0.64  oracle=1.00
+    control band             n= 15 ae=0.20  fixed=0.60  direct=0.47  region=0.73  text=0.33  text_real=0.13  oracle=1.00
+    conflict targets         n=108 ae=0.19  fixed=0.50  direct=0.62  region=0.78  text=0.66  text_real=0.53  oracle=1.00
+    no-conflict targets      n= 12 ae=0.99  fixed=0.42  direct=0.92  region=1.00  text=0.83  text_real=0.75  oracle=1.00
+WROTE /home/cc/qae/model_text_results.json
+MODEL_DONE

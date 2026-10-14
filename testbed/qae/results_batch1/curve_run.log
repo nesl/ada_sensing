@@ -1,0 +1,25 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 25790.37it/s]
+40 labeled scenes (8 test, 32 pool), 59 unlabeled photo sets (273 photos)
+/home/cc/qa_scoring/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+k= 4 seed=0: jepa_all=0.62 jepa_k=0.65 direct=0.62 fixed=0.32 ae=0.32  | conflict: jepa_all=0.64 jepa_k=0.61 direct=0.58
+k= 4 seed=1: jepa_all=0.74 jepa_k=0.78 direct=0.78 fixed=0.39 ae=0.32  | conflict: jepa_all=0.71 jepa_k=0.82 direct=0.76
+k= 4 seed=2: jepa_all=0.73 jepa_k=0.73 direct=0.68 fixed=0.50 ae=0.32  | conflict: jepa_all=0.76 jepa_k=0.76 direct=0.70
+k= 8 seed=0: jepa_all=0.81 jepa_k=0.78 direct=0.68 fixed=0.50 ae=0.32  | conflict: jepa_all=0.79 jepa_k=0.76 direct=0.64
+k= 8 seed=1: jepa_all=0.62 jepa_k=0.74 direct=0.63 fixed=0.50 ae=0.32  | conflict: jepa_all=0.64 jepa_k=0.71 direct=0.65
+k= 8 seed=2: jepa_all=0.68 jepa_k=0.78 direct=0.68 fixed=0.53 ae=0.32  | conflict: jepa_all=0.70 jepa_k=0.82 direct=0.70
+k=16 seed=0: jepa_all=0.57 jepa_k=0.67 direct=0.82 fixed=0.53 ae=0.32  | conflict: jepa_all=0.52 jepa_k=0.64 direct=0.79
+k=16 seed=1: jepa_all=0.57 jepa_k=0.52 direct=0.53 fixed=0.53 ae=0.32  | conflict: jepa_all=0.58 jepa_k=0.52 direct=0.53
+k=16 seed=2: jepa_all=0.57 jepa_k=0.70 direct=0.58 fixed=0.50 ae=0.32  | conflict: jepa_all=0.52 jepa_k=0.67 direct=0.53
+k=32 seed=0: jepa_all=0.62 jepa_k=0.56 direct=0.62 fixed=0.53 ae=0.32  | conflict: jepa_all=0.64 jepa_k=0.57 direct=0.58
+k=32 seed=1: jepa_all=0.57 jepa_k=0.62 direct=0.57 fixed=0.53 ae=0.32  | conflict: jepa_all=0.52 jepa_k=0.58 direct=0.58
+k=32 seed=2: jepa_all=0.78 jepa_k=0.78 direct=0.53 fixed=0.53 ae=0.32  | conflict: jepa_all=0.75 jepa_k=0.76 direct=0.53
+
+mean over seeds:
+  k= 4: jepa_all=0.70±0.05  jepa_k=0.72±0.05  direct=0.70±0.07  fixed=0.40±0.08
+  k= 8: jepa_all=0.70±0.08  jepa_k=0.77±0.02  direct=0.66±0.02  fixed=0.51±0.01
+  k=16: jepa_all=0.57±0.00  jepa_k=0.63±0.08  direct=0.64±0.13  fixed=0.52±0.01
+  k=32: jepa_all=0.66±0.09  jepa_k=0.66±0.09  direct=0.57±0.04  fixed=0.53±0.00
+CURVE_DONE
+CURVE_DONE

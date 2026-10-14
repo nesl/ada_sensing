@@ -1,0 +1,43 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 25175.06it/s]
+244 scenes, 3098 targets, 2003 recoverable
+fold 0: 195 train / 49 test
+/home/cc/qa_scoring/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+    step 0 pred 0.4078 heads 2.1354
+    step 500 pred 0.1012 heads 1.5516
+    step 1000 pred 0.1190 heads 1.2352
+    step 1499 pred 0.0927 heads 1.5396
+fold 1: 195 train / 49 test
+/home/cc/qa_scoring/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+    step 0 pred 0.4864 heads 2.1171
+    step 500 pred 0.1081 heads 1.4305
+    step 1000 pred 0.1296 heads 0.9155
+    step 1499 pred 0.1155 heads 1.0076
+fold 2: 195 train / 49 test
+    step 0 pred 0.4989 heads 2.0297
+    step 500 pred 0.1077 heads 1.6261
+    step 1000 pred 0.0987 heads 0.9799
+    step 1499 pred 0.1238 heads 1.0238
+fold 3: 195 train / 49 test
+    step 0 pred 0.5441 heads 2.0325
+    step 500 pred 0.1451 heads 1.5556
+    step 1000 pred 0.1175 heads 1.7924
+    step 1499 pred 0.1223 heads 1.3146
+fold 4: 196 train / 48 test
+    step 0 pred 0.4306 heads 2.0692
+    step 500 pred 0.1342 heads 1.2810
+    step 1000 pred 0.1249 heads 1.2025
+    step 1499 pred 0.1325 heads 1.2464
+
+mean REAL score at the chosen setting (held-out, recoverable targets):
+  all                        n=2003 ae=0.46  fixed=0.67  direct=0.82  region=0.89  text=0.85  text_real=0.85  oracle=1.00
+    bright band              n=606 ae=0.10  fixed=0.95  direct=0.87  region=0.93  text=0.87  text_real=0.88  oracle=1.00
+    mid band                 n=695 ae=0.85  fixed=0.81  direct=0.83  region=0.88  text=0.85  text_real=0.84  oracle=1.00
+    dim band                 n=501 ae=0.27  fixed=0.10  direct=0.77  region=0.87  text=0.86  text_real=0.85  oracle=1.00
+    control band             n=201 ae=0.67  fixed=0.80  direct=0.72  region=0.80  text=0.74  text_real=0.76  oracle=1.00
+    conflict targets         n=1205 ae=0.10  fixed=0.56  direct=0.76  region=0.85  text=0.80  text_real=0.80  oracle=1.00
+    no-conflict targets      n=798 ae=1.00  fixed=0.85  direct=0.91  region=0.94  text=0.92  text_real=0.92  oracle=1.00
+WROTE results_v3/settings_seed2.json
+SETTINGS_V3_DONE

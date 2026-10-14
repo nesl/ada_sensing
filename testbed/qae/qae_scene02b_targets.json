@@ -1,0 +1,173 @@
+{
+ "scene": "qae_scene02b",
+ "ipad_image": "qae_scene02b.png",
+ "targets": [
+  {
+   "id": "q_ruler_bright",
+   "band": "bright",
+   "kind": "vqa_image",
+   "level": 1.0,
+   "question": "What is the largest number printed on the ruler?",
+   "answers": [
+    "50"
+   ],
+   "canvas_box": [
+    110,
+    290,
+    730,
+    755
+   ],
+   "camera_box": [
+    960,
+    1102,
+    1353,
+    1400
+   ]
+  },
+  {
+   "id": "q_sign_bright90",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.902,
+   "question": "What does the upper light-gray text in the white area say?",
+   "answers": [
+    "exit 12"
+   ],
+   "canvas_box": [
+    120,
+    887,
+    443,
+    967
+   ],
+   "camera_box": [
+    970,
+    1471,
+    1173,
+    1524
+   ]
+  },
+  {
+   "id": "q_sign_bright95",
+   "band": "bright",
+   "kind": "text",
+   "level": 0.949,
+   "question": "What does the lower light-gray text in the white area say?",
+   "answers": [
+    "gate b4"
+   ],
+   "canvas_box": [
+    120,
+    1066,
+    504,
+    1148
+   ],
+   "camera_box": [
+    972,
+    1579,
+    1211,
+    1634
+   ]
+  },
+  {
+   "id": "q_plate_dim",
+   "band": "dim",
+   "kind": "vqa_image",
+   "level": 0.06,
+   "question": "What word does the license plate say?",
+   "answers": [
+    "french"
+   ],
+   "canvas_box": [
+    1240,
+    300,
+    1660,
+    615
+   ],
+   "camera_box": [
+    1672,
+    1128,
+    1939,
+    1329
+   ]
+  },
+  {
+   "id": "q_room_control",
+   "band": "control",
+   "kind": "vqa_image",
+   "level": 0.45,
+   "question": "Which room is shown in the photo at the top right?",
+   "answers": [
+    "bedroom"
+   ],
+   "canvas_box": [
+    1720,
+    300,
+    2280,
+    720
+   ],
+   "camera_box": [
+    1968,
+    1137,
+    2326,
+    1403
+   ]
+  },
+  {
+   "id": "q_text_dim6",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.059,
+   "question": "What does the upper dark text in the black area say?",
+   "answers": [
+    "4kxp 271",
+    "4kxp271"
+   ],
+   "canvas_box": [
+    1250,
+    967,
+    1654,
+    1047
+   ],
+   "camera_box": [
+    1673,
+    1536,
+    1923,
+    1590
+   ]
+  },
+  {
+   "id": "q_text_dim4",
+   "band": "dim",
+   "kind": "text",
+   "level": 0.039,
+   "question": "What does the lower dark text in the black area say?",
+   "answers": [
+    "7rxf 195",
+    "7rxf195"
+   ],
+   "canvas_box": [
+    1250,
+    1137,
+    1649,
+    1218
+   ],
+   "camera_box": [
+    1671,
+    1638,
+    1917,
+    1692
+   ]
+  },
+  {
+   "id": "q_negative",
+   "band": "none",
+   "kind": "negative",
+   "level": null,
+   "question": "Is there a dog anywhere in the image? Answer yes or no.",
+   "answers": [
+    "no"
+   ],
+   "canvas_box": null
+  }
+ ]
+}

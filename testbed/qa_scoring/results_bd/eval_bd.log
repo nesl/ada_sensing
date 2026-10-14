@@ -1,0 +1,16 @@
+/home/cc/qa/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+
+held-out: 6 scenes, 26 targets; fixed setting = ISO 100, 0.06667s
+mean real score at the chosen setting:
+  ae             0.383
+  fixed          0.504
+  direct         0.556
+  jepa           0.556
+  probe_on_real  0.584
+  oracle         0.644
+  [ipad_image] n=14 ae=0.253  fixed=0.275  direct=0.268  jepa=0.268  probe_on_real=0.308  oracle=0.410
+  [ipad_text] n=12 ae=0.536  fixed=0.772  direct=0.893  jepa=0.893  probe_on_real=0.905  oracle=0.917
+  [targets where AE loses >0.2 to oracle] n=8 ae=0.169  fixed=0.612  direct=0.762  jepa=0.763  probe_on_real=0.755  oracle=0.875
+EVAL_DONE
+FINAL_DONE

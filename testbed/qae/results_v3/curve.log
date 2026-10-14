@@ -1,0 +1,35 @@
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 26587.66it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+244 labeled scenes (60 test, 184 pool), 301 unlabeled photo sets (1204 photos)
+/home/cc/qa_scoring/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+/home/cc/qa_scoring/jepa_qa.py:140: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.tr = nn.TransformerEncoder(layer, depth)
+k= 4 seed=0: jepa_all=0.73 jepa_k=0.81 direct=0.78 fixed=0.68 ae=0.47  | conflict: jepa_all=0.67 jepa_k=0.79 direct=0.72
+k= 4 seed=1: jepa_all=0.79 jepa_k=0.83 direct=0.76 fixed=0.63 ae=0.47  | conflict: jepa_all=0.77 jepa_k=0.78 direct=0.69
+k= 4 seed=2: jepa_all=0.84 jepa_k=0.80 direct=0.74 fixed=0.68 ae=0.47  | conflict: jepa_all=0.80 jepa_k=0.74 direct=0.75
+k= 8 seed=0: jepa_all=0.80 jepa_k=0.81 direct=0.75 fixed=0.68 ae=0.47  | conflict: jepa_all=0.75 jepa_k=0.78 direct=0.76
+k= 8 seed=1: jepa_all=0.82 jepa_k=0.82 direct=0.76 fixed=0.63 ae=0.47  | conflict: jepa_all=0.77 jepa_k=0.79 direct=0.76
+k= 8 seed=2: jepa_all=0.84 jepa_k=0.80 direct=0.80 fixed=0.61 ae=0.47  | conflict: jepa_all=0.81 jepa_k=0.74 direct=0.76
+k=16 seed=0: jepa_all=0.83 jepa_k=0.84 direct=0.82 fixed=0.68 ae=0.47  | conflict: jepa_all=0.80 jepa_k=0.82 direct=0.79
+k=16 seed=1: jepa_all=0.83 jepa_k=0.85 direct=0.80 fixed=0.61 ae=0.47  | conflict: jepa_all=0.78 jepa_k=0.82 direct=0.76
+k=16 seed=2: jepa_all=0.83 jepa_k=0.82 direct=0.81 fixed=0.68 ae=0.47  | conflict: jepa_all=0.80 jepa_k=0.80 direct=0.80
+k=32 seed=0: jepa_all=0.84 jepa_k=0.84 direct=0.81 fixed=0.68 ae=0.47  | conflict: jepa_all=0.80 jepa_k=0.81 direct=0.78
+k=32 seed=1: jepa_all=0.86 jepa_k=0.86 direct=0.78 fixed=0.68 ae=0.47  | conflict: jepa_all=0.83 jepa_k=0.82 direct=0.76
+k=32 seed=2: jepa_all=0.83 jepa_k=0.85 direct=0.78 fixed=0.68 ae=0.47  | conflict: jepa_all=0.75 jepa_k=0.83 direct=0.78
+k=64 seed=0: jepa_all=0.85 jepa_k=0.84 direct=0.85 fixed=0.68 ae=0.47  | conflict: jepa_all=0.81 jepa_k=0.79 direct=0.83
+k=64 seed=1: jepa_all=0.83 jepa_k=0.85 direct=0.81 fixed=0.68 ae=0.47  | conflict: jepa_all=0.76 jepa_k=0.81 direct=0.76
+k=64 seed=2: jepa_all=0.86 jepa_k=0.85 direct=0.84 fixed=0.68 ae=0.47  | conflict: jepa_all=0.82 jepa_k=0.80 direct=0.80
+k=128 seed=0: jepa_all=0.84 jepa_k=0.86 direct=0.81 fixed=0.68 ae=0.47  | conflict: jepa_all=0.79 jepa_k=0.83 direct=0.78
+k=128 seed=1: jepa_all=0.85 jepa_k=0.85 direct=0.84 fixed=0.68 ae=0.47  | conflict: jepa_all=0.80 jepa_k=0.80 direct=0.81
+k=128 seed=2: jepa_all=0.87 jepa_k=0.84 direct=0.81 fixed=0.68 ae=0.47  | conflict: jepa_all=0.84 jepa_k=0.81 direct=0.77
+
+mean over seeds:
+  k= 4: jepa_all=0.79±0.05  jepa_k=0.81±0.01  direct=0.76±0.02  fixed=0.66±0.03
+  k= 8: jepa_all=0.82±0.02  jepa_k=0.81±0.01  direct=0.77±0.02  fixed=0.64±0.03
+  k=16: jepa_all=0.83±0.00  jepa_k=0.84±0.01  direct=0.81±0.01  fixed=0.66±0.03
+  k=32: jepa_all=0.84±0.01  jepa_k=0.85±0.01  direct=0.79±0.02  fixed=0.68±0.00
+  k=64: jepa_all=0.85±0.01  jepa_k=0.85±0.01  direct=0.83±0.02  fixed=0.68±0.00
+  k=128: jepa_all=0.85±0.01  jepa_k=0.85±0.01  direct=0.82±0.01  fixed=0.68±0.00
+CURVE_DONE
+CURVE_V3_DONE

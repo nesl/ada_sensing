@@ -1,0 +1,18 @@
+=== v3 held-out settings
+3 seeds, 2003 held-out targets per seed
+
+all targets  (mean score, ± 95% CI over seeds)
+  ae         0.459 ± 0.000
+  fixed      0.674 ± 0.000
+  direct     0.774 ± 0.057
+  text       0.848 ± 0.002
+  region     0.884 ± 0.002
+  text_real  0.847 ± 0.001
+  oracle     1.000 ± 0.000
+  success rate (score=1): fixed=0.65  direct=0.74  text=0.82  region=0.85
+  regret vs oracle:       fixed=0.33  direct=0.23  text=0.15  region=0.12
+direct  picks a never-labeled setting 26% of the time; score then 0.663 ± 0.118
+text    picks a never-labeled setting 17% of the time; score then 0.990 ± 0.004
+region  picks a never-labeled setting 20% of the time; score then 0.879 ± 0.021
+
+[exited with code 0]

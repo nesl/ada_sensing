@@ -1,0 +1,1482 @@
+[
+ {
+  "scene": "layoutA_s0000",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "an alp",
+  "ae": 0.012086275033652782,
+  "fixed": 0.02223408780992031,
+  "oracle": 0.031775347888469696,
+  "jepa": 0.021622253581881523,
+  "direct": 0.02223408780992031,
+  "probe_on_real": 0.021622253581881523,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a bow tie",
+  "ae": 0.024497754871845245,
+  "fixed": 0.8355785012245178,
+  "oracle": 0.869988739490509,
+  "jepa": 0.8355785012245178,
+  "direct": 0.8355785012245178,
+  "probe_on_real": 0.869988739490509,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a beaker",
+  "ae": 0.004993287846446037,
+  "fixed": 0.2774902582168579,
+  "oracle": 0.3327917754650116,
+  "jepa": 0.3327917754650116,
+  "direct": 0.2774902582168579,
+  "probe_on_real": 0.0694466233253479,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "9SHV 406",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "YIELD",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 0.6000000238418579,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.012718486599624157,
+  "fixed": 0.5661149621009827,
+  "oracle": 0.5661149621009827,
+  "jepa": 0.5661149621009827,
+  "direct": 0.5661149621009827,
+  "probe_on_real": 0.5661149621009827,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.20105265080928802,
+  "fixed": 0.20869384706020355,
+  "oracle": 0.3300412893295288,
+  "jepa": 0.3087157905101776,
+  "direct": 0.18674884736537933,
+  "probe_on_real": 0.2812296748161316,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0000",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0599,
+  "fixed": 0.04659999907016754,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a bee",
+  "ae": 0.04123091325163841,
+  "fixed": 0.247695192694664,
+  "oracle": 0.2968769669532776,
+  "jepa": 0.2219669371843338,
+  "direct": 0.247695192694664,
+  "probe_on_real": 0.24262522161006927,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a Chihuahua",
+  "ae": 0.00020246815984137356,
+  "fixed": 0.000708347070030868,
+  "oracle": 0.0018915369873866439,
+  "jepa": 0.0003409151977393776,
+  "direct": 9.665780089562759e-05,
+  "probe_on_real": 0.0018915369873866439,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   1600,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a jinrikisha",
+  "ae": 0.0017806937685236335,
+  "fixed": 0.007997839711606503,
+  "oracle": 0.010670355521142483,
+  "jepa": 0.005431026220321655,
+  "direct": 0.010670355521142483,
+  "probe_on_real": 0.010670355521142483,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   1600,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "ONE WAY",
+  "ae": 0.8333,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 0.666700005531311,
+  "direct": 0.666700005531311,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "5BRL 174",
+  "ae": 0.8571,
+  "fixed": 0.8571000099182129,
+  "oracle": 1.0,
+  "jepa": 0.8571000099182129,
+  "direct": 1.0,
+  "probe_on_real": 0.8571000099182129,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.033678922802209854,
+  "fixed": 0.4926925003528595,
+  "oracle": 0.5069509148597717,
+  "jepa": 0.4926925003528595,
+  "direct": 0.4926925003528595,
+  "probe_on_real": 0.4926925003528595,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.2068997472524643,
+  "fixed": 0.18858832120895386,
+  "oracle": 0.2882629930973053,
+  "jepa": 0.2882629930973053,
+  "direct": 0.2337026298046112,
+  "probe_on_real": 0.24900074303150177,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0007",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0577,
+  "fixed": 0.04610000178217888,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a rugby ball",
+  "ae": 0.014200421050190926,
+  "fixed": 0.08687125891447067,
+  "oracle": 0.15902988612651825,
+  "jepa": 0.08687125891447067,
+  "direct": 0.14248554408550262,
+  "probe_on_real": 0.08687125891447067,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a plunger",
+  "ae": 0.006923999171704054,
+  "fixed": 0.15333494544029236,
+  "oracle": 0.5451022386550903,
+  "jepa": 0.4645000994205475,
+  "direct": 0.5451022386550903,
+  "probe_on_real": 0.5451022386550903,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   1600,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a beacon",
+  "ae": 0.006312225479632616,
+  "fixed": 0.15946204960346222,
+  "oracle": 0.1997244656085968,
+  "jepa": 0.1997244656085968,
+  "direct": 0.12124115973711014,
+  "probe_on_real": 0.12124115973711014,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "3UZC 211",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 0.7142999768257141,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "6OYN 874",
+  "ae": 0.7143,
+  "fixed": 0.7142999768257141,
+  "oracle": 0.8571000099182129,
+  "jepa": 0.7142999768257141,
+  "direct": 0.2856999933719635,
+  "probe_on_real": 0.7142999768257141,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.019468804821372032,
+  "fixed": 0.49335867166519165,
+  "oracle": 0.49335867166519165,
+  "jepa": 0.49335867166519165,
+  "direct": 0.49335867166519165,
+  "probe_on_real": 0.49335867166519165,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.19221118092536926,
+  "fixed": 0.17284993827342987,
+  "oracle": 0.2543942928314209,
+  "jepa": 0.22186660766601562,
+  "direct": 0.17284993827342987,
+  "probe_on_real": 0.22186660766601562,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0011",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.058,
+  "fixed": 0.04600000008940697,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0014",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a suspension bridge",
+  "ae": 0.00012495744158513844,
+  "fixed": 0.03991606831550598,
+  "oracle": 0.04188665747642517,
+  "jepa": 0.03237989917397499,
+  "direct": 0.03991606831550598,
+  "probe_on_real": 0.03991606831550598,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   1600,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0014",
+  "target": "t1",
+  "kind": "ipad_text",
+  "label": "OPEN 60",
+  "ae": 0.1667,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0014",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.015534676611423492,
+  "fixed": 0.5246642827987671,
+  "oracle": 0.5246642827987671,
+  "jepa": 0.5246642827987671,
+  "direct": 0.5246642827987671,
+  "probe_on_real": 0.5246642827987671,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0014",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.21233218908309937,
+  "fixed": 0.19381004571914673,
+  "oracle": 0.28416088223457336,
+  "jepa": 0.25553494691848755,
+  "direct": 0.19381004571914673,
+  "probe_on_real": 0.25553494691848755,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0014",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0589,
+  "fixed": 0.04639999940991402,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a Persian cat",
+  "ae": 0.904884397983551,
+  "fixed": 0.8173925280570984,
+  "oracle": 0.8981966376304626,
+  "jepa": 0.8173925280570984,
+  "direct": 0.8502152562141418,
+  "probe_on_real": 0.7449391484260559,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   1600,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a teapot",
+  "ae": 0.0005481872940436006,
+  "fixed": 0.4018908143043518,
+  "oracle": 0.8815200328826904,
+  "jepa": 0.8737825751304626,
+  "direct": 1.1017142242053524e-05,
+  "probe_on_real": 0.009512034244835377,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   1600,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "t2",
+  "kind": "ipad_text",
+  "label": "NO ENTRY",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "DETOUR 28",
+  "ae": 0.875,
+  "fixed": 0.875,
+  "oracle": 1.0,
+  "jepa": 0.875,
+  "direct": 0.875,
+  "probe_on_real": 0.875,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "9HHS 665",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 0.8571000099182129,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.017612960189580917,
+  "fixed": 0.535061776638031,
+  "oracle": 0.535061776638031,
+  "jepa": 0.535061776638031,
+  "direct": 0.535061776638031,
+  "probe_on_real": 0.535061776638031,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.14700841903686523,
+  "fixed": 0.16613543033599854,
+  "oracle": 0.2896491587162018,
+  "jepa": 0.27916815876960754,
+  "direct": 0.16613543033599854,
+  "probe_on_real": 0.27916815876960754,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0018",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0591,
+  "fixed": 0.04650000110268593,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a barn",
+  "ae": 4.006590825156309e-05,
+  "fixed": 1.882094352367858e-06,
+  "oracle": 6.274872430367395e-05,
+  "jepa": 9.395544680046441e-07,
+  "direct": 9.395544680046441e-07,
+  "probe_on_real": 9.395544680046441e-07,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   1600,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a frying pan",
+  "ae": 0.011095239780843258,
+  "fixed": 0.4632687270641327,
+  "oracle": 0.5322739481925964,
+  "jepa": 0.44474926590919495,
+  "direct": 0.2312469780445099,
+  "probe_on_real": 0.4632687270641327,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "t2",
+  "kind": "ipad_text",
+  "label": "SCHOOL 26",
+  "ae": 0.8,
+  "fixed": 0.800000011920929,
+  "oracle": 0.800000011920929,
+  "jepa": 0.800000011920929,
+  "direct": 0.800000011920929,
+  "probe_on_real": 0.800000011920929,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "SCHOOL 74",
+  "ae": 0.0,
+  "fixed": 0.125,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 0.375,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "5HGQ 123",
+  "ae": 0.5,
+  "fixed": 0.625,
+  "oracle": 0.8571000099182129,
+  "jepa": 0.75,
+  "direct": 0.5555999875068665,
+  "probe_on_real": 0.75,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   1600,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.028417734429240227,
+  "fixed": 0.5475232005119324,
+  "oracle": 0.5475232005119324,
+  "jepa": 0.5475232005119324,
+  "direct": 0.5475232005119324,
+  "probe_on_real": 0.5475232005119324,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.21228846907615662,
+  "fixed": 0.15161524713039398,
+  "oracle": 0.2611820697784424,
+  "jepa": 0.2498759627342224,
+  "direct": 0.15161524713039398,
+  "probe_on_real": 0.2611820697784424,
+  "jepa_choice": [
+   400,
+   0.06666666666666667
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0020",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0579,
+  "fixed": 0.04659999907016754,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a go-kart",
+  "ae": 0.31383785605430603,
+  "fixed": 0.5563352704048157,
+  "oracle": 0.5563352704048157,
+  "jepa": 0.5563352704048157,
+  "direct": 0.5563352704048157,
+  "probe_on_real": 0.5464610457420349,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a moving van",
+  "ae": 0.0001568209263496101,
+  "fixed": 1.859087024058681e-05,
+  "oracle": 0.00017974121146835387,
+  "jepa": 9.608326763554942e-06,
+  "direct": 3.764828943531029e-05,
+  "probe_on_real": 3.764828943531029e-05,
+  "jepa_choice": [
+   100,
+   0.004
+  ],
+  "oracle_choice": [
+   1600,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "t2",
+  "kind": "ipad_text",
+  "label": "PARKING 97",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "LANE",
+  "ae": 0.0,
+  "fixed": 0.0,
+  "oracle": 0.75,
+  "jepa": 0.0,
+  "direct": 0.0,
+  "probe_on_real": 0.75,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "GATE",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.0215662382543087,
+  "fixed": 0.5597060322761536,
+  "oracle": 0.5951776504516602,
+  "jepa": 0.5597060322761536,
+  "direct": 0.5597060322761536,
+  "probe_on_real": 0.4880583882331848,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.16376712918281555,
+  "fixed": 0.15325966477394104,
+  "oracle": 0.2713506519794464,
+  "jepa": 0.2713506519794464,
+  "direct": 0.1981976181268692,
+  "probe_on_real": 0.27093470096588135,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0021",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0579,
+  "fixed": 0.04670000076293945,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a king penguin",
+  "ae": 0.21369941532611847,
+  "fixed": 0.6053219437599182,
+  "oracle": 0.6749538779258728,
+  "jepa": 0.3363634943962097,
+  "direct": 0.6053219437599182,
+  "probe_on_real": 0.543714702129364,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   1600,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a cliff dwelling",
+  "ae": 0.008484147489070892,
+  "fixed": 0.06785599887371063,
+  "oracle": 0.14680470526218414,
+  "jepa": 0.14680470526218414,
+  "direct": 0.06785599887371063,
+  "probe_on_real": 0.030073946341872215,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   400,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a plunger",
+  "ae": 0.03607133775949478,
+  "fixed": 0.2993102967739105,
+  "oracle": 0.2993102967739105,
+  "jepa": 0.16079027950763702,
+  "direct": 0.07099352777004242,
+  "probe_on_real": 0.07099352777004242,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "NO ENTRY",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "t4",
+  "kind": "ipad_text",
+  "label": "7JFN 442",
+  "ae": 0.0,
+  "fixed": 0.0,
+  "oracle": 0.0,
+  "jepa": 0.0,
+  "direct": 0.0,
+  "probe_on_real": 0.0,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.014483732171356678,
+  "fixed": 0.5360668897628784,
+  "oracle": 0.5360668897628784,
+  "jepa": 0.5360668897628784,
+  "direct": 0.5360668897628784,
+  "probe_on_real": 0.5360668897628784,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.15331946313381195,
+  "fixed": 0.15417005121707916,
+  "oracle": 0.30878522992134094,
+  "jepa": 0.28038620948791504,
+  "direct": 0.1920788586139679,
+  "probe_on_real": 0.1920788586139679,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0023",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0586,
+  "fixed": 0.046799998730421066,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 0.9606000185012817,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a hourglass",
+  "ae": 0.06701308488845825,
+  "fixed": 0.5953475832939148,
+  "oracle": 0.5953475832939148,
+  "jepa": 0.5953475832939148,
+  "direct": 0.5224010944366455,
+  "probe_on_real": 0.5953475832939148,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a stopwatch",
+  "ae": 0.11154484748840332,
+  "fixed": 0.776479959487915,
+  "oracle": 0.776479959487915,
+  "jepa": 0.776479959487915,
+  "direct": 0.5557649731636047,
+  "probe_on_real": 0.7475093007087708,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "t2",
+  "kind": "ipad_image",
+  "label": "a cliff",
+  "ae": 0.013027281500399113,
+  "fixed": 0.31032928824424744,
+  "oracle": 0.31032928824424744,
+  "jepa": 0.12350644171237946,
+  "direct": 0.03776855394244194,
+  "probe_on_real": 0.03776855394244194,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "t3",
+  "kind": "ipad_text",
+  "label": "BUS 30",
+  "ae": 1.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.020410235971212387,
+  "fixed": 0.5289433002471924,
+  "oracle": 0.5289433002471924,
+  "jepa": 0.5289433002471924,
+  "direct": 0.5289433002471924,
+  "probe_on_real": 0.5289433002471924,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.1848338097333908,
+  "fixed": 0.21090444922447205,
+  "oracle": 0.3798748254776001,
+  "jepa": 0.3161061406135559,
+  "direct": 0.224878191947937,
+  "probe_on_real": 0.2768593430519104,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0038",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0583,
+  "fixed": 0.04670000076293945,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ },
+ {
+  "scene": "layoutA_s0039",
+  "target": "t0",
+  "kind": "ipad_image",
+  "label": "a barn",
+  "ae": 0.0018682701047509909,
+  "fixed": 0.028068186715245247,
+  "oracle": 0.060195066034793854,
+  "jepa": 0.050384536385536194,
+  "direct": 0.028068186715245247,
+  "probe_on_real": 0.050384536385536194,
+  "jepa_choice": [
+   400,
+   1.0
+  ],
+  "oracle_choice": [
+   1600,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0039",
+  "target": "t1",
+  "kind": "ipad_image",
+  "label": "a sandal",
+  "ae": 0.11340270936489105,
+  "fixed": 0.5337941646575928,
+  "oracle": 0.5700520277023315,
+  "jepa": 0.4903124272823334,
+  "direct": 0.5337941646575928,
+  "probe_on_real": 0.5337941646575928,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0039",
+  "target": "t2",
+  "kind": "ipad_text",
+  "label": "2JCJ 909",
+  "ae": 0.0,
+  "fixed": 1.0,
+  "oracle": 1.0,
+  "jepa": 0.428600013256073,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   400,
+   0.25
+  ],
+  "oracle_choice": [
+   100,
+   1.0
+  ]
+ },
+ {
+  "scene": "layoutA_s0039",
+  "target": "toy_car",
+  "kind": "physical",
+  "label": "a toy car",
+  "ae": 0.020549485459923744,
+  "fixed": 0.48727813363075256,
+  "oracle": 0.48954007029533386,
+  "jepa": 0.48727813363075256,
+  "direct": 0.48727813363075256,
+  "probe_on_real": 0.48727813363075256,
+  "jepa_choice": [
+   100,
+   1.0
+  ],
+  "oracle_choice": [
+   100,
+   0.25
+  ]
+ },
+ {
+  "scene": "layoutA_s0039",
+  "target": "figurine",
+  "kind": "physical",
+  "label": "a green figurine",
+  "ae": 0.12905222177505493,
+  "fixed": 0.19446542859077454,
+  "oracle": 0.320224791765213,
+  "jepa": 0.25740328431129456,
+  "direct": 0.19446542859077454,
+  "probe_on_real": 0.320224791765213,
+  "jepa_choice": [
+   100,
+   0.25
+  ],
+  "oracle_choice": [
+   400,
+   0.06666666666666667
+  ]
+ },
+ {
+  "scene": "layoutA_s0039",
+  "target": "panel",
+  "kind": "distractor",
+  "label": "a light panel",
+  "ae": 0.0587,
+  "fixed": 0.04639999940991402,
+  "oracle": 1.0,
+  "jepa": 1.0,
+  "direct": 1.0,
+  "probe_on_real": 1.0,
+  "jepa_choice": [
+   100,
+   0.00025
+  ],
+  "oracle_choice": [
+   100,
+   0.00025
+  ]
+ }
+]
