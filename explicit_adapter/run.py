@@ -276,9 +276,9 @@ def main():
     ap.add_argument("--only", default="")
     a = ap.parse_args()
     specs = json.load(open(a.specs))
-    if a.only:
-        keep = set(a.only.split(","))
-        specs = [s for s in specs if s["name"] in keep]
+    if a.only:                                  # run exactly these, in the order given
+        by_name = {s["name"]: s for s in specs}
+        specs = [by_name[n] for n in a.only.split(",")]
     ctx = Ctx(a.gpu)
     for spec in specs:
         run_spec(spec, ctx)
