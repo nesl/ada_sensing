@@ -23,10 +23,14 @@ def linear_to_srgb(x):
 
 
 def interp(x, xp, fp):
-    """Piecewise-linear interpolation of x on (xp, fp), xp non-decreasing (K,); differentiable in x, xp, fp."""
+    """Piecewise-linear interpolation of x on (xp, fp), xp non-decreasing (K,); differentiable in x, xp, fp.
+    Table lookups go through F.embedding: its backward sorts the indices, whereas plain indexing
+    accumulates millions of pixel gradients into K slots with atomics (6.5x slower, same result)."""
     idx = torch.searchsorted(xp.detach().contiguous(), x.detach().contiguous(), right=True)
     idx = idx.clamp(1, xp.numel() - 1)
-    x0, x1, y0, y1 = xp[idx - 1], xp[idx], fp[idx - 1], fp[idx]
+    tab = torch.stack([xp, fp], 1)
+    lo, hi = F.embedding(idx - 1, tab), F.embedding(idx, tab)
+    x0, y0, x1, y1 = lo[..., 0], lo[..., 1], hi[..., 0], hi[..., 1]
     w = ((x - x0) / (x1 - x0).clamp(min=1e-12)).clamp(0, 1)
     return y0 + w * (y1 - y0)
 
