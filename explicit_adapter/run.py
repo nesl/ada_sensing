@@ -19,7 +19,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from common import (AE, BANDS, EV, HOLDOUTS, JUDGES, NCFG, OUT, REPO, SETTING, Encoder, Index, action, ev_of,
+from common import (AE, BANDS, D, EV, HOLDOUTS, JUDGES, NCFG, OUT, REPO, SETTING, Encoder, Index, action, ev_of,
                     preload, seed_all, to01)
 from models import AttnHead, ExplicitAdapter, LatentPredictor, PhysicsOracle
 
@@ -38,6 +38,25 @@ class Ctx:
 
     def img(self, s, slot):
         return to01(self.IMG[s, slot], self.dev)
+
+    @torch.no_grad()
+    def prior(self):
+        """Scene-agnostic baseline: mean real token map of each setting over the training scenes
+        (knows the setting, ignores the AE shot)."""
+        if not hasattr(self, "_prior"):
+            p = OUT / "prior_tokens.pt"
+            if p.exists():
+                self._prior = torch.load(p, map_location=self.dev)
+            else:
+                tr, acc = self.index.split["train"], 0
+                for i in range(0, len(tr), 8):
+                    sc = tr[i:i + 8]
+                    t = self.enc(self.img(sc.repeat_interleave(NCFG), torch.arange(NCFG).repeat(len(sc))))
+                    acc = acc + t.view(len(sc), NCFG, -1, D).sum(0)
+                self._prior = acc / len(tr)                      # (27, N, D)
+                OUT.mkdir(exist_ok=True)
+                torch.save(self._prior, p)
+        return self._prior
 
 
 # ---------------------------------------------------------------- heads
@@ -90,20 +109,23 @@ def make_transition(spec, ctx):
                                noise=spec.get("noise", False), hidden=spec.get("hidden", 128)).to(ctx.dev)
     if m == "physics":
         return PhysicsOracle(REPO, ctx.dev)
-    if m == "copy":
+    if m in ("copy", "prior"):
         return None
     raise ValueError(m)
 
 
-def predict(spec, model, ctx, s, src, tgt, x_src, t_src):
+def predict(spec, model, ctx, s, src, tgt, x_src, t_src, stochastic=None):
     """Predicted target tokens (B, N, D) and, for image-space models, the simulated image."""
     m = spec["model"]
     if m == "copy":
         return t_src, x_src
+    if m == "prior":
+        return ctx.prior()[tgt.to(ctx.dev)], None
     if m == "latent":
         return model(t_src, action(src, tgt).to(ctx.dev)), None
     if m == "explicit":
-        xh = model(x_src, action(src, tgt).to(ctx.dev), ev_of(src).to(ctx.dev), EV[tgt].to(ctx.dev))
+        xh = model(x_src, action(src, tgt).to(ctx.dev), ev_of(src).to(ctx.dev), EV[tgt].to(ctx.dev),
+                   stochastic=stochastic)
         return ctx.enc(xh), xh
     if m == "physics":
         xh = model(x_src, ctx.index.env[s].to(ctx.dev), tgt.to(ctx.dev))
@@ -147,12 +169,12 @@ def train_transition(spec, ctx, model):
         if step % 500 == 0 or step == steps - 1:
             print(f"  [{spec['name']}] step {step} loss {loss.item():.4f} ({time.time() - t0:.0f}s)", flush=True)
         if spec.get("eval_every") and (step + 1) % spec["eval_every"] == 0 and step + 1 < steps:
-            sub = ctx.index.split["val"][:spec.get("curve_n", 240)]
+            val = ctx.index.split["val"]
+            sub = val[::max(1, len(val) // spec.get("curve_n", 240))]          # spread over all envs
             f, _ = evaluate(spec, model, ctx, sub)
-            fid = summarize(f, None, sub, hold, ctx, spec["model"])["fidelity"]
-            curve.append({"step": step + 1, "tok_cos": fid["all"]["tok_cos"], "skill": fid["all"]["skill"],
-                          "psnr": fid["all"]["psnr"]})
-            print(f"  [{spec['name']}] val@{step + 1}: tok_cos {fid['all']['tok_cos']:.4f} skill {fid['all']['skill']:.4f}",
+            b = summarize(f, None, sub, hold, ctx, spec["model"])["fidelity"]["balanced"]
+            curve.append({"step": step + 1, "tok_cos": b["tok_cos"], "skill_ln": b["skill_ln"]})
+            print(f"  [{spec['name']}] val@{step + 1}: balanced tok_cos {b['tok_cos']:.4f} skill_ln {b['skill_ln']:.4f}",
                   flush=True)
     return curve
 
@@ -160,11 +182,26 @@ def train_transition(spec, ctx, model):
 # ---------------------------------------------------------------- evaluation
 @torch.no_grad()
 def evaluate(spec, model, ctx, scenes, heads=None, chunk=8):
+    """Fidelity and selection, always from the AE shot. Image-space predictions are layer-normed by the
+    encoder; latent regression outputs are not and can shrink toward the conditional mean, which lowers
+    MSE without improving direction, so every prediction is also scored after layer norm (mse_ln,
+    pred_ln). Noise models are scored over `noise_draws` stochastic draws (metrics and logits averaged)."""
     if hasattr(model, "eval"):
         model.eval()
+    draws = spec.get("noise_draws", 4) if spec.get("noise") else 1
+    rng_cpu, rng_gpu = torch.get_rng_state(), torch.cuda.get_rng_state(ctx.dev)   # don't perturb training
+    torch.manual_seed(1234)
+    try:
+        return _evaluate(spec, model, ctx, scenes, heads, chunk, draws)
+    finally:
+        torch.set_rng_state(rng_cpu)
+        torch.cuda.set_rng_state(rng_gpu, ctx.dev)
+
+
+def _evaluate(spec, model, ctx, scenes, heads, chunk, draws):
     S = len(scenes)
-    f = {k: torch.full((S, NCFG), float("nan")) for k in ("tok_cos", "pool_cos", "mse", "mse_copy", "psnr", "bright")}
-    lg = {k: torch.zeros(S, NCFG, len(JUDGES)) for k in ("pred", "real", "direct")} if heads else None
+    f = {k: torch.zeros(S, NCFG) for k in ("tok_cos", "pool_cos", "mse", "mse_ln", "mse_copy", "norm", "psnr", "bright")}
+    lg = {k: torch.zeros(S, NCFG, len(JUDGES)) for k in ("pred", "pred_ln", "real", "direct")} if heads else None
     for i in range(0, S, chunk):
         sc = scenes[i:i + chunk]
         n = len(sc)
@@ -176,21 +213,33 @@ def evaluate(spec, model, ctx, scenes, heads=None, chunk=8):
         x_ae1 = ctx.img(sc, torch.full((n,), AE))
         t_ae1 = ctx.enc(x_ae1)
         x_ae, t_ae = x_ae1.repeat_interleave(NCFG, 0), t_ae1.repeat_interleave(NCFG, 0)
-        pred, xh = predict(spec, model, ctx, s, src, tgt, x_ae, t_ae)
         sl = slice(i, i + n)
-        f["tok_cos"][sl] = F.cosine_similarity(pred, t_real, dim=-1).mean(1).view(n, NCFG).cpu()
-        f["pool_cos"][sl] = F.cosine_similarity(pred.mean(1), t_real.mean(1), dim=-1).view(n, NCFG).cpu()
-        f["mse"][sl] = ((pred - t_real) ** 2).mean((1, 2)).view(n, NCFG).cpu()
-        f["mse_copy"][sl] = ((t_ae - t_real) ** 2).mean((1, 2)).view(n, NCFG).cpu()
-        f["bright"][sl] = x_real.mean((1, 2, 3)).view(n, NCFG).cpu()
-        if xh is not None:
-            mse_px = ((xh - x_real) ** 2).mean((1, 2, 3)).clamp(min=1e-10)
-            f["psnr"][sl] = (10 * torch.log10(1 / mse_px)).view(n, NCFG).cpu()
+
+        def put(k, v, w=1.0):
+            f[k][sl] += w * v.view(n, NCFG).cpu()
+
+        put("mse_copy", ((t_ae - t_real) ** 2).mean((1, 2)))
+        put("bright", x_real.mean((1, 2, 3)))
         if heads:
             q, d = heads
-            lg["pred"][sl] = q(pred).view(n, NCFG, -1).cpu()
             lg["real"][sl] = q(t_real).view(n, NCFG, -1).cpu()
             lg["direct"][sl] = d(t_ae, SETTING[tgt].to(ctx.dev)).view(n, NCFG, -1).cpu()
+        for _ in range(draws):
+            pred, xh = predict(spec, model, ctx, s, src, tgt, x_ae, t_ae, stochastic=draws > 1)
+            pln = F.layer_norm(pred, (D,))
+            w = 1.0 / draws
+            put("tok_cos", F.cosine_similarity(pred, t_real, dim=-1).mean(1), w)
+            put("pool_cos", F.cosine_similarity(pred.mean(1), t_real.mean(1), dim=-1), w)
+            put("mse", ((pred - t_real) ** 2).mean((1, 2)), w)
+            put("mse_ln", ((pln - t_real) ** 2).mean((1, 2)), w)
+            put("norm", pred.norm(dim=-1).mean(1) / D ** 0.5, w)
+            if xh is not None:
+                put("psnr", 10 * torch.log10(1 / ((xh - x_real) ** 2).mean((1, 2, 3)).clamp(min=1e-10)), w)
+            if heads:
+                lg["pred"][sl] += w * q(pred).view(n, NCFG, -1).cpu()
+                lg["pred_ln"][sl] += w * q(pln).view(n, NCFG, -1).cpu()
+        if xh is None:
+            f["psnr"][sl] = float("nan")
     return f, lg
 
 
@@ -199,10 +248,11 @@ def summarize(f, lg, scenes, hold, ctx, model_name):
     held[hold] = True
 
     def agg(mask):
-        p = f["psnr"][mask]
+        p, mc = f["psnr"][mask], f["mse_copy"][mask].sum()
         return {"n": int(mask.sum()), "tok_cos": float(f["tok_cos"][mask].mean()),
                 "pool_cos": float(f["pool_cos"][mask].mean()),
-                "skill": float(1 - f["mse"][mask].sum() / f["mse_copy"][mask].sum()),
+                "skill": float(1 - f["mse"][mask].sum() / mc), "skill_ln": float(1 - f["mse_ln"][mask].sum() / mc),
+                "norm": float(f["norm"][mask].mean()),
                 "psnr": None if torch.isnan(p).all() else float(np.nanmean(p.numpy()))}
 
     every = torch.ones_like(f["tok_cos"], dtype=torch.bool)
@@ -211,6 +261,10 @@ def summarize(f, lg, scenes, hold, ctx, model_name):
         fid["seen"], fid["held"] = agg(every & ~held), agg(every & held)
     for lo, hi, name in BANDS:
         fid[name] = agg((f["bright"] >= lo) & (f["bright"] < hi))
+    # headline: mean over brightness bands (near-black targets are ~60% of all and carry ~74% of the
+    # copy error, so pooled numbers mostly measure "dark setting -> black tokens")
+    bands = [fid[name] for _, _, name in BANDS if fid[name]["n"]]
+    fid["balanced"] = {k: float(np.mean([b[k] for b in bands])) for k in ("tok_cos", "pool_cos", "skill", "skill_ln")}
     out = {"fidelity": fid}
     if lg is not None:
         corr = ctx.index.correct[scenes].float()
@@ -224,22 +278,29 @@ def summarize(f, lg, scenes, hold, ctx, model_name):
             sel[judge] = {"ae": float(corr[:, AE, j].mean()), "fixed": float(c[:, ctx.fixed[j]].mean()),
                           "direct": pick(lg["direct"]), "q_real": pick(lg["real"]),
                           "q_pred": None if model_name == "copy" else pick(lg["pred"]),
+                          "q_pred_ln": None if model_name == "copy" else pick(lg["pred_ln"]),
                           "oracle": float(c.max(1).values.mean())}
         out["selection"] = sel
     return out
 
 
 # ---------------------------------------------------------------- driver
-def run_spec(spec, ctx):
+def run_spec(spec, ctx, reeval=False):
+    """Train (if needed) and evaluate one spec. reeval=True re-runs only the evaluation of a finished
+    spec from its saved model.pt (keeps the training curve)."""
     d = OUT / spec["name"]
-    if (d / "result.json").exists():
+    done = (d / "result.json").exists()
+    if reeval and (not done or spec["kind"] == "heads"):
+        print(f"[skip reeval] {spec['name']}", flush=True)
+        return
+    if done and not reeval:
         print(f"[skip] {spec['name']}", flush=True)
         return
     d.mkdir(parents=True, exist_ok=True)
-    print(f"[run] {spec['name']}: {json.dumps(spec)}", flush=True)
+    print(f"[{'reeval' if reeval else 'run'}] {spec['name']}: {json.dumps(spec)}", flush=True)
     t = time.time()
     spec.setdefault("seed", 0)
-    res = {}
+    res = json.load(open(d / "result.json")) if reeval else {}
     if spec["kind"] == "heads":
         torch.save(train_heads(spec, ctx), d / "heads.pt")
         heads = load_heads(spec["name"], ctx)
@@ -247,11 +308,15 @@ def run_spec(spec, ctx):
         f, lg = evaluate({"model": "copy"}, None, ctx, val, heads)
         res["val"] = summarize(f, lg, val, [], ctx, "copy")["selection"]
     else:
+        seed_all(spec["seed"])                      # before construction: same init for every variant
         model = make_transition(spec, ctx)
         hold = HOLDOUTS.get(spec.get("holdout"), [])
         if spec["kind"] == "transition":
-            res["curve"] = train_transition(spec, ctx, model)
-            torch.save(model.state_dict(), d / "model.pt")
+            if reeval:
+                model.load_state_dict(torch.load(d / "model.pt", map_location=ctx.dev))
+            else:
+                res["curve"] = train_transition(spec, ctx, model)
+                torch.save(model.state_dict(), d / "model.pt")
         heads = load_heads(spec.get("heads", f"heads_s{spec['seed']}"), ctx)
         for split in spec.get("eval", ["val"]):
             scenes = ctx.index.split[split][:spec.get("eval_n")]
@@ -260,13 +325,14 @@ def run_spec(spec, ctx):
             np.savez_compressed(d / f"metrics_{split}.npz", scenes=scenes.numpy(),
                                 **{k: v.numpy() for k, v in f.items()},
                                 **{f"logit_{k}": v.numpy() for k, v in lg.items()})
-            a, sel = res[split]["fidelity"]["all"], res[split]["selection"]
-            print(f"  [{spec['name']}] {split}: tok_cos {a['tok_cos']:.4f} skill {a['skill']:.4f} psnr {a['psnr']} | "
-                  + " | ".join(f"{j}: q_pred {sel[j]['q_pred']} direct {sel[j]['direct']:.3f} q_real {sel[j]['q_real']:.3f}"
-                               for j in JUDGES), flush=True)
-    res["spec"], res["seconds"] = spec, time.time() - t
+            b, sel = res[split]["fidelity"]["balanced"], res[split]["selection"]
+            print(f"  [{spec['name']}] {split}: balanced tok_cos {b['tok_cos']:.4f} skill_ln {b['skill_ln']:.4f} | "
+                  + " | ".join(f"{j}: q_pred_ln {sel[j]['q_pred_ln']} direct {sel[j]['direct']:.3f} "
+                               f"q_real {sel[j]['q_real']:.3f}" for j in JUDGES), flush=True)
+    res["spec"], res["eval_version"] = spec, 2
+    res["seconds" if not reeval else "reeval_seconds"] = time.time() - t
     json.dump(res, open(d / "result.json", "w"), indent=1)
-    print(f"[done] {spec['name']} in {res['seconds']:.0f}s", flush=True)
+    print(f"[done] {spec['name']} in {time.time() - t:.0f}s", flush=True)
 
 
 def main():
@@ -274,6 +340,7 @@ def main():
     ap.add_argument("specs")
     ap.add_argument("--gpu", type=int, default=1)
     ap.add_argument("--only", default="")
+    ap.add_argument("--reeval", action="store_true", help="re-run only the evaluation of finished specs")
     a = ap.parse_args()
     specs = json.load(open(a.specs))
     if a.only:                                  # run exactly these, in the order given
@@ -281,7 +348,7 @@ def main():
         specs = [by_name[n] for n in a.only.split(",")]
     ctx = Ctx(a.gpu)
     for spec in specs:
-        run_spec(spec, ctx)
+        run_spec(spec, ctx, reeval=a.reeval)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,39 @@
+[
+ {
+  "name": "smoke2_heads",
+  "kind": "heads",
+  "seed": 0,
+  "steps": 30,
+  "bs": 32
+ },
+ {
+  "name": "smoke2_prior",
+  "kind": "static",
+  "model": "prior",
+  "heads": "smoke2_heads",
+  "eval_n": 16
+ },
+ {
+  "name": "smoke2_latent",
+  "kind": "transition",
+  "model": "latent",
+  "heads": "smoke2_heads",
+  "steps": 30,
+  "lr": 0.0003,
+  "bs": 16,
+  "eval_every": 15,
+  "curve_n": 24,
+  "eval_n": 16
+ },
+ {
+  "name": "smoke2_explicit_noise",
+  "kind": "transition",
+  "model": "explicit",
+  "noise": true,
+  "heads": "smoke2_heads",
+  "steps": 30,
+  "lr": 0.001,
+  "bs": 16,
+  "eval_n": 16
+ }
+]

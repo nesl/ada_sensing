@@ -16,6 +16,15 @@
   ]
  },
  {
+  "name": "prior_s0",
+  "kind": "static",
+  "model": "prior",
+  "seed": 0,
+  "eval": [
+   "val"
+  ]
+ },
+ {
   "name": "physics_s0",
   "kind": "static",
   "model": "physics",
