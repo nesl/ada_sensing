@@ -1,0 +1,201 @@
+[
+ {
+  "name": "heads_s0",
+  "kind": "heads",
+  "seed": 0,
+  "steps": 6000,
+  "bs": 128
+ },
+ {
+  "name": "copy_s0",
+  "kind": "static",
+  "model": "copy",
+  "seed": 0,
+  "eval": [
+   "val"
+  ]
+ },
+ {
+  "name": "physics_s0",
+  "kind": "static",
+  "model": "physics",
+  "seed": 0,
+  "eval": [
+   "val"
+  ]
+ },
+ {
+  "name": "latent_s0",
+  "kind": "transition",
+  "model": "latent",
+  "seed": 0,
+  "steps": 8000,
+  "lr": 0.0003,
+  "bs": 64,
+  "eval_every": 2000,
+  "eval": [
+   "val"
+  ]
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "phys",
+  "use_stats": true,
+  "grid": [
+   0,
+   0
+  ],
+  "learn_tone": true,
+  "noise": false,
+  "lam_pix": 1.0,
+  "lam_feat": 1.0,
+  "name": "explicit_phys_stats_s0"
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "phys",
+  "use_stats": true,
+  "grid": [
+   0,
+   0
+  ],
+  "learn_tone": true,
+  "noise": false,
+  "lam_pix": 1.0,
+  "lam_feat": 0.0,
+  "name": "explicit_phys_stats_pixonly_s0"
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "phys",
+  "use_stats": true,
+  "grid": [
+   3,
+   4
+  ],
+  "learn_tone": true,
+  "noise": false,
+  "lam_pix": 1.0,
+  "lam_feat": 1.0,
+  "name": "explicit_phys_stats_grid_s0"
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "phys",
+  "use_stats": true,
+  "grid": [
+   0,
+   0
+  ],
+  "learn_tone": false,
+  "noise": false,
+  "lam_pix": 1.0,
+  "lam_feat": 1.0,
+  "name": "explicit_phys_stats_fixedtone_s0"
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "phys",
+  "use_stats": false,
+  "grid": [
+   0,
+   0
+  ],
+  "learn_tone": true,
+  "noise": false,
+  "lam_pix": 1.0,
+  "lam_feat": 1.0,
+  "name": "explicit_phys_nostats_s0"
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "free",
+  "use_stats": true,
+  "grid": [
+   0,
+   0
+  ],
+  "learn_tone": true,
+  "noise": false,
+  "lam_pix": 1.0,
+  "lam_feat": 1.0,
+  "name": "explicit_free_stats_s0"
+ },
+ {
+  "kind": "transition",
+  "model": "explicit",
+  "seed": 0,
+  "steps": 3000,
+  "lr": 0.001,
+  "bs": 64,
+  "eval_every": 1000,
+  "eval": [
+   "val"
+  ],
+  "gain": "phys",
+  "use_stats": true,
+  "grid": [
+   0,
+   0
+  ],
+  "learn_tone": true,
+  "noise": true,
+  "lam_pix": 1.0,
+  "lam_feat": 1.0,
+  "name": "explicit_phys_stats_noise_s0"
+ }
+]

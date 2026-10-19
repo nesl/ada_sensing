@@ -22,3 +22,4 @@ ManualCam/**/build/
 ManualCam/.gradle/
 ManualCam/local.properties
 exposure_sim/results*/**/*.jpg
+explicit_adapter/_out/

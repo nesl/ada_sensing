@@ -1,0 +1,8 @@
+[
+ {"name": "smoke_heads", "kind": "heads", "seed": 0, "steps": 30, "bs": 32},
+ {"name": "smoke_copy", "kind": "static", "model": "copy", "heads": "smoke_heads", "eval_n": 16},
+ {"name": "smoke_physics", "kind": "static", "model": "physics", "heads": "smoke_heads", "eval_n": 16},
+ {"name": "smoke_latent", "kind": "transition", "model": "latent", "heads": "smoke_heads", "steps": 40, "lr": 3e-4, "bs": 16, "eval_every": 20, "curve_n": 16, "eval_n": 16},
+ {"name": "smoke_explicit", "kind": "transition", "model": "explicit", "gain": "phys", "use_stats": true, "grid": [3, 4], "noise": true, "heads": "smoke_heads", "steps": 40, "lr": 1e-3, "bs": 16, "eval_every": 20, "curve_n": 16, "eval_n": 16},
+ {"name": "smoke_explicit_free", "kind": "transition", "model": "explicit", "gain": "free", "use_stats": false, "learn_tone": false, "lam_feat": 0, "heads": "smoke_heads", "steps": 40, "lr": 1e-3, "bs": 16, "eval_n": 16, "holdout": "iso16000"}
+]
